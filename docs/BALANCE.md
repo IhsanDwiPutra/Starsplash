@@ -56,3 +56,14 @@ Drop chance per musuh: Easy 15% / Normal 10% / Hard 7%. Pity: dijamin drop jika 
 ## Skor
 - Bonus akhir level: nyawa tersisa × 1000.
 - Combo (opsional): +10% per kill beruntun <1.5 s, maks ×2.
+
+## Starsplash Combo (nilai awal)
+| Parameter | Nilai |
+|---|---|
+| Bintang dari musuh biasa | 1 (elite 3, boss 15) |
+| Radius tarik bintang ke kapal | 220 px |
+| Bintang untuk Splash Meter penuh | 30 |
+| Splash | menghapus semua peluru musuh di layar, damage 8 ke musuh |
+| Combo | kill <1.5 s berturut: +1 bintang tiap 3 kombo, skor maks x2 |
+| Bintang hilang | di tepi kiri layar |
+| Meter saat mati | direset ke 0 |
