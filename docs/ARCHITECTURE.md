@@ -36,7 +36,7 @@ Satu `.tscn` ↔ satu `.gd` dengan nama sama.
 
 ## Input Map
 `move_left`, `move_right`, `move_up`, `move_down`, `fire`, `missile`, `splash`, `pause`
-- Keyboard: WASD/Panah, `J`/Space = fire, `K` = missile, `L` = splash, Esc = pause
+- Keyboard: WASD/Panah, `J`/Space/Klik Kiri Mouse = fire, `K` = missile, `L` = splash, Esc = pause
 - Gamepad: stik kiri/D-pad, A = fire, X = missile, Y = splash, Start = pause
 - Touch (fase Android): joystick virtual + tombol, mengirim action yang sama.
 

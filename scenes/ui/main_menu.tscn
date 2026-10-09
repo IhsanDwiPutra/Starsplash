@@ -43,7 +43,7 @@ offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 36
-text = "Tekan J / Spasi / tombol A untuk mulai"
+text = "Tekan J / Spasi / Klik Kiri / tombol A untuk mulai"
 horizontal_alignment = 1
 vertical_alignment = 1
 
