@@ -1,4 +1,4 @@
-# ARCHITECTURE â€” Starsplash
+# ARCHITECTURE - Starsplash
 
 > Pelengkap GDD. Ubah dokumen ini jika struktur berubah, dan catat di DECISIONS.md.
 
@@ -14,7 +14,7 @@ scenes/   player/ enemies/ bosses/ levels/ ui/ pickups/ fx/ projectiles/
 scripts/  mirror scenes + autoload/ + resources/
 assets/   art/ audio/ fonts/
 ```
-Satu `.tscn` â†” satu `.gd` dengan nama sama.
+Satu `.tscn` <-> satu `.gd` dengan nama sama.
 
 ## Autoload (singleton)
 | Nama | Tugas |
@@ -36,7 +36,7 @@ Satu `.tscn` â†” satu `.gd` dengan nama sama.
 
 ## Input Map
 `move_left`, `move_right`, `move_up`, `move_down`, `fire`, `missile`, `splash`, `pause`
-- Keyboard: WASD/Panah, `J`/Space/Klik Kiri Mouse = fire, `K` = missile, `L` = splash, Esc = pause
+- Keyboard: WASD/Panah, `J`/Space/Klik Kiri Mouse = fire, `K`/Klik Kanan Mouse = missile, `L` = splash, Esc = pause
 - Gamepad: stik kiri/D-pad, A = fire, X = missile, Y = splash, Start = pause
 - Touch (fase Android): joystick virtual + tombol, mengirim action yang sama.
 
