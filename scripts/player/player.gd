@@ -10,6 +10,9 @@ const FIRE_RATE: float = 6.0
 const INVULN_TIME: float = 2.0
 const SCREEN_MARGIN: Vector2 = Vector2(60.0, 40.0)
 const BulletScene: PackedScene = preload("res://scenes/projectiles/player_bullet.tscn")
+const SplashWaveScene: PackedScene = preload("res://scenes/fx/splash_wave.tscn")
+const SPLASH_DAMAGE: int = 8
+const SPLASH_OFFSCREEN_MARGIN: float = 50.0
 
 var _cooldown: float = 0.0
 var _invuln: float = 0.0
@@ -18,11 +21,17 @@ var _dead: bool = false
 @onready var _muzzle: Marker2D = $Muzzle
 
 
+func _ready() -> void:
+	add_to_group("player")
+
+
 func _physics_process(delta: float) -> void:
 	if _dead:
 		return
 	_move(delta)
 	_handle_fire(delta)
+	if Input.is_action_just_pressed("splash"):
+		_try_splash()
 	_handle_damage(delta)
 
 
@@ -41,6 +50,21 @@ func _handle_fire(delta: float) -> void:
 		var bullet: Node2D = BulletScene.instantiate()
 		get_parent().add_child(bullet)
 		bullet.global_position = _muzzle.global_position
+
+
+func _try_splash() -> void:
+	if not GameState.try_splash():
+		return
+	for bullet in get_tree().get_nodes_in_group("enemy_bullet"):
+		bullet.queue_free()
+	var limit_x: float = get_viewport_rect().size.x + SPLASH_OFFSCREEN_MARGIN
+	for node in get_tree().get_nodes_in_group("enemy"):
+		var enemy := node as Enemy
+		if enemy != null and enemy.global_position.x < limit_x:
+			enemy.take_damage(SPLASH_DAMAGE)
+	var wave := SplashWaveScene.instantiate() as Node2D
+	get_parent().add_child(wave)
+	wave.global_position = global_position
 
 
 func _handle_damage(delta: float) -> void:

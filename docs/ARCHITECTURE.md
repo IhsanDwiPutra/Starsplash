@@ -1,4 +1,4 @@
-# ARCHITECTURE — Starsplash
+# ARCHITECTURE â€” Starsplash
 
 > Pelengkap GDD. Ubah dokumen ini jika struktur berubah, dan catat di DECISIONS.md.
 
@@ -14,7 +14,7 @@ scenes/   player/ enemies/ bosses/ levels/ ui/ pickups/ fx/ projectiles/
 scripts/  mirror scenes + autoload/ + resources/
 assets/   art/ audio/ fonts/
 ```
-Satu `.tscn` ↔ satu `.gd` dengan nama sama.
+Satu `.tscn` â†” satu `.gd` dengan nama sama.
 
 ## Autoload (singleton)
 | Nama | Tugas |
@@ -42,8 +42,8 @@ Satu `.tscn` ↔ satu `.gd` dengan nama sama.
 
 ## Pola Penting
 - **Level:** `LevelRunner` membaca timeline spawn (data) dan men-scroll dunia; musuh dibuat dari data, bukan ditaruh manual.
-- **Musuh:** base `Enemy` (HP, skor, drop, signal `died`), varian mengganti pola gerak/tembak.
+- **Musuh:** base `Enemy` (HP, skor, drop, signal `died`), varian mengganti pola gerak/tembak. Tipe gerak: STRAIGHT, SINE, HOLD (berhenti lalu menembak ke arah pemain). Peluru musuh = grup `enemy_bullet`.
 - **Peluru:** pooling bila performa menurun (Web/Android).
 - **Signal utama:** `player_hit`, `player_died`, `enemy_died(score)`, `pickup_collected(type)`, `star_collected(amount)`, `splash_ready`, `splash_fired`, `level_completed`.
-- **Starsplash Combo:** node `SplashMeter` (dimiliki player/HUD) menghitung bintang; `Star` adalah pickup (layer pickup) yang tertarik ke player dalam radius.
+- **Starsplash Combo:** Splash Meter, kombo, dan skor-multiplier disimpan di `GameState` (signal `splash_changed`, `splash_ready`, `splash_fired`, `combo_changed`). `Star` (scripts/pickups) adalah pickup yang menarik diri ke player dalam radius dan memanggil `GameState.add_stars()`. `Player._try_splash()` menghapus grup `enemy_bullet` dan memberi damage ke grup `enemy` di layar. Meter & kombo di-reset saat kehilangan nyawa.
 - **Data:** stat di Resource `.tres` (`EnemyData`, `WeaponLevelData`), nilai awal di `BALANCE.md`.

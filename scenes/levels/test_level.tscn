@@ -34,6 +34,36 @@ offset_bottom = 90.0
 theme_override_font_sizes/font_size = 44
 text = "SKOR 0000000"
 
+[node name="SplashLabel" type="Label" parent="HUD"]
+offset_left = 40.0
+offset_top = 944.0
+offset_right = 640.0
+offset_bottom = 990.0
+theme_override_font_sizes/font_size = 32
+text = "SPLASH 0/30"
+
+[node name="SplashBar" type="ProgressBar" parent="HUD"]
+offset_left = 40.0
+offset_top = 1000.0
+offset_right = 520.0
+offset_bottom = 1034.0
+max_value = 30.0
+step = 1.0
+show_percentage = false
+
+[node name="ComboLabel" type="Label" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -720.0
+offset_top = 24.0
+offset_right = -40.0
+offset_bottom = 90.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 44
+text = "KOMBO"
+horizontal_alignment = 2
+
 [node name="GameOverLabel" type="Label" parent="HUD"]
 anchors_preset = 8
 anchor_left = 0.5

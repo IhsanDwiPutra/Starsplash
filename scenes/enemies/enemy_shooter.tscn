@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy.gd" id="1_enemy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_shooter"]
+radius = 38.0
+
+[node name="EnemyShooter" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_enemy")
+max_hp = 3
+speed = 200.0
+score_value = 200
+star_value = 3
+move_type = 2
+hold_x = 1500.0
+hold_duration = 6.0
+fire_interval = 2.0
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.4, 0.78, 0.82, 1)
+polygon = PackedVector2Array(-38, 0, -22, -30, 22, -30, 38, 0, 22, 30, -22, 30)
+
+[node name="Cannon" type="Polygon2D" parent="."]
+color = Color(0.25, 0.4, 0.55, 1)
+polygon = PackedVector2Array(-52, -8, -20, -8, -20, 8, -52, 8)
+
+[node name="Eye" type="Polygon2D" parent="."]
+color = Color(1, 0.88, 0.45, 1)
+polygon = PackedVector2Array(-6, -10, 12, -10, 18, 0, 12, 10, -6, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_shooter")
