@@ -1,17 +1,17 @@
-# ROADMAP — Starsplash
+# ROADMAP â€” Starsplash
 
 > Penghubung antar sesi/model AI. Centang saat selesai; isi Catatan Serah-Terima di bawah.
 
-## Fase 0 — Setup
+## Fase 0 â€” Setup
 - [x] GDD v0.2
 - [x] AGENTS.md, ARCHITECTURE, ROADMAP, DECISIONS, BALANCE, CREDITS
-- [ ] Git init + `.gitignore` + commit pertama
-- [ ] Repo GitHub (private) terhubung
-- [ ] `project.godot` (Compatibility, 1920x1080, input map, collision layer name)
-- [ ] Struktur folder + autoload kosong
-- [ ] Cek headless tanpa error
+- [x] Git init + `.gitignore` + commit pertama
+- [x] Repo GitHub (private) terhubung
+- [x] `project.godot` (Compatibility, 1920x1080, input map, collision layer name)
+- [x] Struktur folder + autoload kosong
+- [x] Cek headless tanpa error
 
-## Fase 1 — Prototipe
+## Fase 1 â€” Prototipe
 - [ ] Kapal pemain bergerak 8 arah (batas layar)
 - [ ] Tembakan dasar
 - [ ] Bintang dari musuh + Splash Meter + ledakan Splash (mekanik khas)
@@ -21,35 +21,36 @@
 - [ ] Musuh 2 (sinus)
 - [ ] Uji main 2 menit: seru?
 
-## Fase 2 — Core Loop
-- [ ] Parallax background (3–4 lapis)
+## Fase 2 â€” Core Loop
+- [ ] Parallax background (3â€“4 lapis)
 - [ ] LevelRunner (timeline spawn)
-- [ ] Power-up senjata (level 1–5, turun saat hit)
+- [ ] Power-up senjata (level 1â€“5, turun saat hit)
 - [ ] Rudal + pickup
 - [ ] Shield
 - [ ] Respawn + checkpoint
 - [ ] Ledakan/partikel + SFX dasar + musik
 - [ ] Level 1 tamat
 
-## Fase 3 — MVP Lengkap (PC)
+## Fase 3 â€” MVP Lengkap (PC)
 - [ ] Level 2
-- [ ] Musuh 3–6
-- [ ] Boss (2–3 fase)
+- [ ] Musuh 3â€“6
+- [ ] Boss (2â€“3 fase)
 - [ ] Menu utama, pilih kesulitan, pause, hasil, game over
 - [ ] High score tersimpan
 
-## Fase 4 — Web
+## Fase 4 â€” Web
 - [ ] Export Web, uji performa & audio
 
-## Fase 5 — Android
+## Fase 5 â€” Android
 - [ ] Kontrol touch
 - [ ] Setup SDK + export APK, uji di HP
 
-## Fase 6 — Polish & Konten
-- [ ] Visual/audio final, dunia 2–3
+## Fase 6 â€” Polish & Konten
+- [ ] Visual/audio final, dunia 2â€“3
 
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-09 | Claude | Fase 0 selesai: project.godot, input map (termasuk splash), collision layer, 4 autoload, main_menu placeholder, cek headless OK | project.godot, scripts/autoload/*, scenes/ui/main_menu.tscn | Belum ada gameplay | Fase 1: kapal pemain 8 arah + tembakan dasar
 - 2026-10-09 | Claude | Dokumen dasar dibuat | docs/*, AGENTS.md | Git belum di-init | Setup Git lalu Fase 0
 
