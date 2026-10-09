@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 22.0
+
+[node name="Player" type="Area2D"]
+collision_mask = 28
+script = ExtResource("1_player")
+
+[node name="Body" type="Polygon2D" parent="."]
+color = Color(1, 0.62, 0.78, 1)
+polygon = PackedVector2Array(-40, -26, 44, 0, -40, 26, -22, 0)
+
+[node name="Cockpit" type="Polygon2D" parent="."]
+color = Color(0.45, 0.7, 1, 1)
+polygon = PackedVector2Array(0, -8, 14, -5, 18, 0, 14, 5, 0, 8, -6, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_player")
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(50, 0)
