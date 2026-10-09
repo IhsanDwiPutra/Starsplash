@@ -1,5 +1,5 @@
 extends CanvasLayer
-## HUD: skor, nyawa, status senjata, rudal, shield, Splash Meter, dan kombo.
+## HUD: skor, nyawa, status senjata & durasi timer, rudal, shield, Splash Meter, dan kombo.
 
 const COLOR_CHARGING: Color = Color(0.7, 0.9, 1.0)
 const COLOR_READY: Color = Color(1.0, 0.9, 0.3)
@@ -18,13 +18,14 @@ func _ready() -> void:
 	GameState.score_changed.connect(_refresh.unbind(1))
 	GameState.lives_changed.connect(_refresh.unbind(1))
 	GameState.weapon_changed.connect(_on_weapon_changed)
+	GameState.weapon_timer_changed.connect(_on_weapon_timer_changed)
 	GameState.missiles_changed.connect(_on_missiles_changed)
 	GameState.shield_changed.connect(_on_shield_changed)
 	GameState.splash_changed.connect(_on_splash_changed)
 	GameState.combo_changed.connect(_on_combo_changed)
 
 	_refresh()
-	_on_weapon_changed(GameState.weapon_level)
+	_update_weapon_display(GameState.weapon_level, GameState.weapon_timer)
 	_on_missiles_changed(GameState.missile_ammo, GameState.MAX_MISSILES)
 	_on_shield_changed(GameState.has_shield)
 	_on_splash_changed(GameState.splash_charge, GameState.SPLASH_MAX)
@@ -36,11 +37,22 @@ func _refresh() -> void:
 
 
 func _on_weapon_changed(level: int) -> void:
+	_update_weapon_display(level, GameState.weapon_timer)
+
+
+func _on_weapon_timer_changed(time_left: float, _max_time: float) -> void:
+	_update_weapon_display(GameState.weapon_level, time_left)
+
+
+func _update_weapon_display(level: int, time_left: float) -> void:
 	if level >= GameState.MAX_WEAPON_LEVEL:
-		_weapon_label.text = "SENJATA: LV %d [MAX]" % level
+		_weapon_label.text = "SENJATA: LV %d [MAX] (%.1fs)" % [level, time_left]
 		_weapon_label.modulate = Color(1.0, 0.85, 0.2)
+	elif level > 1:
+		_weapon_label.text = "SENJATA: LV %d (%.1fs)" % [level, time_left]
+		_weapon_label.modulate = Color(0.4, 1.0, 0.6) if time_left > 5.0 else Color(1.0, 0.45, 0.4)
 	else:
-		_weapon_label.text = "SENJATA: LV %d" % level
+		_weapon_label.text = "SENJATA: LV 1"
 		_weapon_label.modulate = Color(1.0, 1.0, 1.0)
 
 

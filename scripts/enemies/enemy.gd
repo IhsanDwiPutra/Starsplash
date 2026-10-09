@@ -19,6 +19,8 @@ enum MoveType { STRAIGHT, SINE, HOLD }
 @export var hold_duration: float = 6.0
 ## Selang tembak (detik). 0 = tidak menembak.
 @export var fire_interval: float = 0.0
+## Carrier: drone khusus pembawa hadiah (100% drop [P] atau Shield)
+@export var is_carrier: bool = false
 
 const DESPAWN_X: float = -150.0
 const ON_SCREEN_X: float = 1880.0
@@ -124,20 +126,30 @@ func _drop_stars(count: int) -> void:
 
 
 func _maybe_drop_pickup() -> void:
-	_kills_without_drop += 1
-	var chance: float = 0.4 if move_type == MoveType.HOLD else 0.12
-	if _kills_without_drop >= 10:
-		chance = 1.0 # Pity drop jaminan
-	if randf() <= chance:
-		_kills_without_drop = 0
+	if is_carrier:
+		# Carrier drone selalu menjatuhkan Power-Up atau Shield!
 		var pickup := PickupScene.instantiate() as Pickup
 		pickup.position = position
-		# Tentukan jenis drop secara dinamis
-		var roll := randf()
-		if not GameState.has_shield and roll < 0.3:
+		if not GameState.has_shield and randf() < 0.4:
 			pickup.type = Pickup.Type.SHIELD
-		elif GameState.weapon_level < 5 and roll < 0.7:
-			pickup.type = Pickup.Type.WEAPON
 		else:
-			pickup.type = Pickup.Type.MISSILE
+			pickup.type = Pickup.Type.WEAPON
 		get_parent().add_child.call_deferred(pickup)
+		return
+
+	if move_type == MoveType.HOLD:
+		# Shooter enemy punya peluang 35% menjatuhkan Shield atau Rudal
+		if randf() < 0.35:
+			var pickup := PickupScene.instantiate() as Pickup
+			pickup.position = position
+			pickup.type = Pickup.Type.SHIELD if (not GameState.has_shield and randf() < 0.5) else Pickup.Type.MISSILE
+			get_parent().add_child.call_deferred(pickup)
+		return
+
+	# Musuh biasa (Drone, Sine): peluang kecil menjatuhkan amunisi Rudal (6%)
+	if randf() < 0.06:
+		var pickup := PickupScene.instantiate() as Pickup
+		pickup.position = position
+		pickup.type = Pickup.Type.MISSILE
+		get_parent().add_child.call_deferred(pickup)
+

@@ -11,6 +11,7 @@ signal splash_ready
 signal splash_fired
 signal combo_changed(combo: int, multiplier: float)
 signal weapon_changed(level: int)
+signal weapon_timer_changed(time_left: float, max_time: float)
 signal missiles_changed(ammo: int, max_ammo: int)
 signal shield_changed(active: bool)
 
@@ -32,6 +33,7 @@ const COMBO_STEP: float = 0.1
 const MAX_WEAPON_LEVEL: int = 5
 const MAX_MISSILES: int = 9
 const START_MISSILES: int = 3
+const WEAPON_DURATION: float = 16.0
 
 var difficulty: Difficulty = Difficulty.NORMAL
 var score: int = 0
@@ -40,16 +42,27 @@ var splash_charge: int = 0
 var combo: int = 0
 
 var weapon_level: int = 1
+var weapon_timer: float = 0.0
 var missile_ammo: int = 3
 var has_shield: bool = false
 
 var _last_kill_time: float = -100.0
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if combo > 0 and _now() - _last_kill_time > COMBO_WINDOW:
 		combo = 0
 		combo_changed.emit(combo, get_multiplier())
+
+	# Durasi senjata super (Level 2–5)
+	if weapon_level > 1:
+		weapon_timer -= delta
+		weapon_timer_changed.emit(weapon_timer, WEAPON_DURATION)
+		if weapon_timer <= 0.0:
+			weapon_level = 1
+			weapon_timer = 0.0
+			weapon_changed.emit(weapon_level)
+			weapon_timer_changed.emit(0.0, WEAPON_DURATION)
 
 
 func new_game(chosen: Difficulty = Difficulty.NORMAL) -> void:
@@ -57,12 +70,14 @@ func new_game(chosen: Difficulty = Difficulty.NORMAL) -> void:
 	score = 0
 	lives = START_LIVES[chosen]
 	weapon_level = 1
+	weapon_timer = 0.0
 	missile_ammo = START_MISSILES
 	has_shield = false
 	_reset_splash_and_combo()
 	score_changed.emit(score)
 	lives_changed.emit(lives)
 	weapon_changed.emit(weapon_level)
+	weapon_timer_changed.emit(0.0, WEAPON_DURATION)
 	missiles_changed.emit(missile_ammo, MAX_MISSILES)
 	shield_changed.emit(has_shield)
 
@@ -80,12 +95,19 @@ func lose_life() -> void:
 
 func upgrade_weapon() -> void:
 	weapon_level = mini(weapon_level + 1, MAX_WEAPON_LEVEL)
+	weapon_timer = WEAPON_DURATION
 	weapon_changed.emit(weapon_level)
+	weapon_timer_changed.emit(weapon_timer, WEAPON_DURATION)
 
 
 func downgrade_weapon() -> void:
 	weapon_level = maxi(weapon_level - 1, 1)
+	if weapon_level == 1:
+		weapon_timer = 0.0
+	else:
+		weapon_timer = minf(weapon_timer, WEAPON_DURATION * 0.5)
 	weapon_changed.emit(weapon_level)
+	weapon_timer_changed.emit(weapon_timer, WEAPON_DURATION)
 
 
 func add_missiles(amount: int) -> void:

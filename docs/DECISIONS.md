@@ -18,3 +18,4 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 12 | 2026-10-09 | Visual akhir: pastel flat outline tebal; tidak meniru claymation/karakter referensi | Identitas sendiri, ringan di Web/Android |
 | 13 | 2026-10-09 | Premis: Pip (bintang kecil) vs Raja Gloop (pencuri bintang); Dunia 1 Laut Beku | Arah cerita ringan yang konsisten |
 | 14 | 2026-10-09 | Splash Meter, kombo, dan multiplier disimpan di autoload GameState (bukan node terpisah) | Sederhana; HUD, Player, Enemy mengaksesnya satu tempat |
+| 15 | 2026-10-09 | Senjata super (Lv 2-5) berdurasi 16 detik; drop [P] & Shield hanya dari musuh khusus/Carrier | Mencegah pemain terlalu overpowered; menjaga tensi dan tantangan |

@@ -4,6 +4,7 @@ extends Node2D
 const DroneScene: PackedScene = preload("res://scenes/enemies/enemy_drone.tscn")
 const SineScene: PackedScene = preload("res://scenes/enemies/enemy_sine.tscn")
 const ShooterScene: PackedScene = preload("res://scenes/enemies/enemy_shooter.tscn")
+const CarrierScene: PackedScene = preload("res://scenes/enemies/enemy_carrier.tscn")
 const MENU_PATH: String = "res://scenes/ui/main_menu.tscn"
 const SPAWN_INTERVAL: float = 0.9
 const SPAWN_X: float = 2050.0
@@ -37,7 +38,11 @@ func _spawn_enemy() -> void:
 	var scene: PackedScene = DroneScene
 	var y_min: float = 120.0
 	var y_max: float = 960.0
-	if _spawn_count % 5 == 0:
+	if _spawn_count % 11 == 0:
+		scene = CarrierScene
+		y_min = 200.0
+		y_max = 700.0
+	elif _spawn_count % 5 == 0:
 		scene = ShooterScene
 		y_min = 250.0
 		y_max = 830.0

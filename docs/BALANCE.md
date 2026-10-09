@@ -19,7 +19,8 @@
 | 4 | 9 | 3 + damage naik | 2 |
 | 5 | 10 | 5 spread | 2 |
 
-Kecepatan peluru: 1400 px/s. Kena hit tanpa shield → turun 1 level (minimum 1).
+Kecepatan peluru: 1400 px/s.
+Durasi Senjata Super (Level 2–5): 16 detik per pickup [P]. Jika timer habis, kembali ke Level 1. Kena hit tanpa shield → turun 1 level (minimum 1).
 
 ## Rudal & Shield
 | Item | Nilai |
@@ -35,6 +36,7 @@ Kecepatan peluru: 1400 px/s. Kena hit tanpa shield → turun 1 level (minimum 1)
 | Drone (lurus) | 1 | 300 | 100 | terbang lurus ke kiri |
 | Penembak diam | 3 | 200 | 200 | berhenti, tembak ke pemain tiap 2 s |
 | Sinus | 2 | 280 | 150 | gelombang sinus vertikal |
+| Carrier (pembawa item) | 2 | 240 | 150 | terbang melintas emas, jaminan drop [P]/[S] |
 | Pengejar | 3 | 350 | 250 | mengarah ke pemain, tikungan terbatas |
 | Penyerang vertikal | 2 | 320 | 150 | masuk dari atas/bawah |
 | Turret terrain | 4 | 0 | 200 | menempel terrain, tembak berkala |
@@ -43,7 +45,9 @@ Kecepatan peluru musuh: Easy 350 / Normal 450 / Hard 550.
 HP musuh: Easy ×0.8 / Normal ×1.0 / Hard ×1.3.
 
 ## Drop Power-up
-Drop chance per musuh: Easy 15% / Normal 10% / Hard 7%. Pity: dijamin drop jika 12 musuh berturut-turut tanpa drop.
+- Musuh biasa (Drone, Sine): 100% Bintang, drop Rudal [M] 6%.
+- Musuh Penembak (Shooter): 100% Bintang (3), 30% drop Shield [S] atau Rudal [M].
+- Carrier Drone: 100% drop Power-up Senjata [P] atau Shield [S].
 
 ## Boss (Dunia 1)
 - HP total: 150, 3 fase (100% / 66% / 33%), tiap fase pola tembak baru.
