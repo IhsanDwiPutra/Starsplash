@@ -14,3 +14,6 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 8 | 2026-10-09 | Root project & repo Git: `PROJEK/Starsplash/` | Terpisah dari project lain |
 | 9 | 2026-10-09 | MVP: 1 dunia (Laut & Es), 2 level + boss | Cegah scope creep |
 | 10 | 2026-10-09 | Repo GitHub private dulu | Publikasi nanti |
+| 11 | 2026-10-09 | Mekanik khas: Starsplash Combo (bintang dari musuh, Splash Meter, ledakan Splash) | Pembeda dari game referensi |
+| 12 | 2026-10-09 | Visual akhir: pastel flat outline tebal; tidak meniru claymation/karakter referensi | Identitas sendiri, ringan di Web/Android |
+| 13 | 2026-10-09 | Premis: Pip (bintang kecil) vs Raja Gloop (pencuri bintang); Dunia 1 Laut Beku | Arah cerita ringan yang konsisten |

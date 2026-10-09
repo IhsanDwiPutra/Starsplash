@@ -1,7 +1,7 @@
 # GDD — Starsplash (Game Shmup 2D)
 
 > **Source of truth.** Semua keputusan desain ada di sini. AI agent WAJIB membaca dokumen ini sebelum mengerjakan fitur. Jika ada konflik antara permintaan dan dokumen ini, tanyakan dulu, lalu perbarui dokumen.
-> Status: **v0.2** — 2026-10-09 | Root project: `PROJEK/Starsplash/`
+> Status: **v0.3** — 2026-10-09 | Root project: `PROJEK/Starsplash/`
 
 ## 1. Visi
 Game shoot 'em up (shmup) 2D horizontal yang lucu, berwarna, dan seru, dengan referensi **Platypus** (PC): kapal kecil menembak gelombang musuh sambil melintasi dunia-dunia unik. Ringan, cepat dimainkan, mudah dipelajari.
@@ -43,6 +43,14 @@ Game shoot 'em up (shmup) 2D horizontal yang lucu, berwarna, dan seru, dengan re
 - **Rudal:** amunisi terbatas, damage besar, isi ulang dari pickup.
 - **Shield:** menyerap 1 hit, hilang setelah dipakai.
 
+### 4.3b Mekanik Khas: Starsplash Combo
+Identitas utama game ini (pembeda dari game referensi).
+- Musuh yang hancur **melepas bintang kecil**; bintang tertarik ke kapal saat dekat.
+- Bintang mengisi **Splash Meter**. Saat penuh, tombol `splash` melepas **ledakan gelombang bintang**: membersihkan peluru musuh di layar dan memberi damage ke musuh sekitar.
+- Kill beruntun cepat menambah **combo** yang menaikkan jumlah bintang dan skor.
+- Bintang yang terlewat hilang di tepi kiri layar (mendorong pemain agresif).
+- Angka di `docs/BALANCE.md`.
+
 ### 4.3 Nyawa & Kesulitan
 - Pemain mulai dengan **3 nyawa**; mati → respawn di **checkpoint** level dengan invulnerable singkat.
 - **Easy / Normal / Hard** mengubah: jumlah nyawa awal, kecepatan peluru musuh, HP musuh, frekuensi drop.
@@ -61,11 +69,15 @@ Game shoot 'em up (shmup) 2D horizontal yang lucu, berwarna, dan seru, dengan re
 - **Di luar MVP:** co-op, dunia 2–3, world map, loadout, achievements.
 
 ## 6. Cerita & Tema
-Ringan dan lucu: petualangan antar dunia dengan musuh nyentrik. **Tanpa cerita berat**; konteks disampaikan lewat judul dunia dan intro singkat (opsional).
+Ringan dan lucu. **Premis:** Bintang-bintang di galaksi mulai jatuh dan menghilang karena ulah **Raja Gloop**, makhluk usil pencuri bintang. **Pip**, bintang kecil yang menaiki kapal mungilnya, berangkat mengambil kembali bintang-bintang itu dari dunia ke dunia.
+- **Pahlawan:** Pip (bintang kecil, ceria, nekat) + kapal mungil.
+- **Antagonis:** Raja Gloop; boss tiap dunia adalah anak buahnya, boss akhir adalah Raja Gloop.
+- **Dunia 1:** **Laut Beku** (musuh bertema gelembung & es usil). Dunia berikutnya (setelah MVP): Gurun Kaca, Langit Kunang-kunang.
+- **Penyampaian:** teks intro singkat per dunia; **tanpa dialog panjang**.
 
 ## 7. Arah Visual & Audio
 - **Fase 1:** placeholder 2D (bentuk sederhana / aset gratis berlisensi jelas). Fokus gameplay.
-- **Fase akhir:** poles; referensi gaya claymation (lihat `platypus.jpg`), kemungkinan sprite hasil render dari Blender.
+- **Fase akhir:** gaya **pastel flat dengan outline tebal**, ringan, bersih, cocok untuk Web/Android. Gambar `docs/reference/platypus.jpg` hanya inspirasi *rasa* (cerah, lucu); **jangan meniru** gaya claymation, karakter, atau desain musuhnya. Starsplash harus punya identitas sendiri.
 - Palet cerah, kontras tinggi, peluru musuh mudah dibedakan dari background.
 - Aset pihak ketiga: catat sumber dan lisensi di `docs/CREDITS.md`.
 
@@ -116,3 +128,4 @@ PROJEK/Starsplash/   <- root project Godot & repo Git
 ## 13. Log Perubahan
 - v0.1 (2026-10-09): draft awal berdasarkan keputusan diskusi.
 - v0.2 (2026-10-09): judul final **Starsplash**; dokumen dipindah ke `PROJEK/Starsplash/docs/` (root project terpisah dari proyek lain).
+- v0.3 (2026-10-09): tambah mekanik khas Starsplash Combo, premis cerita (Pip vs Raja Gloop), gaya visual pastel flat.

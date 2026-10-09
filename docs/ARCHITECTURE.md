@@ -35,14 +35,15 @@ Satu `.tscn` ↔ satu `.gd` dengan nama sama.
 | 6 | terrain | player, player_bullet |
 
 ## Input Map
-`move_left`, `move_right`, `move_up`, `move_down`, `fire`, `missile`, `pause`
-- Keyboard: WASD/Panah, `J`/Space = fire, `K` = missile, Esc = pause
-- Gamepad: stik kiri/D-pad, A = fire, X = missile, Start = pause
+`move_left`, `move_right`, `move_up`, `move_down`, `fire`, `missile`, `splash`, `pause`
+- Keyboard: WASD/Panah, `J`/Space = fire, `K` = missile, `L` = splash, Esc = pause
+- Gamepad: stik kiri/D-pad, A = fire, X = missile, Y = splash, Start = pause
 - Touch (fase Android): joystick virtual + tombol, mengirim action yang sama.
 
 ## Pola Penting
 - **Level:** `LevelRunner` membaca timeline spawn (data) dan men-scroll dunia; musuh dibuat dari data, bukan ditaruh manual.
 - **Musuh:** base `Enemy` (HP, skor, drop, signal `died`), varian mengganti pola gerak/tembak.
 - **Peluru:** pooling bila performa menurun (Web/Android).
-- **Signal utama:** `player_hit`, `player_died`, `enemy_died(score)`, `pickup_collected(type)`, `level_completed`.
+- **Signal utama:** `player_hit`, `player_died`, `enemy_died(score)`, `pickup_collected(type)`, `star_collected(amount)`, `splash_ready`, `splash_fired`, `level_completed`.
+- **Starsplash Combo:** node `SplashMeter` (dimiliki player/HUD) menghitung bintang; `Star` adalah pickup (layer pickup) yang tertarik ke player dalam radius.
 - **Data:** stat di Resource `.tres` (`EnemyData`, `WeaponLevelData`), nilai awal di `BALANCE.md`.

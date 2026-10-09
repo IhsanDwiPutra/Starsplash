@@ -14,6 +14,7 @@
 ## Fase 1 — Prototipe
 - [ ] Kapal pemain bergerak 8 arah (batas layar)
 - [ ] Tembakan dasar
+- [ ] Bintang dari musuh + Splash Meter + ledakan Splash (mekanik khas)
 - [ ] Musuh 1 (lurus) + HP + mati
 - [ ] Tabrakan pemain-musuh, nyawa
 - [ ] Skor + HUD dasar
@@ -51,3 +52,4 @@
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
 - 2026-10-09 | Claude | Dokumen dasar dibuat | docs/*, AGENTS.md | Git belum di-init | Setup Git lalu Fase 0
+
