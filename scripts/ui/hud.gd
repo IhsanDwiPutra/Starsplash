@@ -1,10 +1,14 @@
 extends CanvasLayer
-## HUD: skor, nyawa, Splash Meter, dan kombo.
+## HUD: skor, nyawa, status senjata, rudal, shield, Splash Meter, dan kombo.
 
 const COLOR_CHARGING: Color = Color(0.7, 0.9, 1.0)
 const COLOR_READY: Color = Color(1.0, 0.9, 0.3)
+const COLOR_SHIELD: Color = Color(0.3, 0.9, 1.0)
 
 @onready var _label: Label = $ScoreLabel
+@onready var _weapon_label: Label = $WeaponLabel
+@onready var _missile_label: Label = $MissileLabel
+@onready var _shield_label: Label = $ShieldLabel
 @onready var _bar: ProgressBar = $SplashBar
 @onready var _splash_label: Label = $SplashLabel
 @onready var _combo_label: Label = $ComboLabel
@@ -13,15 +17,42 @@ const COLOR_READY: Color = Color(1.0, 0.9, 0.3)
 func _ready() -> void:
 	GameState.score_changed.connect(_refresh.unbind(1))
 	GameState.lives_changed.connect(_refresh.unbind(1))
+	GameState.weapon_changed.connect(_on_weapon_changed)
+	GameState.missiles_changed.connect(_on_missiles_changed)
+	GameState.shield_changed.connect(_on_shield_changed)
 	GameState.splash_changed.connect(_on_splash_changed)
 	GameState.combo_changed.connect(_on_combo_changed)
+
 	_refresh()
+	_on_weapon_changed(GameState.weapon_level)
+	_on_missiles_changed(GameState.missile_ammo, GameState.MAX_MISSILES)
+	_on_shield_changed(GameState.has_shield)
 	_on_splash_changed(GameState.splash_charge, GameState.SPLASH_MAX)
 	_on_combo_changed(GameState.combo, GameState.get_multiplier())
 
 
 func _refresh() -> void:
 	_label.text = "SKOR %07d     NYAWA %d" % [GameState.score, GameState.lives]
+
+
+func _on_weapon_changed(level: int) -> void:
+	if level >= GameState.MAX_WEAPON_LEVEL:
+		_weapon_label.text = "SENJATA: LV %d [MAX]" % level
+		_weapon_label.modulate = Color(1.0, 0.85, 0.2)
+	else:
+		_weapon_label.text = "SENJATA: LV %d" % level
+		_weapon_label.modulate = Color(1.0, 1.0, 1.0)
+
+
+func _on_missiles_changed(ammo: int, max_ammo: int) -> void:
+	_missile_label.text = "RUDAL: %d/%d [K / Klik Kanan]" % [ammo, max_ammo]
+	_missile_label.modulate = Color(1.0, 0.5, 0.5) if ammo <= 0 else Color(1.0, 0.9, 0.8)
+
+
+func _on_shield_changed(active: bool) -> void:
+	_shield_label.visible = active
+	_shield_label.text = "SHIELD: AKTIF"
+	_shield_label.modulate = COLOR_SHIELD
 
 
 func _on_splash_changed(charge: int, max_charge: int) -> void:

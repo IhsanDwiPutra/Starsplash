@@ -23,10 +23,10 @@
 
 ## Fase 2 - Core Loop
 - [x] Parallax background (prosedural, 6 lapis Laut Beku)
-- [ ] Kontras visual musuh vs background
-- [ ] Power-up senjata (level 1-5, turun saat hit)
-- [ ] Rudal (K / klik kanan) + ammo + pickup
-- [ ] Shield (pelindung) + pickup
+- [x] Kontras visual musuh vs background
+- [x] Power-up senjata (level 1-5, turun saat hit)
+- [x] Rudal (K / klik kanan) + ammo + pickup
+- [x] Shield (pelindung) + pickup
 - [ ] LevelRunner (timeline spawn musuh)
 - [ ] Respawn + checkpoint
 - [ ] Ledakan/partikel + SFX dasar + musik
@@ -52,6 +52,7 @@
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-09 | Gemini | Fase 2: Power-up senjata (Lv 1-5, spread shot & turun saat hit), Rudal area damage (K / Klik Kanan), Shield aura pelindung, item pickup (P, M, S drop dari musuh), kontras outline musuh, update HUD | scripts/player/player.gd, scripts/projectiles/*, scripts/pickups/pickup.*, scenes/enemies/*, scripts/ui/hud.gd | - | LevelRunner (timeline spawn terstruktur), ledakan partikel / SFX, checkpoint & tamat Level 1
 - 2026-10-09 | Gemini | Perbaikan encoding ROADMAP.md & ARCHITECTURE.md, update status Fase 1 lulus uji main | docs/ROADMAP.md, docs/ARCHITECTURE.md | - | Eksekusi Senjata 1-5, Rudal, Shield, Pickups & Kontras musuh
 - 2026-10-09 | Claude | Parallax background prosedural Laut Beku (langit gradasi, bulan, bintang, awan, 2 lapis gunung es, riak, bongkahan es) tanpa aset gambar | scripts/fx/bg_layer.gd, scripts/fx/parallax_background.gd, scenes/levels/test_level.tscn | Masih placeholder; ganti sprite saat fase poles | Power-up senjata bertingkat, rudal, shield (atau tuning Splash dulu)
 - 2026-10-09 | Claude | Starsplash Combo: bintang drop, Splash Meter (30), ledakan Splash (hapus peluru + damage 8), kombo (multiplier + bonus bintang), musuh penembak (HOLD), peluru musuh, HUD meter/kombo; klik kiri mouse = fire | scripts/autoload/game_state.gd, scripts/pickups/star.gd, scripts/enemies/enemy.gd, scripts/player/player.gd, scripts/ui/hud.gd | Belum playtest manusia; belum ada pilihan kesulitan di menu; HP musuh belum diskala | Playtest & tuning Splash, lalu parallax, power-up senjata, rudal, shield

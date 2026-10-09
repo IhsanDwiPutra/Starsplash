@@ -38,6 +38,31 @@ offset_bottom = 90.0
 theme_override_font_sizes/font_size = 44
 text = "SKOR 0000000"
 
+[node name="WeaponLabel" type="Label" parent="HUD"]
+offset_left = 40.0
+offset_top = 84.0
+offset_right = 500.0
+offset_bottom = 124.0
+theme_override_font_sizes/font_size = 28
+text = "SENJATA: LV 1"
+
+[node name="MissileLabel" type="Label" parent="HUD"]
+offset_left = 40.0
+offset_top = 124.0
+offset_right = 600.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 28
+text = "RUDAL: 3/9 [K / Klik Kanan]"
+
+[node name="ShieldLabel" type="Label" parent="HUD"]
+visible = false
+offset_left = 40.0
+offset_top = 164.0
+offset_right = 500.0
+offset_bottom = 204.0
+theme_override_font_sizes/font_size = 28
+text = "SHIELD: AKTIF"
+
 [node name="SplashLabel" type="Label" parent="HUD"]
 offset_left = 40.0
 offset_top = 944.0

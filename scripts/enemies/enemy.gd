@@ -1,7 +1,7 @@
 class_name Enemy
 extends Area2D
 ## Musuh dasar. Varian dibuat lewat scene dengan nilai export berbeda.
-## Nilai awal dari docs/BALANCE.md. (Pengali HP kesulitan: belum diterapkan.)
+## Nilai awal dari docs/BALANCE.md.
 
 signal died
 
@@ -24,6 +24,9 @@ const DESPAWN_X: float = -150.0
 const ON_SCREEN_X: float = 1880.0
 const StarScene: PackedScene = preload("res://scenes/pickups/star.tscn")
 const EnemyBulletScene: PackedScene = preload("res://scenes/projectiles/enemy_bullet.tscn")
+const PickupScene: PackedScene = preload("res://scenes/pickups/pickup.tscn")
+
+static var _kills_without_drop: int = 0
 
 var _hp: int
 var _time: float = 0.0
@@ -107,6 +110,7 @@ func _die() -> void:
 	GameState.register_kill()
 	GameState.add_score(roundi(score_value * GameState.get_multiplier()))
 	_drop_stars(star_value + GameState.combo_bonus_stars())
+	_maybe_drop_pickup()
 	died.emit()
 	queue_free()
 
@@ -116,5 +120,24 @@ func _drop_stars(count: int) -> void:
 	for i in count:
 		var star: Node2D = StarScene.instantiate()
 		star.position = position
-		# Ditunda: kita mungkin sedang berada di dalam callback fisika.
 		parent.add_child.call_deferred(star)
+
+
+func _maybe_drop_pickup() -> void:
+	_kills_without_drop += 1
+	var chance: float = 0.4 if move_type == MoveType.HOLD else 0.12
+	if _kills_without_drop >= 10:
+		chance = 1.0 # Pity drop jaminan
+	if randf() <= chance:
+		_kills_without_drop = 0
+		var pickup := PickupScene.instantiate() as Pickup
+		pickup.position = position
+		# Tentukan jenis drop secara dinamis
+		var roll := randf()
+		if not GameState.has_shield and roll < 0.3:
+			pickup.type = Pickup.Type.SHIELD
+		elif GameState.weapon_level < 5 and roll < 0.7:
+			pickup.type = Pickup.Type.WEAPON
+		else:
+			pickup.type = Pickup.Type.MISSILE
+		get_parent().add_child.call_deferred(pickup)

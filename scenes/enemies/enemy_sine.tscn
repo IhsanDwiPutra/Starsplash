@@ -15,12 +15,16 @@ move_type = 1
 sine_amplitude = 160.0
 sine_frequency = 2.2
 
+[node name="Outline" type="Polygon2D" parent="."]
+color = Color(0.16, 0.08, 0.28, 1)
+polygon = PackedVector2Array(-37, 0, 0, -37, 37, 0, 0, 37)
+
 [node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.7, 0.55, 0.95, 1)
+color = Color(0.74, 0.52, 0.98, 1)
 polygon = PackedVector2Array(-32, 0, 0, -32, 32, 0, 0, 32)
 
 [node name="Core" type="Polygon2D" parent="."]
-color = Color(1, 0.88, 0.45, 1)
+color = Color(1, 0.9, 0.4, 1)
 polygon = PackedVector2Array(-10, 0, 0, -10, 10, 0, 0, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

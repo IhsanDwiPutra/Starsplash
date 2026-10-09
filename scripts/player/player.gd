@@ -1,28 +1,37 @@
 class_name Player
 extends Area2D
-## Kapal Pip: gerak 8 arah dalam batas layar, tembakan dasar, nyawa & invulnerable.
-## Angka dari docs/BALANCE.md (Senjata level 1, kecepatan pemain).
+## Kapal Pip: gerak 8 arah, senjata bertingkat (level 1-5), rudal, shield, dan Splash.
+## Nilai dari docs/BALANCE.md.
 
 signal game_over
 
 const SPEED: float = 600.0
-const FIRE_RATE: float = 6.0
 const INVULN_TIME: float = 2.0
 const SCREEN_MARGIN: Vector2 = Vector2(60.0, 40.0)
-const BulletScene: PackedScene = preload("res://scenes/projectiles/player_bullet.tscn")
-const SplashWaveScene: PackedScene = preload("res://scenes/fx/splash_wave.tscn")
+
+const FIRE_RATES: Array[float] = [6.0, 7.0, 8.0, 9.0, 10.0]
+const MISSILE_COOLDOWN_TIME: float = 0.6
 const SPLASH_DAMAGE: int = 8
 const SPLASH_OFFSCREEN_MARGIN: float = 50.0
 
+const BulletScene: PackedScene = preload("res://scenes/projectiles/player_bullet.tscn")
+const MissileScene: PackedScene = preload("res://scenes/projectiles/missile.tscn")
+const SplashWaveScene: PackedScene = preload("res://scenes/fx/splash_wave.tscn")
+
 var _cooldown: float = 0.0
+var _missile_cooldown: float = 0.0
 var _invuln: float = 0.0
 var _dead: bool = false
+var _shield_pulse: float = 0.0
 
 @onready var _muzzle: Marker2D = $Muzzle
+@onready var _shield_aura: Polygon2D = $ShieldAura
 
 
 func _ready() -> void:
 	add_to_group("player")
+	GameState.shield_changed.connect(_on_shield_changed)
+	_shield_aura.visible = GameState.has_shield
 
 
 func _physics_process(delta: float) -> void:
@@ -30,8 +39,10 @@ func _physics_process(delta: float) -> void:
 		return
 	_move(delta)
 	_handle_fire(delta)
+	_handle_missile(delta)
 	if Input.is_action_just_pressed("splash"):
 		_try_splash()
+	_update_shield_visual(delta)
 	_handle_damage(delta)
 
 
@@ -45,11 +56,53 @@ func _move(delta: float) -> void:
 
 func _handle_fire(delta: float) -> void:
 	_cooldown -= delta
+	var lvl: int = clampi(GameState.weapon_level, 1, 5)
+	var fire_rate: float = FIRE_RATES[lvl - 1]
 	if Input.is_action_pressed("fire") and _cooldown <= 0.0:
-		_cooldown = 1.0 / FIRE_RATE
-		var bullet: Node2D = BulletScene.instantiate()
-		get_parent().add_child(bullet)
-		bullet.global_position = _muzzle.global_position
+		_cooldown = 1.0 / fire_rate
+		_shoot_weapon_pattern(lvl)
+
+
+func _shoot_weapon_pattern(lvl: int) -> void:
+	var m_pos: Vector2 = _muzzle.global_position
+	match lvl:
+		1:
+			_spawn_bullet(m_pos, Vector2.RIGHT, 1)
+		2:
+			_spawn_bullet(m_pos + Vector2(0, -14), Vector2.RIGHT, 1)
+			_spawn_bullet(m_pos + Vector2(0, 14), Vector2.RIGHT, 1)
+		3:
+			_spawn_bullet(m_pos, Vector2.RIGHT, 1)
+			_spawn_bullet(m_pos, Vector2.from_angle(-0.18), 1)
+			_spawn_bullet(m_pos, Vector2.from_angle(0.18), 1)
+		4:
+			_spawn_bullet(m_pos, Vector2.RIGHT, 2)
+			_spawn_bullet(m_pos, Vector2.from_angle(-0.18), 2)
+			_spawn_bullet(m_pos, Vector2.from_angle(0.18), 2)
+		5:
+			_spawn_bullet(m_pos, Vector2.RIGHT, 2)
+			_spawn_bullet(m_pos, Vector2.from_angle(-0.16), 2)
+			_spawn_bullet(m_pos, Vector2.from_angle(0.16), 2)
+			_spawn_bullet(m_pos, Vector2.from_angle(-0.32), 2)
+			_spawn_bullet(m_pos, Vector2.from_angle(0.32), 2)
+
+
+func _spawn_bullet(pos: Vector2, dir: Vector2, dmg: int) -> void:
+	var bullet := BulletScene.instantiate() as PlayerBullet
+	bullet.direction = dir
+	bullet.damage = dmg
+	get_parent().add_child(bullet)
+	bullet.global_position = pos
+
+
+func _handle_missile(delta: float) -> void:
+	_missile_cooldown -= delta
+	if Input.is_action_just_pressed("missile") and _missile_cooldown <= 0.0:
+		if GameState.use_missile():
+			_missile_cooldown = MISSILE_COOLDOWN_TIME
+			var missile := MissileScene.instantiate() as Missile
+			get_parent().add_child(missile)
+			missile.global_position = _muzzle.global_position
 
 
 func _try_splash() -> void:
@@ -67,6 +120,17 @@ func _try_splash() -> void:
 	wave.global_position = global_position
 
 
+func _update_shield_visual(delta: float) -> void:
+	if _shield_aura.visible:
+		_shield_pulse += delta * 6.0
+		var s: float = 1.0 + sin(_shield_pulse) * 0.06
+		_shield_aura.scale = Vector2(s, s)
+
+
+func _on_shield_changed(active: bool) -> void:
+	_shield_aura.visible = active
+
+
 func _handle_damage(delta: float) -> void:
 	if _invuln > 0.0:
 		_invuln -= delta
@@ -81,6 +145,13 @@ func _handle_damage(delta: float) -> void:
 
 
 func _take_hit() -> void:
+	# Jika memiliki shield: serap serangan, jangan kurangi nyawa & level senjata
+	if GameState.has_shield:
+		GameState.set_shield(false)
+		_invuln = 1.0
+		return
+	# Tanpa shield: turunkan level senjata dan kurangi nyawa
+	GameState.downgrade_weapon()
 	GameState.lose_life()
 	if GameState.lives <= 0:
 		_dead = true
