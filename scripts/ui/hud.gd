@@ -124,6 +124,7 @@ func update_progress(ratio: float, current_time: float, total_time: float) -> vo
 
 
 func show_level_clear(stats: Dictionary) -> void:
+	update_progress(1.0, 1.0, 1.0)
 	if _clear_panel == null:
 		return
 	_clear_panel.visible = true

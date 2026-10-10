@@ -42,7 +42,7 @@ func _ready() -> void:
 		"carrier": CarrierScene
 	}
 	var timeline: Array[Dictionary] = Level1Data.get_timeline(enemy_scenes)
-	_level_runner.setup(_enemies, timeline, 140.0)
+	_level_runner.setup(_enemies, timeline)
 
 
 func _process(delta: float) -> void:

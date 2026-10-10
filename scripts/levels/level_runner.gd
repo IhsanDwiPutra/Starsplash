@@ -37,10 +37,15 @@ func _ready() -> void:
 	pass
 
 
-func setup(container: Node2D, timeline_events: Array[Dictionary], duration: float = 140.0) -> void:
+func setup(container: Node2D, timeline_events: Array[Dictionary], duration: float = 0.0) -> void:
 	_enemies_container = container
 	events = timeline_events
-	total_duration = duration
+	if duration > 0.0:
+		total_duration = duration
+	elif not events.is_empty():
+		total_duration = events.back().get("time", 136.0)
+	else:
+		total_duration = 136.0
 	elapsed_time = 0.0
 	_current_event_idx = 0
 	_delayed_spawns.clear()
@@ -226,6 +231,8 @@ func _clear_active_threats() -> void:
 func _finish_level() -> void:
 	is_completed = true
 	is_running = false
+	elapsed_time = total_duration
+	progress_updated.emit(1.0, total_duration, total_duration)
 	var bonus_lives: int = GameState.lives * 1000
 	var final_score: int = GameState.score + bonus_lives
 	var stats: Dictionary = {
