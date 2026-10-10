@@ -39,6 +39,6 @@ func _build_stars() -> void:
 
 
 func _build_far_mountains() -> void:
-	# Pegunungan es bersalju baru meluncur mulus di separuh bawah layar
-	var layer: BgLayer = _new_layer(35.0)
-	layer.add_texture(FarMountainsTex, Rect2(0.0, 10.0, SCREEN.x, 1070.0), Color(1.0, 1.0, 1.0, 0.98))
+	# Pegunungan es bersalju diberi modulasi malam dingin teduh agar kapal Pip, peluru, dan musuh sangat kontras
+	var layer: BgLayer = _new_layer(30.0)
+	layer.add_texture(FarMountainsTex, Rect2(0.0, 110.0, SCREEN.x, 1070.0), Color(0.52, 0.58, 0.78, 0.95))
