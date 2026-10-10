@@ -1,79 +1,88 @@
 # GDD — Starsplash (Game Shmup 2D)
 
 > **Source of truth.** Semua keputusan desain ada di sini. AI agent WAJIB membaca dokumen ini sebelum mengerjakan fitur. Jika ada konflik antara permintaan dan dokumen ini, tanyakan dulu, lalu perbarui dokumen.
-> Status: **v0.3** — 2026-10-09 | Root project: `PROJEK/Starsplash/`
+> Status: **v0.4** — 2026-10-10 | Root project: `PROJEK/Starsplash/`
 
 ## 1. Visi
-Game shoot 'em up (shmup) 2D horizontal yang lucu, berwarna, dan seru, dengan referensi **Platypus** (PC): kapal kecil menembak gelombang musuh sambil melintasi dunia-dunia unik. Ringan, cepat dimainkan, mudah dipelajari.
+Game shoot 'em up (shmup) 2D horizontal petualangan arcade yang ceria, penuh warna, dan adiktif. Menggabungkan sensasi aksi tembak-menembak berkecepatan tinggi dengan sistem **Peta Tahapan (*World/Stage Map*) ala Feeding Frenzy** serta mekanik khas **Starsplash Combo**.
 
 **Pilar desain**
 1. **Seru dalam 10 detik pertama.** Kontrol responsif, tembakan memuaskan.
-2. **Game feel utama.** Ledakan, efek, dan suara memberi umpan balik jelas.
-3. **Adil.** Kematian harus terasa salah pemain, bukan salah game.
-4. **Scope kecil, selesai dulu.** Selesaikan MVP sebelum menambah konten.
+2. **Game feel utama.** Ledakan partikel, hit spark, screen shake, dan audio punchy memberi umpan balik jelas.
+3. **Petualangan berbobot & adil.** Progresi stage demi stage di peta dunia; kematian terasa sebagai pelajaran pemain, bukan hukuman menyiksa.
+4. **Koleksi Bintang (Replayability).** Sistem rating 1–3 Bintang di setiap stage memicu kepuasan penyelesaian penuh.
 
 ## 2. Platform & Teknis
 | Item | Keputusan |
 |---|---|
 | Engine | Godot **4.7.1** stable |
-| Bahasa | GDScript (static typing) |
-| Renderer | **Compatibility** (agar aman di PC, Android, Web) |
-| Target | PC (utama) → Web → Android |
+| Bahasa | GDScript (static typing ketat) |
+| Renderer | **Compatibility** (optimal untuk PC, Android, Web) |
+| Target | PC (Windows/Linux) → Web HTML5 → Android |
 | Resolusi dasar | 1920x1080 (16:9), stretch mode `canvas_items`, aspect `keep` |
-| Input PC | Keyboard + Gamepad |
-| Input Mobile | Joystick virtual + tombol tembak/rudal di layar (fase Android) |
-| Mode | **Single player** (co-op lokal ditunda, struktur kode jangan menutup kemungkinan ini) |
-| MCP | Tidak digunakan dulu; AI memakai CLI Godot (`--headless`, `--export-*`) |
+| Input PC | Keyboard + Mouse + Gamepad |
+| Input Mobile | Joystick virtual + tombol sentuh (Fase Android) |
+| Mode | Single player (arsitektur modular untuk co-op masa depan) |
+| CLI / Engine | Godot console headless untuk automated verification |
 
-## 3. Struktur Game
-- **Linear:** beberapa **dunia**, tiap dunia berisi 2–3 level + 1 boss, dimainkan berurutan tanpa world map.
-- Setelah boss: layar hasil (skor, bonus), lanjut ke dunia berikutnya.
-- **Rencana dunia:** (1) Laut & Es → (2) Gurun → (3) Luar Angkasa. *Hanya dunia 1 dalam MVP.*
-- Alur layar: Splash → Menu Utama → Pilih Kesulitan → Level → Hasil → … → Game Over / Tamat.
+## 3. Struktur Game & Peta Tahapan (World Map)
+Game dirancang sebagai petualangan panjang 4 Dunia dengan **Peta Rute Bertitik (*Dot-to-Dot Stage Map*)**:
+- **Total Konten:** **4 Dunia $\times$ 6 Stage = 24 Stage Total** (~45–60 menit play-through pertama).
+- **Rencana 4 Dunia:**
+  1. **Dunia 1: Laut Beku (*The Frozen Sea*)** — Pegunungan es, riak laut malam, aurora, gelembung es.
+  2. **Dunia 2: Gurun Kristal (*Crystal Dunes*)** — Pasir senja keemasan, badai pasir, cacing kristal mekanik.
+  3. **Dunia 3: Hutan Neon Kunang-kunang (*Neon Canopy*)** — Lumut bercahaya, spora mengambang, serangga mekanik.
+  4. **Dunia 4: Benteng Galaksi Raja Gloop (*Cosmic Citadel*)** — Pabrik gelap pencetak lendir, reaktor bintang utama.
+
+- **Formula 6 Stage per Dunia:**
+  - **Stage 1 & 2:** Pengenalan rintangan & formasi gelombang dasar (Line, V).
+  - **Stage 3 (MINI-BOSS):** Duel melawan musuh elit sub-komandan (~40–50 HP) sebagai klimaks paruh pertama dunia.
+  - **Stage 4 & 5:** Eskalasi rintangan ekstrim (badai, rintangan lingkungan, turret, penyerang vertikal).
+  - **Stage 6 (MAJOR BOSS DUNIA):** Arena pertarungan bos utama multi-fase (3 Fase, Boss Bar HUD, ledakan pamungkas berantai).
+
+- **Alur Layar:**
+  `Menu Utama` $\rightarrow$ `Intro Komik 3 Panel` (pertama kali / opsi putar ulang) $\rightarrow$ `Peta Dunia (*World Map*)` $\rightarrow$ Pilih Stage Terbuka $\rightarrow$ `Gameplay Shmup` $\rightarrow$ `Layar Hasil (Rating Bintang & Skor)` $\rightarrow$ Kembali ke Peta (Stage berikutnya terbuka).
 
 ## 4. Gameplay Inti
 ### 4.1 Scroll & Gerak
-- Layar **scroll horizontal otomatis kiri ke kanan**, kapal pemain di sisi kiri.
-- Kapal bergerak bebas **8 arah** (analog di gamepad) dalam batas layar.
-- Parallax background 3–4 lapisan untuk kedalaman.
+- Layar scroll horizontal otomatis kiri ke kanan, kapal Pip di sisi kiri.
+- Kapal bergerak bebas 8 arah (analog gamepad / WASD / Panah) dalam batas layar.
+- Parallax background multi-layer (6 lapis prosedural Laut Beku).
 
-### 4.2 Senjata
-- **Tembakan utama:** otomatis/tahan tombol, peluru lurus ke kanan.
-- **Upgrade bertingkat (level 1–5):** dari power-up; jumlah/pola peluru bertambah. **Kena hit tanpa shield → turun 1 tingkat.**
-- **Rudal:** amunisi terbatas, damage besar, isi ulang dari pickup.
-- **Shield:** menyerap 1 hit, hilang setelah dipakai.
+### 4.2 Senjata & Tempur
+- **Tembakan Utama:** Tahan tombol tembak untuk tembakan beruntun.
+- **Tingkat Senjata (Lv 1–5):** Durasi 16 detik per upgrade. Kena hit tanpa shield $\rightarrow$ turun 1 level.
+- **Rudal:** Amunisi terbatas, ledakan area 10 damage, diisi ulang dari pickup [M].
+- **Shield:** Menyerap 1 kali benturan musuh/peluru, melindungi nyawa dan level senjata.
+- **Mekanik Khas: Starsplash Combo:**
+  - Musuh hancur melepaskan bintang; bintang mengisi Splash Meter (30).
+  - Saat penuh, tombol `splash` melepas gelombang pembersih peluru musuh di seluruh layar dan memberi 8 damage instan.
 
-### 4.3b Mekanik Khas: Starsplash Combo
-Identitas utama game ini (pembeda dari game referensi).
-- Musuh yang hancur **melepas bintang kecil**; bintang tertarik ke kapal saat dekat.
-- Bintang mengisi **Splash Meter**. Saat penuh, tombol `splash` melepas **ledakan gelombang bintang**: membersihkan peluru musuh di layar dan memberi damage ke musuh sekitar.
-- Kill beruntun cepat menambah **combo** yang menaikkan jumlah bintang dan skor.
-- Bintang yang terlewat hilang di tepi kiri layar (mendorong pemain agresif).
-- Angka di `docs/BALANCE.md`.
+### 4.3 Nyawa, Kesulitan & Sistem Retry Peta
+- **Tingkat Kesulitan (Dapat Dipilih di Menu):**
+  - **Mudah:** 5 Nyawa awal, peluru musuh santai (350 px/s).
+  - **Normal:** 3 Nyawa awal, kecepatan standar (450 px/s).
+  - **Sulit:** 2 Nyawa awal, peluru musuh cepat & agresif (550 px/s).
+- **Game Over Ramah Pemain (Sistem Stage Map):**
+  - Jika nyawa habis di tengah stage: Layar Game Over menawarkan **[Coba Lagi]** di stage tersebut atau **[Kembali ke Peta]**.
+  - **Tidak ada permadeath ke Stage 1-1.** Stage yang sudah dibuka di peta tetap tersimpan permanen.
 
-### 4.3 Nyawa & Kesulitan
-- Pemain mulai dengan **3 nyawa**; mati → respawn di **checkpoint** level dengan invulnerable singkat.
-- **Easy / Normal / Hard** mengubah: jumlah nyawa awal, kecepatan peluru musuh, HP musuh, frekuensi drop.
-- Game Over saat nyawa habis (opsi continue terbatas, ditentukan nanti).
+### 4.4 Sistem Rating Bintang (⭐ 1–3 per Stage)
+- **⭐ Bintang 1 (Clear):** Menyelesaikan stage sampai garis akhir.
+- **⭐ Bintang 2 (Kolektor Bintang):** Mengumpulkan target minimal bintang di stage tersebut.
+- **⭐ Bintang 3 (Penguasaan):** Selesai tanpa kehilangan nyawa ATAU mengaktifkan Splash Bomb minimal 2 kali.
+- Bintang tersimpan di profil pemain untuk membuka dunia berikutnya.
 
-### 4.4 Skor
-- Skor per musuh, combo/bonus sederhana, bonus akhir level. High score disimpan lokal.
+## 5. Konten MVP vs Rilis Penuh
+- **Fokus MVP Saat Ini:** Dunia 1: Laut Beku (Stage 1-1 s/d 1-6 lengkap + World Map Laut Beku + Mini-Boss Stage 1-3 + Major Boss Glacier Gloop 1-6).
+- **Rilis Penuh:** Melengkapi Dunia 2, 3, dan 4 secara modular.
 
-## 5. Konten MVP (Versi Pertama)
-**Cakupan: 1 dunia (Laut & Es) = 2 level + 1 boss.**
-- **Musuh (5–6):** drone terbang lurus, penembak diam, pola gelombang sinus, pengejar, penyerang dari bawah/atas, mini-turret terrain.
-- **Boss:** 1, 2–3 fase serangan.
-- **Power-up (3):** upgrade senjata, rudal, shield.
-- **UI:** menu utama, pause, HUD (skor, nyawa, shield, rudal), layar hasil, game over.
-- **Audio:** musik 1 level + SFX dasar (tembak, ledak, pickup, hit).
-- **Di luar MVP:** co-op, dunia 2–3, world map, loadout, achievements.
-
-## 6. Cerita & Tema
-Ringan dan lucu. **Premis:** Bintang-bintang di galaksi mulai jatuh dan menghilang karena ulah **Raja Gloop**, makhluk usil pencuri bintang. **Pip**, bintang kecil yang menaiki kapal mungilnya, berangkat mengambil kembali bintang-bintang itu dari dunia ke dunia.
-- **Pahlawan:** Pip (bintang kecil, ceria, nekat) + kapal mungil.
-- **Antagonis:** Raja Gloop; boss tiap dunia adalah anak buahnya, boss akhir adalah Raja Gloop.
-- **Dunia 1:** **Laut Beku** (musuh bertema gelembung & es usil). Dunia berikutnya (setelah MVP): Gurun Kaca, Langit Kunang-kunang.
-- **Penyampaian:** teks intro singkat per dunia; **tanpa dialog panjang**.
+## 6. Cerita & Narasi
+- **Premis:** Bintang-bintang galaksi dicuri dan disedot oleh **Raja Gloop** untuk memberi daya pada armada lendir antargalaksinya. **Pip**, bintang kecil pemberani bertopi pilot, meluncur dengan kapal mungilnya untuk membebaskan saudara-saudaranya.
+- **Penyampaian Narasi: Komik Visual 3 Panel (Tanpa Dialog Panjang):**
+  - Panel 1: Langit malam galaksi damai penuh bintang tersenyum.
+  - Panel 2: Pesawat balon lendir Raja Gloop menyedot bintang-bintang ke dalam toples kosmik raksasa.
+  - Panel 3: Pip mengenakan kacamata pilot, menaiki kapalnya dengan tekad bulat: *"Aku akan bebaskan semua bintang!"*
 
 ## 7. Arah Visual & Audio
 - **Fase 1:** placeholder 2D (bentuk sederhana / aset gratis berlisensi jelas). Fokus gameplay.

@@ -33,26 +33,34 @@
 - [x] Level 1 tamat (layar kemenangan, bonus skor nyawa, alur kembali ke menu)
 - [x] SFX dasar + musik (prosedural synth + slot file audio eksternal)
 
-## Fase 3 - MVP Lengkap (PC)
+## Fase 3 - Dunia 1 Lengkap & Sistem Peta Petualangan (PC)
 - [x] Boss Dunia 1 (3 fase: Glacier Gloop)
-- [ ] Level 2
-- [ ] Musuh 3-6 (pengejar, penyerang vertikal, turret)
 - [x] Menu utama, pilih kesulitan, pause, hasil, game over
-- [x] High score tersimpan
+- [x] High score & audio settings tersimpan
+- [ ] Layar Intro Komik Visual 3 Panel (Pencurian Bintang oleh Raja Gloop & Misi Pip)
+- [ ] Sistem Peta Tahapan Dunia 1: Laut Beku (*World Map* ala Feeding Frenzy dengan 6 Node Stage)
+- [ ] Musuh Baru Dunia 1: Hunter/Dive-Bomber & Ice Turret
+- [ ] Mini-Boss Stage 1-3 (Mecha Narwhal / Sub-Commander Es)
+- [ ] Pecah Timeline Dunia 1 Menjadi Stage 1-1 s/d 1-6 Lengkap
+- [ ] Sistem Evaluasi Rating Bintang (⭐ 1–3) & Alur Hasil Kembali ke Peta
 
-## Fase 4 - Web
-- [ ] Export Web, uji performa & audio
+## Fase 4 - Web & Ekspor Rilis PC
+- [ ] Build standalone PC (.exe siap main)
+- [ ] Export Web HTML5, uji performa & audio
 
 ## Fase 5 - Android
 - [ ] Kontrol touch (joystick virtual & tombol aksi)
 - [ ] Setup SDK + export APK, uji di HP
 
-## Fase 6 - Polish & Konten
-- [ ] Visual/audio final, dunia 2-3
+## Fase 6 - Ekspansi Dunia 2–4 (Gurun Kristal, Hutan Neon, Benteng Raja Gloop)
+- [ ] Dunia 2: Gurun Kristal (*Crystal Dunes*, Stage 2-1 s/d 2-6)
+- [ ] Dunia 3: Hutan Neon Kunang-kunang (*Neon Canopy*, Stage 3-1 s/d 3-6)
+- [ ] Dunia 4: Benteng Galaksi Raja Gloop (*Cosmic Citadel*, Stage 4-1 s/d 4-6) + Boss Akhir Raja Gloop
 
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-10 | Gemini | Finalisasi Desain Arsitektur Petualangan Penuh: 4 Dunia x 6 Stage (24 Stage Total), Sistem Peta Tahapan (*World Map*) bergaya Feeding Frenzy, Formula Mini-Boss Stage 3 & Major Boss Stage 6, Sistem Rating Bintang (⭐ 1-3), Intro Komik 3 Panel, dan retry ramah pemain tanpa permadeath | docs/GDD.md, docs/DECISIONS.md, docs/ROADMAP.md | - | Mulai Eksekusi Peta Laut Beku (World Map), Intro Komik, atau Musuh Baru Dunia 1
 - 2026-10-10 | Gemini | Menu Utama interaktif (Parallax background hidup Laut Beku, animasi melayang kapal Pip, selector kesulitan Easy/Normal/Hard, popup pengaturan audio BGM & SFX slider), Pause Menu in-game (Lanjut, Ulangi Level, Slider Volume, Menu Utama), integrasi persistensi SaveManager (volume & kesulitan) | scenes/ui/*, scripts/ui/*, scripts/levels/test_level.gd, scenes/levels/test_level.tscn, scripts/autoload/save_manager.gd, scripts/autoload/audio_manager.gd, docs/DECISIONS.md, docs/ROADMAP.md | - | Pembuatan Musuh Baru (Penyerang Vertikal / Turret Es) & Desain Level 2
 - 2026-10-10 | Gemini | Perbaikan deteksi tabrakan peluru/rudal/splash pada Boss Glacier Gloop + Sistem Suplai Pertarungan Boss (Checkpoint 2 Sarang Boss di detik 132, amunisi rudal 3 & senjata Lv 2 saat respawn, pre-boss carrier di detik 134, drop hadiah P, M, S saat pecah fase 2 & 3, support carrier berkala) | scripts/bosses/boss_glacier_gloop.gd, scripts/levels/level_1_data.gd, scripts/levels/level_runner.gd, scripts/levels/test_level.gd, scripts/ui/hud.gd, scenes/bosses/boss_glacier_gloop.tscn | - | Menu utama lengkap (pilih kesulitan Easy/Normal/Hard) & Pause Menu in-game
 - 2026-10-10 | Gemini | Sistem AudioManager lengkap: pool pemutar SFX (12 channel), slot file audio (.ogg/.wav) siap hunting, fallback synthesizer prosedural bawaan (tembakan Pip, rudal, ledakan musuh/carrier, hit, bintang, pickup, shield break, splash bomb, checkpoint, victory jingle, ambient loop Laut Beku), integrasi gameplay penuh. Fase 2 Tuntas 100%! | scripts/autoload/audio_manager.gd, scripts/player/player.gd, scripts/enemies/enemy.gd, scripts/pickups/*, scripts/levels/test_level.gd, assets/audio/*, docs/DECISIONS.md, docs/ROADMAP.md | - | Masuk Fase 3: Pilihan kesulitan di menu utama & Boss Dunia 1 (3 fase)
