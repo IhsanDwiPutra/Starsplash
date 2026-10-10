@@ -5,7 +5,11 @@
 ## Pemain
 | Parameter | Nilai |
 |---|---|
-| Kecepatan gerak | 600 px/s |
+| Kecepatan gerak maks (`MAX_SPEED`) | 600 px/s |
+| Akselerasi mesin (`ACCELERATION`) | 2500 px/s² |
+| Deselerasi meluncur (`FRICTION`) | 1900 px/s² |
+| Gaya rem balik arah (`BRAKING_FORCE`) | 3600 px/s² |
+| Kemiringan badan aerodinamis (`MAX_TILT_DEG`) | ±7.5° |
 | Nyawa awal | Easy 5 / Normal 3 / Hard 2 |
 | Invulnerable setelah respawn | 2.0 s |
 | Hitbox | lebih kecil dari sprite (~60%) |
