@@ -1,9 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/pickups/pickup.gd" id="1_pickup"]
+[ext_resource type="Texture2D" path="res://assets/art/pickups/powerup_p.png" id="2_powerup_tex"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
-radius = 26.0
+radius = 32.0
 
 [node name="Pickup" type="Area2D"]
 collision_layer = 16
@@ -35,6 +36,11 @@ theme_override_font_sizes/font_size = 24
 text = "P"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SpriteWeapon" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.065, 0.065)
+texture = ExtResource("2_powerup_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pickup")

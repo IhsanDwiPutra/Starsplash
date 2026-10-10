@@ -10,13 +10,22 @@ const DRIFT_SPEED: float = 180.0
 const DESPAWN_X: float = -60.0
 
 var _burst: Vector2 = Vector2.ZERO
+var _time: float = 0.0
+
+@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D")
 
 
 func _ready() -> void:
 	_burst = Vector2.from_angle(randf() * TAU) * randf_range(120.0, 260.0)
+	_time = randf() * 10.0
 
 
 func _physics_process(delta: float) -> void:
+	_time += delta
+	if _sprite != null:
+		_sprite.rotation = sin(_time * 4.0) * 0.12
+		_sprite.scale = Vector2(0.048, 0.048) * (1.0 + sin(_time * 7.0) * 0.06)
+
 	var player := get_tree().get_first_node_in_group("player") as Node2D
 	if player != null and player.visible:
 		var to_player: Vector2 = player.global_position - global_position

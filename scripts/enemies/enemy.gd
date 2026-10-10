@@ -38,6 +38,7 @@ var _base_y: float
 var _dead: bool = false
 var _fire_timer: float = 0.0
 var _hold_left: float = 0.0
+var _base_spr_scale: Vector2 = Vector2.ONE
 
 
 func _ready() -> void:
@@ -46,6 +47,10 @@ func _ready() -> void:
 	_base_y = position.y
 	_hold_left = hold_duration
 	_fire_timer = fire_interval
+	if has_node("Sprite2D"):
+		var spr := get_node("Sprite2D") as Sprite2D
+		if spr != null:
+			_base_spr_scale = spr.scale
 
 
 func _physics_process(delta: float) -> void:
@@ -59,12 +64,16 @@ func _physics_process(delta: float) -> void:
 		MoveType.HOLD:
 			_move_hold(delta)
 	
-	# Efek bernapas/renang ubur-ubur es
+	# Efek bernapas / pendorong musuh
 	if has_node("Sprite2D"):
 		var spr := get_node("Sprite2D") as Sprite2D
 		if spr != null:
-			spr.scale.y = 0.115 + sin(_time * 5.5) * 0.007
-			spr.scale.x = 0.115 - sin(_time * 5.5) * 0.005
+			if is_carrier:
+				spr.scale.y = _base_spr_scale.y * (1.0 + sin(_time * 4.0) * 0.04)
+				spr.scale.x = _base_spr_scale.x * (1.0 - sin(_time * 4.0) * 0.03)
+			else:
+				spr.scale.y = _base_spr_scale.y * (1.0 + sin(_time * 5.5) * 0.06)
+				spr.scale.x = _base_spr_scale.x * (1.0 - sin(_time * 5.5) * 0.04)
 
 	_handle_fire(delta)
 	if position.x < DESPAWN_X:

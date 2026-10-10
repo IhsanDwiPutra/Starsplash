@@ -23,12 +23,28 @@ func _ready() -> void:
 func _setup_visual() -> void:
 	match type:
 		Type.WEAPON:
-			$Badge.color = Color(1.0, 0.72, 0.1, 1.0)
-			$Label.text = "P"
+			if has_node("SpriteWeapon"):
+				$SpriteWeapon.visible = true
+				$Border.visible = false
+				$Badge.visible = false
+				$Label.visible = false
+			else:
+				$Badge.color = Color(1.0, 0.72, 0.1, 1.0)
+				$Label.text = "P"
 		Type.MISSILE:
+			if has_node("SpriteWeapon"):
+				$SpriteWeapon.visible = false
+			$Border.visible = true
+			$Badge.visible = true
+			$Label.visible = true
 			$Badge.color = Color(0.95, 0.3, 0.3, 1.0)
 			$Label.text = "M"
 		Type.SHIELD:
+			if has_node("SpriteWeapon"):
+				$SpriteWeapon.visible = false
+			$Border.visible = true
+			$Badge.visible = true
+			$Label.visible = true
 			$Badge.color = Color(0.2, 0.75, 1.0, 1.0)
 			$Label.text = "S"
 
@@ -37,6 +53,11 @@ func _physics_process(delta: float) -> void:
 	_time += delta
 	position.x -= DRIFT_SPEED * delta
 	position.y = _base_y + sin(_time * 3.0) * 15.0
+	
+	if has_node("SpriteWeapon") and $SpriteWeapon.visible:
+		$SpriteWeapon.rotation = sin(_time * 3.5) * 0.1
+		$SpriteWeapon.scale = Vector2(0.065, 0.065) * (1.0 + sin(_time * 6.0) * 0.07)
+		
 	if position.x < DESPAWN_X:
 		queue_free()
 
