@@ -27,9 +27,10 @@
 - [x] Power-up senjata (level 1-5, turun saat hit)
 - [x] Rudal (K / klik kanan) + ammo + pickup
 - [x] Shield (pelindung) + pickup
+- [x] Efek Partikel Ledakan, Hit Spark & Camera Screen Shake (Game Feel)
 - [ ] LevelRunner (timeline spawn musuh)
 - [ ] Respawn + checkpoint
-- [ ] Ledakan/partikel + SFX dasar + musik
+- [ ] SFX dasar + musik
 - [ ] Level 1 tamat
 
 ## Fase 3 - MVP Lengkap (PC)
@@ -52,6 +53,7 @@
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-10 | Gemini | Efek partikel ledakan poligon prosedural (flash inti, shockwave arc, pecahan berputar adaptif warna), hit spark peluru, camera screen shake responsif (dihubungkan ke Camera2D test_level, ledakan musuh berbobot, rudal, splash wave, dan damage pemain) | scenes/fx/*, scripts/fx/*, scripts/enemies/enemy.gd, scripts/projectiles/*, scripts/player/player.gd, scripts/levels/test_level.gd, docs/DECISIONS.md | - | LevelRunner (timeline spawn musuh), checkpoint & tamat Level 1, SFX dasar + musik
 - 2026-10-09 | Gemini | Penyeimbang senjata: durasi senjata super (16s timer revert ke Lv 1), Carrier Drone emas khusus (100% drop [P]/[S]), aturan drop ketat (musuh biasa hanya drop Bintang & rudal), HUD timer senjata | scripts/autoload/game_state.gd, scripts/enemies/*, scripts/ui/hud.gd, scenes/enemies/enemy_carrier.tscn, docs/BALANCE.md, docs/DECISIONS.md | - | LevelRunner (timeline spawn terstruktur), ledakan partikel / SFX, checkpoint & tamat Level 1
 - 2026-10-09 | Gemini | Fase 2: Power-up senjata (Lv 1-5, spread shot & turun saat hit), Rudal area damage (K / Klik Kanan), Shield aura pelindung, item pickup (P, M, S drop dari musuh), kontras outline musuh, update HUD | scripts/player/player.gd, scripts/projectiles/*, scripts/pickups/pickup.*, scenes/enemies/*, scripts/ui/hud.gd | - | LevelRunner (timeline spawn terstruktur), ledakan partikel / SFX, checkpoint & tamat Level 1
 - 2026-10-09 | Gemini | Perbaikan encoding ROADMAP.md & ARCHITECTURE.md, update status Fase 1 lulus uji main | docs/ROADMAP.md, docs/ARCHITECTURE.md | - | Eksekusi Senjata 1-5, Rudal, Shield, Pickups & Kontras musuh

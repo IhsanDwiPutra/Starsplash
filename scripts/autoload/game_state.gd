@@ -14,6 +14,7 @@ signal weapon_changed(level: int)
 signal weapon_timer_changed(time_left: float, max_time: float)
 signal missiles_changed(ammo: int, max_ammo: int)
 signal shield_changed(active: bool)
+signal screen_shaken(intensity: float, duration: float)
 
 const START_LIVES: Dictionary = {
 	Difficulty.EASY: 5,
@@ -177,6 +178,10 @@ func _reset_splash_and_combo() -> void:
 	combo = 0
 	splash_changed.emit(splash_charge, SPLASH_MAX)
 	combo_changed.emit(combo, 1.0)
+
+
+func trigger_shake(intensity: float = 6.0, duration: float = 0.2) -> void:
+	screen_shaken.emit(intensity, duration)
 
 
 func _now() -> float:

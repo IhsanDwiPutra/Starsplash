@@ -17,6 +17,7 @@ const SPLASH_OFFSCREEN_MARGIN: float = 50.0
 const BulletScene: PackedScene = preload("res://scenes/projectiles/player_bullet.tscn")
 const MissileScene: PackedScene = preload("res://scenes/projectiles/missile.tscn")
 const SplashWaveScene: PackedScene = preload("res://scenes/fx/splash_wave.tscn")
+const ExplosionScene: PackedScene = preload("res://scenes/fx/explosion.tscn")
 
 var _cooldown: float = 0.0
 var _missile_cooldown: float = 0.0
@@ -108,6 +109,7 @@ func _handle_missile(delta: float) -> void:
 func _try_splash() -> void:
 	if not GameState.try_splash():
 		return
+	GameState.trigger_shake(10.0, 0.35)
 	for bullet in get_tree().get_nodes_in_group("enemy_bullet"):
 		bullet.queue_free()
 	var limit_x: float = get_viewport_rect().size.x + SPLASH_OFFSCREEN_MARGIN
@@ -148,6 +150,7 @@ func _take_hit() -> void:
 	# Jika memiliki shield: serap serangan, jangan kurangi nyawa & level senjata
 	if GameState.has_shield:
 		GameState.set_shield(false)
+		GameState.trigger_shake(5.0, 0.2)
 		_invuln = 1.0
 		return
 	# Tanpa shield: turunkan level senjata dan kurangi nyawa
@@ -156,6 +159,14 @@ func _take_hit() -> void:
 	if GameState.lives <= 0:
 		_dead = true
 		visible = false
+		var exp := ExplosionScene.instantiate() as Explosion
+		exp.global_position = global_position
+		exp.base_color = Color(0.35, 0.75, 1.0)
+		exp.blast_scale = 1.8
+		exp.shard_count = 18
+		get_parent().add_child(exp)
+		GameState.trigger_shake(12.0, 0.45)
 		game_over.emit()
 	else:
+		GameState.trigger_shake(8.0, 0.25)
 		_invuln = INVULN_TIME

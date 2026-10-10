@@ -9,6 +9,7 @@ const MAX_SPEED: float = 1500.0
 const DAMAGE: int = 10
 const BLAST_RADIUS: float = 150.0
 const DESPAWN_X: float = 2100.0
+const ExplosionScene: PackedScene = preload("res://scenes/fx/explosion.tscn")
 
 var _speed: float = INITIAL_SPEED
 var _exploded: bool = false
@@ -37,11 +38,18 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _explode() -> void:
 	_exploded = true
+	GameState.trigger_shake(8.0, 0.25)
+	var exp := ExplosionScene.instantiate() as Explosion
+	exp.global_position = global_position
+	exp.base_color = Color(1.0, 0.55, 0.2)
+	exp.blast_scale = 1.5
+	exp.shard_count = 14
+	get_parent().add_child(exp)
 	# Beri damage ke semua musuh dalam radius ledakan
 	for node in get_tree().get_nodes_in_group("enemy"):
 		var enemy := node as Enemy
 		if enemy != null and enemy.global_position.distance_to(global_position) <= BLAST_RADIUS:
-			enemy.take_damage(DAMAGE)
+			enemy.take_damage(DAMAGE, enemy.global_position)
 	_play_blast_fx()
 
 

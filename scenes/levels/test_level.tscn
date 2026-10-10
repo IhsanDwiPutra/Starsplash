@@ -8,6 +8,9 @@
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_level")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
 

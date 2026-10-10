@@ -27,6 +27,8 @@ const ON_SCREEN_X: float = 1880.0
 const StarScene: PackedScene = preload("res://scenes/pickups/star.tscn")
 const EnemyBulletScene: PackedScene = preload("res://scenes/projectiles/enemy_bullet.tscn")
 const PickupScene: PackedScene = preload("res://scenes/pickups/pickup.tscn")
+const HitSparkScene: PackedScene = preload("res://scenes/fx/hit_spark.tscn")
+const ExplosionScene: PackedScene = preload("res://scenes/fx/explosion.tscn")
 
 static var _kills_without_drop: int = 0
 
@@ -61,10 +63,11 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, hit_pos: Vector2 = Vector2.INF) -> void:
 	if _dead:
 		return
 	_hp -= amount
+	_spawn_hit_spark(hit_pos)
 	if _hp <= 0:
 		_die()
 	else:
@@ -113,8 +116,37 @@ func _die() -> void:
 	GameState.add_score(roundi(score_value * GameState.get_multiplier()))
 	_drop_stars(star_value + GameState.combo_bonus_stars())
 	_maybe_drop_pickup()
+	_spawn_explosion()
 	died.emit()
 	queue_free()
+
+
+func _spawn_hit_spark(hit_pos: Vector2) -> void:
+	var spark := HitSparkScene.instantiate() as Node2D
+	spark.global_position = global_position if hit_pos == Vector2.INF else hit_pos
+	get_parent().add_child(spark)
+
+
+func _spawn_explosion() -> void:
+	var explosion := ExplosionScene.instantiate() as Explosion
+	explosion.global_position = global_position
+	if has_node("Visual"):
+		var visual := get_node("Visual") as Polygon2D
+		if visual != null:
+			explosion.base_color = visual.color
+	if is_carrier:
+		explosion.blast_scale = 1.4
+		explosion.shard_count = 14
+		GameState.trigger_shake(6.0, 0.22)
+	elif move_type == MoveType.HOLD:
+		explosion.blast_scale = 1.2
+		explosion.shard_count = 12
+		GameState.trigger_shake(4.5, 0.18)
+	else:
+		explosion.blast_scale = 1.0
+		explosion.shard_count = 9
+		GameState.trigger_shake(3.0, 0.12)
+	get_parent().add_child(explosion)
 
 
 func _drop_stars(count: int) -> void:
