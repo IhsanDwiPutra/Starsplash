@@ -68,6 +68,7 @@ func take_damage(amount: int, hit_pos: Vector2 = Vector2.INF) -> void:
 		return
 	_hp -= amount
 	_spawn_hit_spark(hit_pos)
+	AudioManager.play_sfx("hit")
 	if _hp <= 0:
 		_die()
 	else:
@@ -102,6 +103,7 @@ func _shoot() -> void:
 	bullet.direction = dir
 	get_parent().add_child(bullet)
 	bullet.global_position = global_position + dir * 40.0
+	AudioManager.play_sfx("enemy_shoot")
 
 
 func _flash() -> void:
@@ -117,6 +119,7 @@ func _die() -> void:
 	_drop_stars(star_value + GameState.combo_bonus_stars())
 	_maybe_drop_pickup()
 	_spawn_explosion()
+	AudioManager.play_sfx("carrier_explosion" if is_carrier else "explosion")
 	died.emit()
 	queue_free()
 

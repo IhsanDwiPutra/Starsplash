@@ -43,6 +43,7 @@ func _ready() -> void:
 	}
 	var timeline: Array[Dictionary] = Level1Data.get_timeline(enemy_scenes)
 	_level_runner.setup(_enemies, timeline)
+	AudioManager.play_music("level_1")
 
 
 func _process(delta: float) -> void:
@@ -80,6 +81,7 @@ func _on_progress_updated(ratio: float, current_time: float, total_time: float) 
 
 func _on_checkpoint_reached(_checkpoint_id: int, _name: String) -> void:
 	GameState.trigger_shake(4.0, 0.2)
+	AudioManager.play_sfx("checkpoint")
 
 
 func _on_level_completed(stats: Dictionary) -> void:
@@ -87,6 +89,7 @@ func _on_level_completed(stats: Dictionary) -> void:
 	SaveManager.submit_score(stats["final_score"])
 	_hud.show_level_clear(stats)
 	GameState.trigger_shake(8.0, 0.3)
+	AudioManager.play_sfx("level_clear")
 	await get_tree().create_timer(GAME_OVER_DELAY).timeout
 	_can_leave = true
 

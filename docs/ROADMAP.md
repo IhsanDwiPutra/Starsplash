@@ -31,7 +31,7 @@
 - [x] LevelRunner (timeline spawn musuh terstruktur & formasi)
 - [x] Respawn + checkpoint (di 50% level)
 - [x] Level 1 tamat (layar kemenangan, bonus skor nyawa, alur kembali ke menu)
-- [ ] SFX dasar + musik
+- [x] SFX dasar + musik (prosedural synth + slot file audio eksternal)
 
 ## Fase 3 - MVP Lengkap (PC)
 - [ ] Level 2
@@ -53,6 +53,7 @@
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-10 | Gemini | Sistem AudioManager lengkap: pool pemutar SFX (12 channel), slot file audio (.ogg/.wav) siap hunting, fallback synthesizer prosedural bawaan (tembakan Pip, rudal, ledakan musuh/carrier, hit, bintang, pickup, shield break, splash bomb, checkpoint, victory jingle, ambient loop Laut Beku), integrasi gameplay penuh. Fase 2 Tuntas 100%! | scripts/autoload/audio_manager.gd, scripts/player/player.gd, scripts/enemies/enemy.gd, scripts/pickups/*, scripts/levels/test_level.gd, assets/audio/*, docs/DECISIONS.md, docs/ROADMAP.md | - | Masuk Fase 3: Pilihan kesulitan di menu utama & Boss Dunia 1 (3 fase)
 - 2026-10-10 | Gemini | LevelRunner timeline spawn terstruktur (Level 1: Laut Beku ~140s), sistem formasi (LINE, V, WALL, SWARM_SINE), notifikasi banner visual, progress bar level di HUD, Checkpoint di 50% dengan respawn flow, dan layar kemenangan Level Clear | scripts/levels/level_runner.gd, scripts/levels/level_1_data.gd, scripts/levels/test_level.gd, scripts/ui/hud.gd, scenes/levels/test_level.tscn, docs/DECISIONS.md, docs/ROADMAP.md | - | SFX dasar + musik (AudioManager), persiapan transisi ke Fase 3
 - 2026-10-10 | Gemini | Efek partikel ledakan poligon prosedural (flash inti, shockwave arc, pecahan berputar adaptif warna), hit spark peluru, camera screen shake responsif (dihubungkan ke Camera2D test_level, ledakan musuh berbobot, rudal, splash wave, dan damage pemain) | scenes/fx/*, scripts/fx/*, scripts/enemies/enemy.gd, scripts/projectiles/*, scripts/player/player.gd, scripts/levels/test_level.gd, docs/DECISIONS.md | - | LevelRunner (timeline spawn musuh), checkpoint & tamat Level 1, SFX dasar + musik
 - 2026-10-09 | Gemini | Penyeimbang senjata: durasi senjata super (16s timer revert ke Lv 1), Carrier Drone emas khusus (100% drop [P]/[S]), aturan drop ketat (musuh biasa hanya drop Bintang & rudal), HUD timer senjata | scripts/autoload/game_state.gd, scripts/enemies/*, scripts/ui/hud.gd, scenes/enemies/enemy_carrier.tscn, docs/BALANCE.md, docs/DECISIONS.md | - | LevelRunner (timeline spawn terstruktur), ledakan partikel / SFX, checkpoint & tamat Level 1

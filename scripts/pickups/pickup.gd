@@ -55,4 +55,5 @@ func _collect() -> void:
 		Type.SHIELD:
 			GameState.set_shield(true)
 	GameState.add_score(150)
+	AudioManager.play_sfx("pickup")
 	queue_free()

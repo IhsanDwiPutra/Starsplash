@@ -62,6 +62,7 @@ func _handle_fire(delta: float) -> void:
 	if Input.is_action_pressed("fire") and _cooldown <= 0.0:
 		_cooldown = 1.0 / fire_rate
 		_shoot_weapon_pattern(lvl)
+		AudioManager.play_sfx("shoot")
 
 
 func _shoot_weapon_pattern(lvl: int) -> void:
@@ -104,11 +105,13 @@ func _handle_missile(delta: float) -> void:
 			var missile := MissileScene.instantiate() as Missile
 			get_parent().add_child(missile)
 			missile.global_position = _muzzle.global_position
+			AudioManager.play_sfx("missile")
 
 
 func _try_splash() -> void:
 	if not GameState.try_splash():
 		return
+	AudioManager.play_sfx("splash")
 	GameState.trigger_shake(10.0, 0.35)
 	for bullet in get_tree().get_nodes_in_group("enemy_bullet"):
 		bullet.queue_free()
@@ -151,6 +154,7 @@ func _take_hit() -> void:
 	if GameState.has_shield:
 		GameState.set_shield(false)
 		GameState.trigger_shake(5.0, 0.2)
+		AudioManager.play_sfx("shield_break")
 		_invuln = 1.0
 		return
 	# Tanpa shield: turunkan level senjata dan kurangi nyawa
@@ -166,7 +170,9 @@ func _take_hit() -> void:
 		exp.shard_count = 18
 		get_parent().add_child(exp)
 		GameState.trigger_shake(12.0, 0.45)
+		AudioManager.play_sfx("game_over")
 		game_over.emit()
 	else:
 		GameState.trigger_shake(8.0, 0.25)
+		AudioManager.play_sfx("hit")
 		_invuln = INVULN_TIME

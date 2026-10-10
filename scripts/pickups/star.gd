@@ -23,6 +23,7 @@ func _physics_process(delta: float) -> void:
 		var dist: float = to_player.length()
 		if dist <= COLLECT_RADIUS:
 			GameState.add_stars(1)
+			AudioManager.play_sfx("star", 0.08)
 			queue_free()
 			return
 		if dist <= ATTRACT_RADIUS:
