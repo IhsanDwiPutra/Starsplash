@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/art/player/pip_ship.png" id="2_ship_tex"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 22.0
@@ -11,28 +12,22 @@ script = ExtResource("1_player")
 
 [node name="ShieldAura" type="Polygon2D" parent="."]
 visible = false
-color = Color(0.2, 0.8, 1, 0.4)
-polygon = PackedVector2Array(-54, 0, -38, -38, 0, -54, 38, -38, 54, 0, 38, 38, 0, 54, -38, 38)
+position = Vector2(5, 5)
+color = Color(0.2, 0.8, 1, 0.35)
+polygon = PackedVector2Array(-65, 0, -46, -46, 0, -65, 46, -46, 65, 0, 46, 46, 0, 65, -46, 46)
 
 [node name="ShieldRing" type="Line2D" parent="ShieldAura"]
-points = PackedVector2Array(-54, 0, -38, -38, 0, -54, 38, -38, 54, 0, 38, 38, 0, 54, -38, 38, -54, 0)
+points = PackedVector2Array(-65, 0, -46, -46, 0, -65, 46, -46, 65, 0, 46, 46, 0, 65, -46, 46, -65, 0)
 width = 4.0
 default_color = Color(0.6, 0.95, 1, 0.9)
 
-[node name="Outline" type="Polygon2D" parent="."]
-color = Color(0.18, 0.08, 0.16, 1)
-polygon = PackedVector2Array(-44, -30, 48, 0, -44, 30, -25, 0)
-
-[node name="Body" type="Polygon2D" parent="."]
-color = Color(1, 0.62, 0.78, 1)
-polygon = PackedVector2Array(-40, -26, 44, 0, -40, 26, -22, 0)
-
-[node name="Cockpit" type="Polygon2D" parent="."]
-color = Color(0.45, 0.7, 1, 1)
-polygon = PackedVector2Array(0, -8, 14, -5, 18, 0, 14, 5, 0, 8, -6, 0)
+[node name="ShipSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("2_ship_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 6)
 shape = SubResource("CircleShape2D_player")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(50, 0)
+position = Vector2(74, 11)
