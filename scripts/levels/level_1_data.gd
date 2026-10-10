@@ -68,7 +68,8 @@ static func get_timeline(scenes: Dictionary) -> Array[Dictionary]:
 		{ "time": 128.0, "type": E.FORMATION, "formation": "LINE", "scene": drone, "y": 380.0, "count": 4 },
 		{ "time": 129.5, "type": E.FORMATION, "formation": "LINE", "scene": drone, "y": 700.0, "count": 4 },
 
-		# --- SEKTOR 7: PEMBERSIHAN & KEMENANGAN (135s+) ---
-		{ "time": 134.0, "type": E.BANNER, "text": "BERSIHKAN SEMUA SISA MUSUH!", "duration": 3.0 },
-		{ "time": 136.0, "type": E.WAIT_CLEAR }
+		# --- SEKTOR 7: BOSS DUNIA 1 — GLACIER GLOOP (135s+) ---
+		{ "time": 134.0, "type": E.BANNER, "text": "PERINGATAN: ANOMALI SUHU EKSTREM!", "duration": 3.0 },
+		{ "time": 137.0, "type": E.BOSS, "scene": scenes.get("boss"), "name": "GLACIER GLOOP" },
+		{ "time": 138.0, "type": E.WAIT_CLEAR }
 	]

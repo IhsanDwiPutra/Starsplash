@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/bosses/boss_glacier_gloop.gd" id="1_boss"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss"]
+radius = 82.0
+
+[node name="BossGlacierGloop" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_boss")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_boss")
+
+[node name="UpperMuzzle" type="Marker2D" parent="."]
+position = Vector2(-95, -42)
+
+[node name="LowerMuzzle" type="Marker2D" parent="."]
+position = Vector2(-95, 42)
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Outline" type="Polygon2D" parent="Visual"]
+color = Color(0.1, 0.08, 0.22, 1)
+polygon = PackedVector2Array(-98, -48, -40, -92, 45, -92, 105, -50, 120, 0, 105, 50, 45, 92, -40, 92, -98, 48, -108, 0)
+
+[node name="Hull" type="Polygon2D" parent="Visual"]
+color = Color(0.32, 0.62, 0.88, 1)
+polygon = PackedVector2Array(-90, -42, -35, -84, 40, -84, 95, -44, 110, 0, 95, 44, 40, 84, -35, 84, -90, 42, -100, 0)
+
+[node name="IceArmor" type="Polygon2D" parent="Visual"]
+color = Color(0.82, 0.95, 1, 0.9)
+polygon = PackedVector2Array(-30, -82, 35, -82, 85, -42, 60, -20, 0, -50, -40, -40)
+
+[node name="IceFin" type="Polygon2D" parent="Visual"]
+color = Color(0.7, 0.9, 1, 0.85)
+polygon = PackedVector2Array(70, -35, 135, -75, 115, -15, 135, 20, 125, 65, 75, 30)
+
+[node name="Cannons" type="Polygon2D" parent="Visual"]
+color = Color(0.18, 0.28, 0.42, 1)
+polygon = PackedVector2Array(-112, -48, -80, -48, -80, -36, -112, -36, -112, 36, -80, 36, -80, 48, -112, 48)
+
+[node name="EyeDome" type="Polygon2D" parent="Visual"]
+color = Color(0.12, 0.16, 0.28, 1)
+polygon = PackedVector2Array(-55, -28, 0, -36, 45, 0, 0, 36, -55, 28)
+
+[node name="EyeIris" type="Polygon2D" parent="Visual"]
+color = Color(0.35, 0.95, 0.8, 1)
+polygon = PackedVector2Array(-42, -18, -6, -24, 28, 0, -6, 24, -42, 18)
+
+[node name="Core" type="Polygon2D" parent="Visual"]
+color = Color(0.3, 0.8, 1, 1)
+polygon = PackedVector2Array(-16, -12, 10, -14, 20, 0, 10, 14, -16, 12)

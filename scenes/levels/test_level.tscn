@@ -137,6 +137,49 @@ text = "GELOMBANG 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="BossBarContainer" type="Control" parent="HUD"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 22.0
+offset_right = 420.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="BossNameLabel" type="Label" parent="HUD/BossBarContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = -2.0
+offset_right = 400.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20
+text = "GLACIER GLOOP - PENGAWAL LAUT BEKU"
+horizontal_alignment = 1
+
+[node name="BossHealthBar" type="ProgressBar" parent="HUD/BossBarContainer"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 150.0
+step = 1.0
+value = 150.0
+show_percentage = false
+
 [node name="GameOverLabel" type="Label" parent="HUD"]
 anchors_preset = 8
 anchor_left = 0.5

@@ -5,6 +5,7 @@ extends Node
 signal banner_requested(text: String, duration: float)
 signal progress_updated(progress_ratio: float, current_time: float, total_time: float)
 signal checkpoint_reached(checkpoint_id: int, name: String)
+signal boss_spawned(boss_node: Node2D, boss_name: String)
 signal level_completed(stats: Dictionary)
 
 enum EventType {
@@ -12,6 +13,7 @@ enum EventType {
 	FORMATION,   # Munculkan formasi sekumpulan musuh (LINE, V, WALL, SWARM_SINE)
 	BANNER,      # Tampilkan teks banner di layar
 	CHECKPOINT,  # Catat checkpoint tengah level
+	BOSS,        # Munculkan boss pertempuran utama
 	WAIT_CLEAR   # Tunggu sampai semua musuh di layar musnah sebelum tamat
 }
 
@@ -144,8 +146,22 @@ func _execute_event(ev: Dictionary) -> void:
 			checkpoint_reached.emit(last_checkpoint_id, last_checkpoint_name)
 			banner_requested.emit("CHECKPOINT: %s" % last_checkpoint_name, 3.0)
 
+		EventType.BOSS:
+			_spawn_boss(ev)
+
 		EventType.WAIT_CLEAR:
 			is_waiting_clear = true
+
+
+func _spawn_boss(ev: Dictionary) -> void:
+	if _enemies_container == null or ev.get("scene") == null:
+		return
+	var boss = ev["scene"].instantiate() as Node2D
+	boss.position = Vector2(2150.0, ev.get("y", 540.0))
+	_enemies_container.add_child(boss)
+	var boss_name: String = ev.get("name", "BOSS")
+	boss_spawned.emit(boss, boss_name)
+	banner_requested.emit("PERINGATAN: %s TERDETEKSI!" % boss_name, 3.5)
 
 
 func _spawn_enemy(scene: PackedScene, y_pos: float, params: Dictionary = {}, x_offset: float = 0.0) -> void:

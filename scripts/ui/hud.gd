@@ -20,6 +20,10 @@ const COLOR_SHIELD: Color = Color(0.3, 0.9, 1.0)
 @onready var _clear_title: Label = $LevelClearPanel/TitleLabel
 @onready var _clear_stats: Label = $LevelClearPanel/StatsLabel
 
+@onready var _boss_container: Control = $BossBarContainer
+@onready var _boss_name_label: Label = $BossBarContainer/BossNameLabel
+@onready var _boss_bar: ProgressBar = $BossBarContainer/BossHealthBar
+
 var _banner_tween: Tween
 
 
@@ -37,6 +41,8 @@ func _ready() -> void:
 		_banner_label.visible = false
 	if _clear_panel:
 		_clear_panel.visible = false
+	if _boss_container:
+		_boss_container.visible = false
 
 	_refresh()
 	_update_weapon_display(GameState.weapon_level, GameState.weapon_timer)
@@ -140,4 +146,37 @@ func show_level_clear(stats: Dictionary) -> void:
 	_clear_stats.text = "SKOR PERJALANAN: %d\nBONUS NYAWA (%d x 1000): +%d\n-------------------------\nTOTAL SKOR AKHIR: %d\n\nTekan [TEMBAK] untuk Main Lagi\nTekan [ESC] untuk Menu Utama" % [
 		base_score, lives, bonus, final_score
 	]
+
+
+func show_boss_bar(boss_name: String, max_hp: int) -> void:
+	if _boss_container == null:
+		return
+	if _level_bar != null:
+		_level_bar.visible = false
+	_boss_name_label.text = boss_name
+	_boss_bar.max_value = max_hp
+	_boss_bar.value = max_hp
+	_boss_container.visible = true
+	_boss_container.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	var t: Tween = create_tween()
+	t.tween_property(_boss_container, "modulate:a", 1.0, 0.4)
+
+
+func update_boss_hp(current_hp: int, max_hp: int) -> void:
+	if _boss_bar != null:
+		_boss_bar.max_value = max_hp
+		_boss_bar.value = current_hp
+
+
+func hide_boss_bar() -> void:
+	if _boss_container == null:
+		return
+	var t: Tween = create_tween()
+	t.tween_property(_boss_container, "modulate:a", 0.0, 0.4)
+	t.tween_callback(func() -> void:
+		_boss_container.visible = false
+		if _level_bar != null:
+			_level_bar.visible = true
+	)
+
 

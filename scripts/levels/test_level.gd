@@ -5,6 +5,7 @@ const DroneScene: PackedScene = preload("res://scenes/enemies/enemy_drone.tscn")
 const SineScene: PackedScene = preload("res://scenes/enemies/enemy_sine.tscn")
 const ShooterScene: PackedScene = preload("res://scenes/enemies/enemy_shooter.tscn")
 const CarrierScene: PackedScene = preload("res://scenes/enemies/enemy_carrier.tscn")
+const BossScene: PackedScene = preload("res://scenes/bosses/boss_glacier_gloop.tscn")
 const MENU_PATH: String = "res://scenes/ui/main_menu.tscn"
 const GAME_OVER_DELAY: float = 1.0
 
@@ -33,13 +34,15 @@ func _ready() -> void:
 	_level_runner.banner_requested.connect(_on_banner_requested)
 	_level_runner.progress_updated.connect(_on_progress_updated)
 	_level_runner.checkpoint_reached.connect(_on_checkpoint_reached)
+	_level_runner.boss_spawned.connect(_on_boss_spawned)
 	_level_runner.level_completed.connect(_on_level_completed)
 
 	var enemy_scenes: Dictionary = {
 		"drone": DroneScene,
 		"sine": SineScene,
 		"shooter": ShooterScene,
-		"carrier": CarrierScene
+		"carrier": CarrierScene,
+		"boss": BossScene
 	}
 	var timeline: Array[Dictionary] = Level1Data.get_timeline(enemy_scenes)
 	_level_runner.setup(_enemies, timeline)
@@ -82,6 +85,14 @@ func _on_progress_updated(ratio: float, current_time: float, total_time: float) 
 func _on_checkpoint_reached(_checkpoint_id: int, _name: String) -> void:
 	GameState.trigger_shake(4.0, 0.2)
 	AudioManager.play_sfx("checkpoint")
+
+
+func _on_boss_spawned(boss_node: Node2D, boss_name: String) -> void:
+	var boss := boss_node as BossGlacierGloop
+	if boss != null:
+		boss.health_changed.connect(_hud.update_boss_hp)
+		boss.defeated.connect(_hud.hide_boss_bar)
+		_hud.show_boss_bar(boss_name, boss.MAX_HP)
 
 
 func _on_level_completed(stats: Dictionary) -> void:
