@@ -37,11 +37,10 @@
 - [x] Boss Dunia 1 (3 fase: Glacier Gloop)
 - [x] Menu utama, pilih kesulitan, pause, hasil, game over
 - [x] High score & audio settings tersimpan
-- [ ] Layar Intro Komik Visual 3 Panel (Pencurian Bintang oleh Raja Gloop & Misi Pip)
-- [ ] Sistem Peta Tahapan Dunia 1: Laut Beku (*World Map* ala Feeding Frenzy dengan 6 Node Stage)
+- [x] Layar Intro Komik Visual 3 Panel (Pencurian Bintang oleh Raja Gloop & Misi Pip)
+- [x] Sistem Pemilihan Dunia (World Select) & Tahapan Stage 1-1 s/d 1-6 dengan Sistem Gembok Progres
 - [ ] Musuh Baru Dunia 1: Hunter/Dive-Bomber & Ice Turret
 - [ ] Mini-Boss Stage 1-3 (Mecha Narwhal / Sub-Commander Es)
-- [ ] Pecah Timeline Dunia 1 Menjadi Stage 1-1 s/d 1-6 Lengkap
 - [ ] Sistem Evaluasi Rating Bintang (⭐ 1–3) & Alur Hasil Kembali ke Peta
 
 ## Fase 4 - Web & Ekspor Rilis PC
@@ -60,6 +59,7 @@
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-10 | Gemini | Layar Prolog Cerita Komik 3 Panel (`story_intro.tscn`) dengan 3 ilustrasi resmi AI (`assets/art/story/intro_panel_*.jpg`), narasi heroik, transisi tween, skip [ESC], tombol tonton ulang di Menu Stage, pemicu otomatis saat pertama kali main Stage 1-1, dan transisi langsung ke gameplay | scenes/ui/story_intro.tscn, scripts/ui/story_intro.gd, scenes/ui/stage_select.tscn, scripts/ui/stage_select.gd, scripts/autoload/save_manager.gd, docs/DECISIONS.md, docs/ROADMAP.md | - | Pembuatan Sprite Musuh Baru (Puffer Snapper, Squid Shooter, Carrier) atau Mini-Boss Stage 1-3 Mecha Narwhal
 - 2026-10-10 | Gemini | Finalisasi Desain Arsitektur Petualangan Penuh: 4 Dunia x 6 Stage (24 Stage Total), Sistem Peta Tahapan (*World Map*) bergaya Feeding Frenzy, Formula Mini-Boss Stage 3 & Major Boss Stage 6, Sistem Rating Bintang (⭐ 1-3), Intro Komik 3 Panel, dan retry ramah pemain tanpa permadeath | docs/GDD.md, docs/DECISIONS.md, docs/ROADMAP.md | - | Mulai Eksekusi Peta Laut Beku (World Map), Intro Komik, atau Musuh Baru Dunia 1
 - 2026-10-10 | Gemini | Menu Utama interaktif (Parallax background hidup Laut Beku, animasi melayang kapal Pip, selector kesulitan Easy/Normal/Hard, popup pengaturan audio BGM & SFX slider), Pause Menu in-game (Lanjut, Ulangi Level, Slider Volume, Menu Utama), integrasi persistensi SaveManager (volume & kesulitan) | scenes/ui/*, scripts/ui/*, scripts/levels/test_level.gd, scenes/levels/test_level.tscn, scripts/autoload/save_manager.gd, scripts/autoload/audio_manager.gd, docs/DECISIONS.md, docs/ROADMAP.md | - | Pembuatan Musuh Baru (Penyerang Vertikal / Turret Es) & Desain Level 2
 - 2026-10-10 | Gemini | Perbaikan deteksi tabrakan peluru/rudal/splash pada Boss Glacier Gloop + Sistem Suplai Pertarungan Boss (Checkpoint 2 Sarang Boss di detik 132, amunisi rudal 3 & senjata Lv 2 saat respawn, pre-boss carrier di detik 134, drop hadiah P, M, S saat pecah fase 2 & 3, support carrier berkala) | scripts/bosses/boss_glacier_gloop.gd, scripts/levels/level_1_data.gd, scripts/levels/level_runner.gd, scripts/levels/test_level.gd, scripts/ui/hud.gd, scenes/bosses/boss_glacier_gloop.tscn | - | Menu utama lengkap (pilih kesulitan Easy/Normal/Hard) & Pause Menu in-game

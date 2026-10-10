@@ -4,6 +4,7 @@ extends Control
 
 const LEVEL_PATH: String = "res://scenes/levels/test_level.tscn"
 const WORLD_SELECT_PATH: String = "res://scenes/ui/world_select.tscn"
+const STORY_INTRO_PATH: String = "res://scenes/ui/story_intro.tscn"
 
 const STAGE_DETAILS: Dictionary = {
 	1: {
@@ -51,6 +52,7 @@ const STAGE_DETAILS: Dictionary = {
 }
 
 @onready var _btn_back: Button = $VBoxContainer/BottomBar/BtnBack
+@onready var _btn_prologue: Button = $VBoxContainer/BottomBar/BtnPrologue
 @onready var _cards_container: GridContainer = $VBoxContainer/GridContainer
 
 var _stage_buttons: Array[Button] = []
@@ -61,6 +63,11 @@ func _ready() -> void:
 
 	if _btn_back != null:
 		_btn_back.pressed.connect(_on_back_pressed)
+	if _btn_prologue != null:
+		_btn_prologue.pressed.connect(func() -> void:
+			AudioManager.play_sfx("pickup")
+			SceneRouter.go_to(STORY_INTRO_PATH)
+		)
 
 	_setup_stage_cards()
 
@@ -124,7 +131,10 @@ func _on_btn_hover() -> void:
 func _play_stage(stage_num: int) -> void:
 	AudioManager.play_sfx("checkpoint")
 	GameState.start_stage(GameState.current_world, stage_num)
-	SceneRouter.go_to(LEVEL_PATH)
+	if stage_num == 1 and not SaveManager.has_seen_intro:
+		SceneRouter.go_to(STORY_INTRO_PATH)
+	else:
+		SceneRouter.go_to(LEVEL_PATH)
 
 
 func _on_back_pressed() -> void:

@@ -9,6 +9,7 @@ var sfx_volume: float = 1.0
 var selected_difficulty: int = 1 # 0: EASY, 1: NORMAL, 2: HARD
 var unlocked_world: int = 1
 var unlocked_stage: int = 1
+var has_seen_intro: bool = false
 
 
 func _ready() -> void:
@@ -21,6 +22,7 @@ func load_data() -> void:
 		high_score = int(cfg.get_value("progress", "high_score", 0))
 		unlocked_world = int(cfg.get_value("progress", "unlocked_world", 1))
 		unlocked_stage = int(cfg.get_value("progress", "unlocked_stage", 1))
+		has_seen_intro = bool(cfg.get_value("progress", "has_seen_intro", false))
 		music_volume = float(cfg.get_value("settings", "music_volume", 0.8))
 		sfx_volume = float(cfg.get_value("settings", "sfx_volume", 1.0))
 		selected_difficulty = int(cfg.get_value("settings", "difficulty", 1))
@@ -35,10 +37,16 @@ func save_data() -> void:
 	cfg.set_value("progress", "high_score", high_score)
 	cfg.set_value("progress", "unlocked_world", unlocked_world)
 	cfg.set_value("progress", "unlocked_stage", unlocked_stage)
+	cfg.set_value("progress", "has_seen_intro", has_seen_intro)
 	cfg.set_value("settings", "music_volume", music_volume)
 	cfg.set_value("settings", "sfx_volume", sfx_volume)
 	cfg.set_value("settings", "difficulty", selected_difficulty)
 	cfg.save(SAVE_PATH)
+
+
+func mark_intro_seen() -> void:
+	has_seen_intro = true
+	save_data()
 
 
 func is_stage_unlocked(world_id: int, stage_id: int) -> bool:

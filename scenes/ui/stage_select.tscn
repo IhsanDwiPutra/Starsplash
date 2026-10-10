@@ -437,10 +437,17 @@ text = "▶  MAINKAN"
 
 [node name="BottomBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 24
 alignment = 1
 
-[node name="BtnBack" type="Button" parent="VBoxContainer/BottomBar"]
-custom_minimum_size = Vector2(380, 52)
+[node name="BtnPrologue" type="Button" parent="VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(260, 52)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 19
+text = "📜  PROLOG CERITA"
+
+[node name="BtnBack" type="Button" parent="VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(340, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
 text = "◀  KEMBALI KE PILIH DUNIA (ESC)"
