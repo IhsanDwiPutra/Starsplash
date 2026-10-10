@@ -37,8 +37,8 @@
 - [x] Boss Dunia 1 (3 fase: Glacier Gloop)
 - [ ] Level 2
 - [ ] Musuh 3-6 (pengejar, penyerang vertikal, turret)
-- [ ] Menu utama, pilih kesulitan, pause, hasil, game over
-- [ ] High score tersimpan
+- [x] Menu utama, pilih kesulitan, pause, hasil, game over
+- [x] High score tersimpan
 
 ## Fase 4 - Web
 - [ ] Export Web, uji performa & audio
@@ -53,7 +53,8 @@
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
-- 2026-10-10 | Gemini | Boss Dunia 1 (Glacier Gloop - Pengawal Laut Beku) selesai: HP 150, 3 fase serangan adaptif (Fase 1: triple spread + drone, Fase 2: 5-fan radial + dual fast shot, Fase 3: enrage spiral stream + sine swarm), transisi visual mata & core reaktif, Boss Health Bar di HUD, urutan kematian 7 ledakan berantai + 15 bintang drop & 5000 skor | scenes/bosses/*, scripts/bosses/*, scripts/levels/level_runner.gd, scripts/levels/level_1_data.gd, scripts/ui/hud.gd, scenes/levels/test_level.tscn, docs/DECISIONS.md, docs/ROADMAP.md | - | Menu utama lengkap (pilih kesulitan Easy/Normal/Hard) & Level 2
+- 2026-10-10 | Gemini | Menu Utama interaktif (Parallax background hidup Laut Beku, animasi melayang kapal Pip, selector kesulitan Easy/Normal/Hard, popup pengaturan audio BGM & SFX slider), Pause Menu in-game (Lanjut, Ulangi Level, Slider Volume, Menu Utama), integrasi persistensi SaveManager (volume & kesulitan) | scenes/ui/*, scripts/ui/*, scripts/levels/test_level.gd, scenes/levels/test_level.tscn, scripts/autoload/save_manager.gd, scripts/autoload/audio_manager.gd, docs/DECISIONS.md, docs/ROADMAP.md | - | Pembuatan Musuh Baru (Penyerang Vertikal / Turret Es) & Desain Level 2
+- 2026-10-10 | Gemini | Perbaikan deteksi tabrakan peluru/rudal/splash pada Boss Glacier Gloop + Sistem Suplai Pertarungan Boss (Checkpoint 2 Sarang Boss di detik 132, amunisi rudal 3 & senjata Lv 2 saat respawn, pre-boss carrier di detik 134, drop hadiah P, M, S saat pecah fase 2 & 3, support carrier berkala) | scripts/bosses/boss_glacier_gloop.gd, scripts/levels/level_1_data.gd, scripts/levels/level_runner.gd, scripts/levels/test_level.gd, scripts/ui/hud.gd, scenes/bosses/boss_glacier_gloop.tscn | - | Menu utama lengkap (pilih kesulitan Easy/Normal/Hard) & Pause Menu in-game
 - 2026-10-10 | Gemini | Sistem AudioManager lengkap: pool pemutar SFX (12 channel), slot file audio (.ogg/.wav) siap hunting, fallback synthesizer prosedural bawaan (tembakan Pip, rudal, ledakan musuh/carrier, hit, bintang, pickup, shield break, splash bomb, checkpoint, victory jingle, ambient loop Laut Beku), integrasi gameplay penuh. Fase 2 Tuntas 100%! | scripts/autoload/audio_manager.gd, scripts/player/player.gd, scripts/enemies/enemy.gd, scripts/pickups/*, scripts/levels/test_level.gd, assets/audio/*, docs/DECISIONS.md, docs/ROADMAP.md | - | Masuk Fase 3: Pilihan kesulitan di menu utama & Boss Dunia 1 (3 fase)
 - 2026-10-10 | Gemini | LevelRunner timeline spawn terstruktur (Level 1: Laut Beku ~140s), sistem formasi (LINE, V, WALL, SWARM_SINE), notifikasi banner visual, progress bar level di HUD, Checkpoint di 50% dengan respawn flow, dan layar kemenangan Level Clear | scripts/levels/level_runner.gd, scripts/levels/level_1_data.gd, scripts/levels/test_level.gd, scripts/ui/hud.gd, scenes/levels/test_level.tscn, docs/DECISIONS.md, docs/ROADMAP.md | - | SFX dasar + musik (AudioManager), persiapan transisi ke Fase 3
 - 2026-10-10 | Gemini | Efek partikel ledakan poligon prosedural (flash inti, shockwave arc, pecahan berputar adaptif warna), hit spark peluru, camera screen shake responsif (dihubungkan ke Camera2D test_level, ledakan musuh berbobot, rudal, splash wave, dan damage pemain) | scenes/fx/*, scripts/fx/*, scripts/enemies/enemy.gd, scripts/projectiles/*, scripts/player/player.gd, scripts/levels/test_level.gd, docs/DECISIONS.md | - | LevelRunner (timeline spawn musuh), checkpoint & tamat Level 1, SFX dasar + musik

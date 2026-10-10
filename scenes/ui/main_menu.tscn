@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://scripts/fx/parallax_background.gd" id="2_bg"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -11,56 +12,280 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Title" type="Label" parent="."]
+[node name="BackgroundSky" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.18, 0.42, 1)
+
+[node name="Parallax" type="Node2D" parent="."]
+script = ExtResource("2_bg")
+
+[node name="PipAnchor" type="Node2D" parent="."]
+position = Vector2(480, 240)
+
+[node name="PipShip" type="Node2D" parent="PipAnchor"]
+scale = Vector2(1.3, 1.3)
+
+[node name="Outline" type="Polygon2D" parent="PipAnchor/PipShip"]
+color = Color(0.18, 0.08, 0.16, 1)
+polygon = PackedVector2Array(-44, -30, 48, 0, -44, 30, -25, 0)
+
+[node name="Body" type="Polygon2D" parent="PipAnchor/PipShip"]
+color = Color(1, 0.62, 0.78, 1)
+polygon = PackedVector2Array(-40, -26, 44, 0, -40, 26, -22, 0)
+
+[node name="Cockpit" type="Polygon2D" parent="PipAnchor/PipShip"]
+color = Color(0.45, 0.7, 1, 1)
+polygon = PackedVector2Array(0, -8, 14, -5, 18, 0, 14, 5, 0, 8, -6, 0)
+
+[node name="CenterContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainCard" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -120.0
-offset_right = 400.0
-offset_bottom = -20.0
+offset_left = -460.0
+offset_top = -380.0
+offset_right = 460.0
+offset_bottom = 440.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 96
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleBox" type="VBoxContainer" parent="CenterContainer/MainCard"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/MainCard/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.06, 0.18, 0.8)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/font_size = 88
 text = "STARSPLASH"
 horizontal_alignment = 1
+
+[node name="SubTitleLabel" type="Label" parent="CenterContainer/MainCard/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.88, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "PETUALANGAN DUNIA 1 • LAUT BEKU"
+horizontal_alignment = 1
+
+[node name="HighScoreBadge" type="PanelContainer" parent="CenterContainer/MainCard"]
+custom_minimum_size = Vector2(360, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HighScoreLabel" type="Label" parent="CenterContainer/MainCard/HighScoreBadge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "🏆 REKOR TERTINGGI: 0000000"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Hint" type="Label" parent="."]
+[node name="DiffSectionTitle" type="Label" parent="CenterContainer/MainCard"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 0.9)
+theme_override_font_sizes/font_size = 18
+text = "PILIH TINGKAT KESULITAN:"
+horizontal_alignment = 1
+
+[node name="DifficultyBox" type="HBoxContainer" parent="CenterContainer/MainCard"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BtnEasy" type="Button" parent="CenterContainer/MainCard/DifficultyBox"]
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  MUDAH"
+
+[node name="BtnNormal" type="Button" parent="CenterContainer/MainCard/DifficultyBox"]
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "★ NORMAL"
+
+[node name="BtnHard" type="Button" parent="CenterContainer/MainCard/DifficultyBox"]
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "  SULIT"
+
+[node name="DiffDescLabel" type="Label" parent="CenterContainer/MainCard"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 0.85)
+theme_override_font_sizes/font_size = 17
+text = "NORMAL: 3 Nyawa • Pengalaman Shmup Standar yang Seimbang"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionBox" type="VBoxContainer" parent="CenterContainer/MainCard"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 14
+
+[node name="BtnStart" type="Button" parent="CenterContainer/MainCard/ActionBox"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../BtnSettings")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "▶  MULAI PETUALANGAN"
+
+[node name="BtnSettings" type="Button" parent="CenterContainer/MainCard/ActionBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnStart")
+focus_neighbor_bottom = NodePath("../BtnQuit")
+theme_override_font_sizes/font_size = 19
+text = "⚙  PENGATURAN SUARA"
+
+[node name="BtnQuit" type="Button" parent="CenterContainer/MainCard/ActionBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnSettings")
+theme_override_font_sizes/font_size = 19
+text = "✕  KELUAR PERMAINAN"
+
+[node name="FooterLabel" type="Label" parent="CenterContainer/MainCard"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.9, 0.6)
+theme_override_font_sizes/font_size = 15
+text = "WASD/Panah: Gerak • J/Spasi: Tembak • K: Rudal • L: Splash • Esc: Jeda"
+horizontal_alignment = 1
+
+[node name="SettingsModal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DarkOverlay" type="ColorRect" parent="SettingsModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.14, 0.82)
+
+[node name="SettingsCard" type="ColorRect" parent="SettingsModal"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = 20.0
-offset_right = 400.0
-offset_bottom = 80.0
+offset_left = -280.0
+offset_top = -220.0
+offset_right = 280.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 36
-text = "Tekan J / Spasi / Klik Kiri / tombol A untuk mulai"
-horizontal_alignment = 1
-vertical_alignment = 1
+color = Color(0.1, 0.14, 0.28, 0.96)
 
-[node name="HighScore" type="Label" parent="."]
+[node name="Outline" type="Line2D" parent="SettingsModal/SettingsCard"]
+points = PackedVector2Array(0, 0, 560, 0, 560, 440, 0, 440, 0, 0)
+width = 4.0
+default_color = Color(0.4, 0.75, 1, 0.8)
+
+[node name="VBox" type="VBoxContainer" parent="SettingsModal/SettingsCard"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = 100.0
-offset_right = 400.0
-offset_bottom = 150.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 35.0
+offset_right = -40.0
+offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 30
-text = "REKOR: 0"
+theme_override_constants/separation = 18
+
+[node name="ModalTitle" type="Label" parent="SettingsModal/SettingsCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_font_sizes/font_size = 32
+text = "PENGATURAN SUARA"
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SettingsModal/SettingsCard/VBox"]
+layout_mode = 2
+
+[node name="AudioBox" type="VBoxContainer" parent="SettingsModal/SettingsCard/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MusicRow" type="HBoxContainer" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Volume Musik BGM"
+
+[node name="MusicValLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/MusicRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "80%"
+
+[node name="MusicSlider" type="HSlider" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
+layout_mode = 2
+step = 5.0
+value = 80.0
+
+[node name="SfxRow" type="HBoxContainer" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
+layout_mode = 2
+
+[node name="SfxLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Volume Efek Suara (SFX)"
+
+[node name="SfxValLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/SfxRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.3, 1)
+theme_override_font_sizes/font_size = 18
+text = "100%"
+
+[node name="SfxSlider" type="HSlider" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
+layout_mode = 2
+step = 5.0
+value = 100.0
+
+[node name="Spacer" type="Control" parent="SettingsModal/SettingsCard/VBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="BtnCloseSettings" type="Button" parent="SettingsModal/SettingsCard/VBox"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "TUTUP PENGATURAN [ESC]"

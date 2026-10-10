@@ -23,6 +23,7 @@ var _shake_timer: float = 0.0
 @onready var _game_over_label: Label = $HUD/GameOverLabel
 @onready var _camera: Camera2D = $Camera2D
 @onready var _level_runner: LevelRunner = $LevelRunner
+@onready var _pause_menu: CanvasLayer = $PauseMenu
 
 
 func _ready() -> void:
@@ -119,6 +120,13 @@ func _on_game_over() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Jika pause ditekan saat bermain aktif (bukan game over dan bukan level tamat)
+	if event.is_action_pressed("pause") and not _is_game_over and not _is_cleared:
+		if _pause_menu != null:
+			_pause_menu.toggle_pause()
+			get_viewport().set_input_as_handled()
+		return
+
 	if not _can_leave:
 		return
 

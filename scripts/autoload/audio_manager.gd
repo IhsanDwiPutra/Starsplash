@@ -137,6 +137,19 @@ func stop_music() -> void:
 		_music_player.stop()
 
 
+func set_music_volume(val: float) -> void:
+	music_volume = clampf(val, 0.0, 1.0)
+	if _music_player:
+		if music_volume <= 0.01:
+			_music_player.volume_db = -80.0
+		else:
+			_music_player.volume_db = -4.0 + linear_to_db(music_volume * master_volume)
+
+
+func set_sfx_volume(val: float) -> void:
+	sfx_volume = clampf(val, 0.0, 1.0)
+
+
 func _get_available_sfx_player() -> AudioStreamPlayer:
 	for p in _sfx_players:
 		if not p.is_playing():
