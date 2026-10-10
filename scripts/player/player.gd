@@ -27,6 +27,8 @@ var _shield_pulse: float = 0.0
 
 @onready var _muzzle: Marker2D = $Muzzle
 @onready var _shield_aura: Polygon2D = $ShieldAura
+@onready var _thruster_flame: CPUParticles2D = $ThrusterFlame
+@onready var _stardust_trail: CPUParticles2D = $StardustTrail
 
 
 func _ready() -> void:
@@ -53,6 +55,21 @@ func _move(delta: float) -> void:
 	var size: Vector2 = get_viewport_rect().size
 	position.x = clampf(position.x, SCREEN_MARGIN.x, size.x - SCREEN_MARGIN.x)
 	position.y = clampf(position.y, SCREEN_MARGIN.y, size.y - SCREEN_MARGIN.y)
+
+	# Efek dinamik semburan jet roket saat akselerasi
+	if _thruster_flame != null:
+		if dir.x > 0.1:
+			_thruster_flame.initial_velocity_min = 220.0
+			_thruster_flame.initial_velocity_max = 330.0
+			_thruster_flame.lifetime = 0.35
+		elif dir.x < -0.1:
+			_thruster_flame.initial_velocity_min = 70.0
+			_thruster_flame.initial_velocity_max = 130.0
+			_thruster_flame.lifetime = 0.20
+		else:
+			_thruster_flame.initial_velocity_min = 130.0
+			_thruster_flame.initial_velocity_max = 210.0
+			_thruster_flame.lifetime = 0.28
 
 
 func _handle_fire(delta: float) -> void:
@@ -164,6 +181,10 @@ func _take_hit() -> void:
 	if GameState.lives <= 0:
 		_dead = true
 		visible = false
+		if _thruster_flame != null:
+			_thruster_flame.emitting = false
+		if _stardust_trail != null:
+			_stardust_trail.emitting = false
 		var exp := ExplosionScene.instantiate() as Explosion
 		exp.global_position = global_position
 		exp.base_color = Color(0.35, 0.75, 1.0)
@@ -177,3 +198,14 @@ func _take_hit() -> void:
 		GameState.trigger_shake(8.0, 0.25)
 		AudioManager.play_sfx("hit")
 		_invuln = INVULN_TIME
+
+
+func respawn_at(spawn_pos: Vector2) -> void:
+	_dead = false
+	visible = true
+	position = spawn_pos
+	_invuln = 2.5
+	if _thruster_flame != null:
+		_thruster_flame.emitting = true
+	if _stardust_trail != null:
+		_stardust_trail.emitting = true

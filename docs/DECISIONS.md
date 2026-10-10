@@ -30,4 +30,6 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 24 | 2026-10-10 | Formula Bos Dinamis: Mini-Boss di Stage 3 & Major Boss Multi-Fase di Stage 6 | Memberikan irama pertempuran yang seimbang tanpa memicu kelelahan duel bos di setiap stage |
 | 25 | 2026-10-10 | Sistem Rating Bintang (⭐ 1-3), Intro Komik 3 Panel, dan Retry Ramah Pemain di Peta | Mendorong replayability pengumpulan bintang, pengenalan cerita cepat tanpa dialog panjang, dan mencegah hukuman permadeath brutal |
 | 26 | 2026-10-10 | Integrasi Sprite Asli Karakter Pip & Kapal Tempur Pip (`assets/art/player/`) | Menggantikan poligon placeholder dengan sprite berkualitas tinggi (Avatar Pip & Kapal Pip 2D Side-View Orthographic), menyelaraskan titik Muzzle moncong tembakan dan collision shape |
+| 27 | 2026-10-10 | Sistem Partikel Pendorong Prosedural (Thruster Flame & Stardust Trail) pada Kapal Pip via CPUParticles2D | Memberikan efek semburan api roket dan jejak debu bintang yang hidup dan reaktif terhadap akselerasi maju-mundur kapal tanpa aset gambar eksternal, hemat memori dan 100% kompatibel di semua platform |
+
 

@@ -4,6 +4,22 @@
 [ext_resource type="Script" path="res://scripts/fx/parallax_background.gd" id="2_bg"]
 [ext_resource type="Texture2D" path="res://assets/art/player/pip_ship.png" id="3_ship_tex"]
 
+[sub_resource type="Curve" id="Curve_menu_flame"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.15), -1.8, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_menu_flame"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(1, 0.96, 0.45, 1, 1, 0.55, 0.15, 0.95, 1, 0.3, 0.6, 0.6, 1, 0.2, 0.4, 0)
+
+[sub_resource type="Curve" id="Curve_menu_stars"]
+_data = [Vector2(0, 0.4), 0.0, 2.0, 0, 0, Vector2(0.3, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_menu_stars"]
+offsets = PackedFloat32Array(0, 0.35, 0.75, 1)
+colors = PackedColorArray(0.4, 0.95, 1, 1, 1, 0.9, 0.4, 0.9, 0.85, 0.55, 1, 0.5, 0.6, 0.4, 0.9, 0)
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -31,6 +47,40 @@ position = Vector2(430, 230)
 [node name="PipShip" type="Sprite2D" parent="PipAnchor"]
 scale = Vector2(0.24, 0.24)
 texture = ExtResource("3_ship_tex")
+
+[node name="ThrusterFlame" type="CPUParticles2D" parent="PipAnchor/PipShip"]
+show_behind_parent = true
+position = Vector2(-410, 50)
+scale = Vector2(4.167, 4.167)
+amount = 32
+lifetime = 0.32
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(-1, 0)
+spread = 12.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 160.0
+initial_velocity_max = 250.0
+scale_amount_min = 4.0
+scale_amount_max = 7.0
+scale_amount_curve = SubResource("Curve_menu_flame")
+color_ramp = SubResource("Gradient_menu_flame")
+
+[node name="StardustTrail" type="CPUParticles2D" parent="PipAnchor/PipShip"]
+show_behind_parent = true
+position = Vector2(-430, 50)
+scale = Vector2(4.167, 4.167)
+amount = 18
+lifetime = 0.65
+direction = Vector2(-1, 0)
+spread = 26.0
+gravity = Vector2(-50, 10)
+initial_velocity_min = 50.0
+initial_velocity_max = 140.0
+scale_amount_min = 2.5
+scale_amount_max = 5.5
+scale_amount_curve = SubResource("Curve_menu_stars")
+color_ramp = SubResource("Gradient_menu_stars")
 
 [node name="CenterContainer" type="Control" parent="."]
 layout_mode = 1

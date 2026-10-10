@@ -172,8 +172,5 @@ func _restart_from_checkpoint() -> void:
 		GameState.weapon_changed.emit(1)
 		GameState.weapon_timer_changed.emit(0.0, GameState.WEAPON_DURATION)
 
-	_player._dead = false
-	_player.visible = true
-	_player.position = Vector2(200, 540)
-	_player._invuln = 2.5
+	_player.respawn_at(Vector2(200, 540))
 	_level_runner.restart_from_checkpoint()
