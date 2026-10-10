@@ -84,6 +84,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("2_bg_tex")
 expand_mode = 1
 stretch_mode = 6
@@ -95,6 +96,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.04, 0.08, 0.18, 0.55)
 
 [node name="SnowParticles" type="CPUParticles2D" parent="."]
@@ -441,4 +443,4 @@ alignment = 1
 custom_minimum_size = Vector2(380, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "◀  KEMBALI KE MENU UTAMA (ESC)"
+text = "◀  KEMBALI KE PILIH DUNIA (ESC)"

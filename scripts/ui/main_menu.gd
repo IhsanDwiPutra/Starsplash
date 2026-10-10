@@ -1,7 +1,7 @@
 extends Control
 ## Menu Utama Starsplash: Parallax background hidup, pilihan kesulitan, pengaturan audio, dan rekor skor.
 
-const STAGE_SELECT_PATH: String = "res://scenes/ui/stage_select.tscn"
+const WORLD_SELECT_PATH: String = "res://scenes/ui/world_select.tscn"
 const LEVEL_PATH: String = "res://scenes/levels/test_level.tscn"
 
 const DIFFICULTY_INFO: Dictionary = {
@@ -104,7 +104,7 @@ func _update_difficulty_buttons() -> void:
 func _start_game() -> void:
 	AudioManager.play_sfx("checkpoint")
 	GameState.new_game(_current_diff)
-	SceneRouter.go_to(STAGE_SELECT_PATH)
+	SceneRouter.go_to(WORLD_SELECT_PATH)
 
 
 func _open_settings() -> void:

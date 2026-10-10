@@ -1,0 +1,378 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/world_select.gd" id="1_world_select"]
+[ext_resource type="Texture2D" path="res://assets/art/backgrounds/bg_stage_select.jpg" id="2_bg_tex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_world1_card"]
+content_margin_left = 22.0
+content_margin_top = 24.0
+content_margin_right = 22.0
+content_margin_bottom = 24.0
+bg_color = Color(0.08, 0.16, 0.32, 0.9)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.75, 1, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.02, 0.08, 0.22, 0.7)
+shadow_size = 14
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_locked_card"]
+content_margin_left = 22.0
+content_margin_top = 24.0
+content_margin_right = 22.0
+content_margin_bottom = 24.0
+bg_color = Color(0.1, 0.11, 0.18, 0.75)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.4, 0.5, 0.5)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.02, 0.02, 0.06, 0.5)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[node name="WorldSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_world_select")
+
+[node name="BackgroundTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg_tex")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VignetteOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.04, 0.07, 0.16, 0.65)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 35.0
+offset_right = -60.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="HeaderBox" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0.06, 0.08, 0.16, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 52
+text = "PILIH DUNIA PETUALANGAN"
+horizontal_alignment = 1
+
+[node name="SubTitleLabel" type="Label" parent="VBoxContainer/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "JELAJAHI 4 REGION KOSMIK SAMUDRA BERSAMA PIP"
+horizontal_alignment = 1
+
+[node name="CenterBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="CardsHBox" type="HBoxContainer" parent="VBoxContainer/CenterBox"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="CardWorld1" type="PanelContainer" parent="VBoxContainer/CenterBox/CardsHBox"]
+custom_minimum_size = Vector2(380, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_world1_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="WorldTag" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "★ DUNIA 1 • TERBUKA"
+
+[node name="WorldName" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "Laut Beku"
+
+[node name="WorldSub" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 0.85)
+theme_override_font_sizes/font_size = 16
+text = "Samudra Es & Badai Aurora"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.9, 1, 0.85)
+theme_override_font_sizes/font_size = 15
+text = "Jelajahi perairan kutub yang membeku, hadapi kawanan ubur-ubur Frost Jelly, dan rebut kembali bintang dari cengkeraman Raja Es Glacier Gloop!"
+autowrap_mode = 2
+
+[node name="InfoBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StagesLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.7, 1)
+theme_override_font_sizes/font_size = 16
+text = "✦ 6 Tahapan Petualangan (1-1 s/d 1-6)"
+
+[node name="BossLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 16
+text = "👑 Boss Utama: Glacier Gloop"
+
+[node name="BtnEnterWorld1" type="Button" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld1/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 20
+text = "▶  JELAJAHI DUNIA 1"
+
+[node name="CardWorld2" type="PanelContainer" parent="VBoxContainer/CenterBox/CardsHBox"]
+custom_minimum_size = Vector2(380, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_locked_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="WorldTag" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "🔒 DUNIA 2 • TERKUNCI"
+
+[node name="WorldName" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.7)
+theme_override_font_sizes/font_size = 32
+text = "Karang Vulkanik"
+
+[node name="WorldSub" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.6, 0.5, 0.7)
+theme_override_font_sizes/font_size = 16
+text = "Lautan Magma & Gelembung Api"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.65, 0.65, 0.65)
+theme_override_font_sizes/font_size = 15
+text = "Arung samudra mendidih penuh gelembung lava panas, hindari batu basal jatuh, dan tantang cangkang baja Kepiting Magma Raksasa!"
+autowrap_mode = 2
+
+[node name="InfoBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StagesLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "✦ 6 Tahapan (Segera Hadir)"
+
+[node name="BossLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "🦀 Boss Utama: Inferno Crab"
+
+[node name="BtnWorld2" type="Button" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld2/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_vertical = 10
+disabled = true
+theme_override_font_sizes/font_size = 18
+text = "🔒  SEGERA HADIR"
+
+[node name="CardWorld3" type="PanelContainer" parent="VBoxContainer/CenterBox/CardsHBox"]
+custom_minimum_size = Vector2(380, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_locked_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="WorldTag" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.5, 1, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "🔒 DUNIA 3 • TERKUNCI"
+
+[node name="WorldName" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.7)
+theme_override_font_sizes/font_size = 32
+text = "Reruntuhan Kristal"
+
+[node name="WorldSub" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.55, 0.75, 0.7)
+theme_override_font_sizes/font_size = 16
+text = "Kuil Kuno & Laser Prisma"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.65, 0.7, 0.65)
+theme_override_font_sizes/font_size = 15
+text = "Menyelam ke peradaban laut dalam yang hilang, pantulkan sinar laser prisma kristal ungu, dan hadapi Penjaga Reruntuhan Kuno!"
+autowrap_mode = 2
+
+[node name="InfoBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StagesLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "✦ 6 Tahapan (Segera Hadir)"
+
+[node name="BossLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "💠 Boss Utama: Prism Guardian"
+
+[node name="BtnWorld3" type="Button" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld3/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_vertical = 10
+disabled = true
+theme_override_font_sizes/font_size = 18
+text = "🔒  SEGERA HADIR"
+
+[node name="CardWorld4" type="PanelContainer" parent="VBoxContainer/CenterBox/CardsHBox"]
+custom_minimum_size = Vector2(380, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_locked_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="WorldTag" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.5, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "🔒 DUNIA 4 • TERKUNCI"
+
+[node name="WorldName" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.7)
+theme_override_font_sizes/font_size = 32
+text = "Inti Bintang Kosmik"
+
+[node name="WorldSub" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.55, 0.6, 0.7)
+theme_override_font_sizes/font_size = 16
+text = "Ruang Hampa & Sarang Pencuri"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.65, 0.65, 0.65)
+theme_override_font_sizes/font_size = 15
+text = "Terbang menembus atmosfer menuju angkasa hampa, hadapi gravitasi singularitas, dan duel penentuan pamungkas memperebutkan Bintang Abadi!"
+autowrap_mode = 2
+
+[node name="InfoBox" type="VBoxContainer" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StagesLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "✦ 6 Tahapan (Segera Hadir)"
+
+[node name="BossLabel" type="Label" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "👑 Final Boss: Void Emperor"
+
+[node name="BtnWorld4" type="Button" parent="VBoxContainer/CenterBox/CardsHBox/CardWorld4/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_vertical = 10
+disabled = true
+theme_override_font_sizes/font_size = 18
+text = "🔒  SEGERA HADIR"
+
+[node name="BottomBar" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnBack" type="Button" parent="VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(380, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "◀  KEMBALI KE MENU UTAMA (ESC)"
