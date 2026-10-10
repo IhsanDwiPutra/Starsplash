@@ -58,6 +58,14 @@ func _physics_process(delta: float) -> void:
 			position.y = _base_y + sin(_time * sine_frequency) * sine_amplitude
 		MoveType.HOLD:
 			_move_hold(delta)
+	
+	# Efek bernapas/renang ubur-ubur es
+	if has_node("Sprite2D"):
+		var spr := get_node("Sprite2D") as Sprite2D
+		if spr != null:
+			spr.scale.y = 0.115 + sin(_time * 5.5) * 0.007
+			spr.scale.x = 0.115 - sin(_time * 5.5) * 0.005
+
 	_handle_fire(delta)
 	if position.x < DESPAWN_X:
 		queue_free()
@@ -133,7 +141,9 @@ func _spawn_hit_spark(hit_pos: Vector2) -> void:
 func _spawn_explosion() -> void:
 	var explosion := ExplosionScene.instantiate() as Explosion
 	explosion.global_position = global_position
-	if has_node("Visual"):
+	if has_node("Sprite2D"):
+		explosion.base_color = Color(0.35, 0.85, 1.0) # Es kristal cyan
+	elif has_node("Visual"):
 		var visual := get_node("Visual") as Polygon2D
 		if visual != null:
 			explosion.base_color = visual.color
