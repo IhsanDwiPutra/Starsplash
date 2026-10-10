@@ -20,7 +20,6 @@ var _shake_timer: float = 0.0
 @onready var _enemies: Node2D = $Enemies
 @onready var _player: Player = $Player
 @onready var _hud: CanvasLayer = $HUD
-@onready var _game_over_label: Label = $HUD/GameOverLabel
 @onready var _camera: Camera2D = $Camera2D
 @onready var _level_runner: LevelRunner = $LevelRunner
 @onready var _pause_menu: CanvasLayer = $PauseMenu
@@ -29,7 +28,7 @@ var _shake_timer: float = 0.0
 func _ready() -> void:
 	_player.game_over.connect(_on_game_over)
 	GameState.screen_shaken.connect(_on_screen_shaken)
-	_game_over_label.visible = false
+	_hud.hide_game_over()
 
 	# Setup timeline Level 1: Laut Beku
 	_level_runner.banner_requested.connect(_on_banner_requested)
@@ -110,11 +109,7 @@ func _on_game_over() -> void:
 	_is_game_over = true
 	_hud.reset_boss_bar()
 	SaveManager.submit_score(GameState.score)
-	if _level_runner.last_checkpoint_id > 0:
-		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Lanjut dari Checkpoint\nTekan [ESC] untuk Menu Utama" % GameState.score
-	else:
-		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Coba Lagi\nTekan [ESC] untuk Menu Utama" % GameState.score
-	_game_over_label.visible = true
+	_hud.show_game_over(_level_runner.last_checkpoint_id > 0, GameState.score)
 	await get_tree().create_timer(GAME_OVER_DELAY).timeout
 	_can_leave = true
 
@@ -150,7 +145,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _restart_from_checkpoint() -> void:
 	_is_game_over = false
 	_can_leave = false
-	_game_over_label.visible = false
+	_hud.hide_game_over()
 	_hud.reset_boss_bar()
 
 	GameState.lives = GameState.START_LIVES[GameState.difficulty]
@@ -172,5 +167,6 @@ func _restart_from_checkpoint() -> void:
 		GameState.weapon_changed.emit(1)
 		GameState.weapon_timer_changed.emit(0.0, GameState.WEAPON_DURATION)
 
+	_hud.hide_game_over()
 	_player.respawn_at(Vector2(200, 540))
 	_level_runner.restart_from_checkpoint()

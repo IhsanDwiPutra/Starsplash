@@ -1,0 +1,619 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud_script"]
+[ext_resource type="Texture2D" path="res://assets/art/player/pip_avatar.png" id="2_avatar"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/icon_star.png" id="3_star"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/icon_missile.png" id="4_missile"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/icon_shield.png" id="5_shield"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/icon_boss.png" id="6_boss"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_player_panel"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+bg_color = Color(0.07, 0.11, 0.24, 0.86)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.75, 1, 0.6)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_avatar_frame"]
+bg_color = Color(0.12, 0.2, 0.42, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.9, 1, 0.85)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.18, 0.35, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.7, 1, 0.35)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_journey_bg"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.06, 0.1, 0.22, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.65, 0.95, 0.45)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.1, 0.14, 0.28, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.35, 0.85, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_splash_bg"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.06, 0.1, 0.22, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.8, 1, 0.5)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_splash_fill"]
+bg_color = Color(0.35, 0.85, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_combo_bg"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.14, 0.08, 0.22, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.65, 0.25, 0.8)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bg"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.18, 0.06, 0.12, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.35, 0.45, 0.85)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
+bg_color = Color(1, 0.3, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner_bg"]
+content_margin_left = 32.0
+content_margin_top = 12.0
+content_margin_right = 32.0
+content_margin_bottom = 12.0
+bg_color = Color(0.08, 0.12, 0.25, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.3, 0.9)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_game_over_card"]
+content_margin_left = 40.0
+content_margin_top = 32.0
+content_margin_right = 40.0
+content_margin_bottom = 32.0
+bg_color = Color(0.07, 0.09, 0.18, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.95, 0.35, 0.45, 0.9)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 12
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clear_card"]
+content_margin_left = 40.0
+content_margin_top = 32.0
+content_margin_right = 40.0
+content_margin_bottom = 32.0
+bg_color = Color(0.07, 0.12, 0.25, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.88, 0.35, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 12
+shadow_offset = Vector2(0, 6)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud_script")
+
+[node name="PlayerCard" type="PanelContainer" parent="."]
+offset_left = 32.0
+offset_top = 22.0
+offset_right = 490.0
+offset_bottom = 124.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_player_panel")
+
+[node name="HBox" type="HBoxContainer" parent="PlayerCard"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="AvatarFrame" type="PanelContainer" parent="PlayerCard/HBox"]
+custom_minimum_size = Vector2(74, 74)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_avatar_frame")
+
+[node name="PipAvatar" type="TextureRect" parent="PlayerCard/HBox/AvatarFrame"]
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoVBox" type="VBoxContainer" parent="PlayerCard/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="ScoreHBox" type="HBoxContainer" parent="PlayerCard/HBox/InfoVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 0
+
+[node name="StarIcon" type="TextureRect" parent="PlayerCard/HBox/InfoVBox/ScoreHBox"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_star")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScoreLabel" type="Label" parent="PlayerCard/HBox/InfoVBox/ScoreHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0.04, 0.06, 0.14, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "0000000"
+vertical_alignment = 1
+
+[node name="BadgesHBox" type="HBoxContainer" parent="PlayerCard/HBox/InfoVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LivesBadge" type="PanelContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="LivesHBox" type="HBoxContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/LivesBadge"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeartLabel" type="Label" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/LivesBadge/LivesHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.65, 1)
+theme_override_font_sizes/font_size = 15
+text = "❤️"
+
+[node name="LivesLabel" type="Label" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/LivesBadge/LivesHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 15
+text = "x 3"
+
+[node name="WeaponBadge" type="PanelContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="WeaponLabel" type="Label" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/WeaponBadge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.65, 1)
+theme_override_font_sizes/font_size = 15
+text = "LV 1"
+
+[node name="MissileBadge" type="PanelContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="MissileHBox" type="HBoxContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/MissileBadge"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MissileIcon" type="TextureRect" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/MissileBadge/MissileHBox"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_missile")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MissileLabel" type="Label" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/MissileBadge/MissileHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.75, 1)
+theme_override_font_sizes/font_size = 15
+text = "3/9"
+
+[node name="ShieldBadge" type="PanelContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="ShieldHBox" type="HBoxContainer" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/ShieldBadge"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ShieldIcon" type="TextureRect" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/ShieldBadge/ShieldHBox"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("5_shield")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ShieldLabel" type="Label" parent="PlayerCard/HBox/InfoVBox/BadgesHBox/ShieldBadge/ShieldHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "AKTIF"
+
+[node name="JourneyContainer" type="PanelContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 22.0
+offset_right = 260.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_journey_bg")
+
+[node name="HBox" type="HBoxContainer" parent="JourneyContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PipMini" type="TextureRect" parent="JourneyContainer/HBox"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BarVBox" type="VBoxContainer" parent="JourneyContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="LevelNameLabel" type="Label" parent="JourneyContainer/HBox/BarVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "DUNIA 1 • LAUT BEKU (0%)"
+horizontal_alignment = 1
+
+[node name="LevelProgress" type="ProgressBar" parent="JourneyContainer/HBox/BarVBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+step = 0.5
+show_percentage = false
+
+[node name="BossMini" type="TextureRect" parent="JourneyContainer/HBox"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_boss")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BossBarContainer" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_boss_bg")
+
+[node name="HBox" type="HBoxContainer" parent="BossBarContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BossAvatar" type="TextureRect" parent="BossBarContainer/HBox"]
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_boss")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="BossBarContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="BossNameLabel" type="Label" parent="BossBarContainer/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.5, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 15
+text = "GLACIER GLOOP - RAJA LAUT BEKU"
+horizontal_alignment = 1
+
+[node name="BossHealthBar" type="ProgressBar" parent="BossBarContainer/HBox/VBox"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
+max_value = 150.0
+step = 1.0
+value = 150.0
+show_percentage = false
+
+[node name="ComboContainer" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 76.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_combo_bg")
+
+[node name="ComboLabel" type="Label" parent="ComboContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "🔥 KOMBO x2 (x1.0)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SplashContainer" type="PanelContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -88.0
+offset_right = 380.0
+offset_bottom = -24.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_splash_bg")
+
+[node name="HBox" type="HBoxContainer" parent="SplashContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SplashStarIcon" type="TextureRect" parent="SplashContainer/HBox"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_star")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="SplashContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="SplashLabel" type="Label" parent="SplashContainer/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
+text = "SPLASH 0/30"
+
+[node name="SplashBar" type="ProgressBar" parent="SplashContainer/HBox/VBox"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_splash_fill")
+max_value = 30.0
+step = 1.0
+show_percentage = false
+
+[node name="BannerContainer" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 150.0
+offset_right = 300.0
+offset_bottom = 210.0
+grow_horizontal = 2
+pivot_offset = Vector2(300, 30)
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner_bg")
+
+[node name="BannerLabel" type="Label" parent="BannerContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 26
+text = "PERINGATAN!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelClearPanel" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -200.0
+offset_right = 340.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_clear_card")
+
+[node name="VBox" type="VBoxContainer" parent="LevelClearPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="LevelClearPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 38
+text = "LAUT BEKU DITAKLUKKAN! 🏆"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="LevelClearPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20
+text = "STATISTIK HASIL"
+horizontal_alignment = 1
+
+[node name="GameOverPanel" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -140.0
+offset_right = 320.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_game_over_card")
+
+[node name="GameOverLabel" type="Label" parent="GameOverPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.85, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 26
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1

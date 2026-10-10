@@ -32,6 +32,8 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 26 | 2026-10-10 | Integrasi Sprite Asli Karakter Pip & Kapal Tempur Pip (`assets/art/player/`) | Menggantikan poligon placeholder dengan sprite berkualitas tinggi (Avatar Pip & Kapal Pip 2D Side-View Orthographic), menyelaraskan titik Muzzle moncong tembakan dan collision shape |
 | 27 | 2026-10-10 | Sistem Partikel Pendorong Prosedural (Thruster Flame & Stardust Trail) pada Kapal Pip via CPUParticles2D | Memberikan efek semburan api roket dan jejak debu bintang yang hidup dan reaktif terhadap akselerasi maju-mundur kapal tanpa aset gambar eksternal, hemat memori dan 100% kompatibel di semua platform |
 | 28 | 2026-10-10 | Fisika Inersia Halus & Kemiringan Aerodinamis (Smooth Momentum & Banking Tilt) pada Kapal Pip | Menghadirkan rasa kendali berbobot melalui akselerasi (2500 px/s²), deselerasi meluncur (1900 px/s²), pengereman balik arah (3600 px/s²), kemiringan badan saat naik-turun (±7.5°), dan semburan api proporsional |
+| 29 | 2026-10-10 | Desain UI Gameplay Modern (HUD Glassmorphism & Icon Pack Shmup) di `scenes/ui/hud.tscn` | Mempercantik antarmuka in-game dengan kartu status Pip glassmorphism, avatar Pip resmi, aset ikon AI (Bintang, Rudal, Shield, Boss), Stage Journey progress bar, Splash gauge berdenyut, dan kartu hasil level/game-over yang terisolasi rapi |
+
 
 
 
