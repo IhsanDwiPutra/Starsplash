@@ -188,18 +188,26 @@ theme_override_constants/separation = 14
 [node name="BtnStart" type="Button" parent="CenterContainer/MainCard/ActionBox"]
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-focus_neighbor_bottom = NodePath("../BtnSettings")
+focus_neighbor_bottom = NodePath("../BtnPrologue")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "▶  MULAI PETUALANGAN"
 
-[node name="BtnSettings" type="Button" parent="CenterContainer/MainCard/ActionBox"]
+[node name="BtnPrologue" type="Button" parent="CenterContainer/MainCard/ActionBox"]
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 focus_neighbor_top = NodePath("../BtnStart")
+focus_neighbor_bottom = NodePath("../BtnSettings")
+theme_override_font_sizes/font_size = 19
+text = "📜  PROLOG CERITA"
+
+[node name="BtnSettings" type="Button" parent="CenterContainer/MainCard/ActionBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnPrologue")
 focus_neighbor_bottom = NodePath("../BtnQuit")
 theme_override_font_sizes/font_size = 19
-text = "⚙  PENGATURAN SUARA"
+text = "⚙  PENGATURAN & DATA"
 
 [node name="BtnQuit" type="Button" parent="CenterContainer/MainCard/ActionBox"]
 custom_minimum_size = Vector2(0, 46)
@@ -241,15 +249,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -280.0
-offset_top = -220.0
+offset_top = -265.0
 offset_right = 280.0
-offset_bottom = 220.0
+offset_bottom = 265.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.1, 0.14, 0.28, 0.96)
 
 [node name="Outline" type="Line2D" parent="SettingsModal/SettingsCard"]
-points = PackedVector2Array(0, 0, 560, 0, 560, 440, 0, 440, 0, 0)
+points = PackedVector2Array(0, 0, 560, 0, 560, 530, 0, 530, 0, 0)
 width = 4.0
 default_color = Color(0.4, 0.75, 1, 0.8)
 
@@ -259,18 +267,18 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = 35.0
+offset_top = 30.0
 offset_right = -40.0
-offset_bottom = -35.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 14
 
 [node name="ModalTitle" type="Label" parent="SettingsModal/SettingsCard/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
-theme_override_font_sizes/font_size = 32
-text = "PENGATURAN SUARA"
+theme_override_font_sizes/font_size = 30
+text = "PENGATURAN & DATA"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="SettingsModal/SettingsCard/VBox"]
@@ -278,7 +286,7 @@ layout_mode = 2
 
 [node name="AudioBox" type="VBoxContainer" parent="SettingsModal/SettingsCard/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
 [node name="MusicRow" type="HBoxContainer" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
 layout_mode = 2
@@ -286,13 +294,13 @@ layout_mode = 2
 [node name="MusicLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/MusicRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "Volume Musik BGM"
 
 [node name="MusicValLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/MusicRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "80%"
 
 [node name="MusicSlider" type="HSlider" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
@@ -306,13 +314,13 @@ layout_mode = 2
 [node name="SfxLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/SfxRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "Volume Efek Suara (SFX)"
 
 [node name="SfxValLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/AudioBox/SfxRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8, 0.3, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "100%"
 
 [node name="SfxSlider" type="HSlider" parent="SettingsModal/SettingsCard/VBox/AudioBox"]
@@ -320,12 +328,30 @@ layout_mode = 2
 step = 5.0
 value = 100.0
 
-[node name="Spacer" type="Control" parent="SettingsModal/SettingsCard/VBox"]
-custom_minimum_size = Vector2(0, 10)
+[node name="HSeparator2" type="HSeparator" parent="SettingsModal/SettingsCard/VBox"]
 layout_mode = 2
 
-[node name="BtnCloseSettings" type="Button" parent="SettingsModal/SettingsCard/VBox"]
-custom_minimum_size = Vector2(0, 48)
+[node name="DataBox" type="VBoxContainer" parent="SettingsModal/SettingsCard/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_constants/separation = 4
+
+[node name="BtnResetData" type="Button" parent="SettingsModal/SettingsCard/VBox/DataBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_font_sizes/font_size = 17
+text = "🔄  RESET PROGRES & PROLOG"
+
+[node name="ResetHintLabel" type="Label" parent="SettingsModal/SettingsCard/VBox/DataBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 0.6)
+theme_override_font_sizes/font_size = 13
+text = "Mengunci kembali stage & putar ulang prolog cerita saat mulai"
+horizontal_alignment = 1
+
+[node name="BtnCloseSettings" type="Button" parent="SettingsModal/SettingsCard/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 19
 text = "TUTUP PENGATURAN [ESC]"

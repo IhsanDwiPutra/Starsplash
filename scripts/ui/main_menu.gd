@@ -3,6 +3,7 @@ extends Control
 
 const WORLD_SELECT_PATH: String = "res://scenes/ui/world_select.tscn"
 const LEVEL_PATH: String = "res://scenes/levels/test_level.tscn"
+const STORY_INTRO_PATH: String = "res://scenes/ui/story_intro.tscn"
 
 const DIFFICULTY_INFO: Dictionary = {
 	GameState.Difficulty.EASY: "MUDAH: 5 Nyawa • Kecepatan Peluru Musuh Santai (Cocok untuk pemula)",
@@ -19,6 +20,7 @@ const DIFFICULTY_INFO: Dictionary = {
 @onready var _btn_hard: Button = $CenterContainer/MainCard/DifficultyBox/BtnHard
 
 @onready var _btn_start: Button = $CenterContainer/MainCard/ActionBox/BtnStart
+@onready var _btn_prologue: Button = $CenterContainer/MainCard/ActionBox/BtnPrologue
 @onready var _btn_settings: Button = $CenterContainer/MainCard/ActionBox/BtnSettings
 @onready var _btn_quit: Button = $CenterContainer/MainCard/ActionBox/BtnQuit
 
@@ -27,6 +29,8 @@ const DIFFICULTY_INFO: Dictionary = {
 @onready var _music_val_label: Label = $SettingsModal/SettingsCard/VBox/AudioBox/MusicRow/MusicValLabel
 @onready var _sfx_slider: HSlider = $SettingsModal/SettingsCard/VBox/AudioBox/SfxSlider
 @onready var _sfx_val_label: Label = $SettingsModal/SettingsCard/VBox/AudioBox/SfxRow/SfxValLabel
+@onready var _btn_reset_data: Button = $SettingsModal/SettingsCard/VBox/DataBox/BtnResetData
+@onready var _reset_hint_label: Label = $SettingsModal/SettingsCard/VBox/DataBox/ResetHintLabel
 @onready var _btn_close_settings: Button = $SettingsModal/SettingsCard/VBox/BtnCloseSettings
 
 var _time: float = 0.0
@@ -50,11 +54,13 @@ func _ready() -> void:
 	_btn_hard.pressed.connect(func() -> void: _set_difficulty(GameState.Difficulty.HARD))
 
 	_btn_start.pressed.connect(_start_game)
+	_btn_prologue.pressed.connect(_open_prologue)
 	_btn_settings.pressed.connect(_open_settings)
 	_btn_quit.pressed.connect(func() -> void: get_tree().quit())
 
-	# Connect audio modal
+	# Connect audio modal & data reset
 	_btn_close_settings.pressed.connect(_close_settings)
+	_btn_reset_data.pressed.connect(_on_reset_data_pressed)
 	_music_slider.value_changed.connect(_on_music_slider_changed)
 	_sfx_slider.value_changed.connect(_on_sfx_slider_changed)
 
@@ -105,6 +111,19 @@ func _start_game() -> void:
 	AudioManager.play_sfx("checkpoint")
 	GameState.new_game(_current_diff)
 	SceneRouter.go_to(WORLD_SELECT_PATH)
+
+
+func _open_prologue() -> void:
+	AudioManager.play_sfx("pickup")
+	SceneRouter.go_to(STORY_INTRO_PATH)
+
+
+func _on_reset_data_pressed() -> void:
+	SaveManager.reset_progress()
+	_high_score_label.text = "🏆 REKOR TERTINGGI: 0000000"
+	_reset_hint_label.text = "✔ PROGRES & PROLOG TELAH DI-RESET KE AWAL!"
+	_reset_hint_label.modulate = Color(0.4, 1.0, 0.6)
+	AudioManager.play_sfx("checkpoint")
 
 
 func _open_settings() -> void:

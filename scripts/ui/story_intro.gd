@@ -44,7 +44,7 @@ func _ready() -> void:
 	AudioManager.play_music("menu")
 
 	if _btn_skip != null:
-		_btn_skip.pressed.connect(_finish_intro)
+		_btn_skip.pressed.connect(_skip_or_back)
 	if _btn_next != null:
 		_btn_next.pressed.connect(_next_panel)
 
@@ -53,7 +53,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		_finish_intro()
+		_skip_or_back()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("fire"):
 		_next_panel()
@@ -91,6 +91,15 @@ func _next_panel() -> void:
 	AudioManager.play_sfx("pickup", 0.05)
 	if _current_panel < PANELS.size() - 1:
 		_show_panel(_current_panel + 1)
+	else:
+		_finish_intro()
+
+
+func _skip_or_back() -> void:
+	AudioManager.play_sfx("pickup")
+	if SaveManager.has_seen_intro:
+		# Jika sedang menonton ulang, kembali ke menu utama
+		SceneRouter.go_to("res://scenes/ui/main_menu.tscn")
 	else:
 		_finish_intro()
 

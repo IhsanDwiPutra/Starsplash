@@ -49,6 +49,19 @@ func mark_intro_seen() -> void:
 	save_data()
 
 
+func reset_intro() -> void:
+	has_seen_intro = false
+	save_data()
+
+
+func reset_progress() -> void:
+	unlocked_world = 1
+	unlocked_stage = 1
+	has_seen_intro = false
+	high_score = 0
+	save_data()
+
+
 func is_stage_unlocked(world_id: int, stage_id: int) -> bool:
 	if world_id < unlocked_world:
 		return true
