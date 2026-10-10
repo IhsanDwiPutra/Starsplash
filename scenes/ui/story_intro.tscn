@@ -179,11 +179,13 @@ alignment = 2
 visible = false
 custom_minimum_size = Vector2(170, 44)
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 17
 text = "◀  SEBELUMNYA"
 
 [node name="BtnNext" type="Button" parent="SubtitlePlate/VBox/ControlsRow"]
-custom_minimum_size = Vector2(280, 46)
+custom_minimum_size = Vector2(240, 46)
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 18
-text = "SELANJUTNYA ▶ [SPASI]"
+text = "SELANJUTNYA ▶"

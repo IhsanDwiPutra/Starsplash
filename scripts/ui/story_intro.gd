@@ -59,11 +59,15 @@ var _shake_offset: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	AudioManager.play_music("menu")
 
+	# Hanya navigasi dengan klik mouse (hindari bug double trigger tombol spasi)
 	if _btn_skip != null:
+		_btn_skip.focus_mode = Control.FOCUS_NONE
 		_btn_skip.pressed.connect(_skip_or_back)
 	if _btn_next != null:
+		_btn_next.focus_mode = Control.FOCUS_NONE
 		_btn_next.pressed.connect(_next_panel)
 	if _btn_prev != null:
+		_btn_prev.focus_mode = Control.FOCUS_NONE
 		_btn_prev.pressed.connect(_prev_panel)
 
 	_show_panel(0)
@@ -72,9 +76,6 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		_skip_or_back()
-		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("fire"):
-		_next_panel()
 		get_viewport().set_input_as_handled()
 
 
@@ -137,10 +138,9 @@ func _show_panel(index: int) -> void:
 
 	if _btn_next != null:
 		if index >= PANELS.size() - 1:
-			_btn_next.text = "🚀  GAS BERANGKAT! [SPASI]"
+			_btn_next.text = "🚀  GAS BERANGKAT!"
 		else:
-			_btn_next.text = "SELANJUTNYA ▶ [SPASI]"
-		_btn_next.grab_focus()
+			_btn_next.text = "SELANJUTNYA ▶"
 
 
 func _trigger_flash() -> void:
@@ -167,7 +167,14 @@ func _trigger_shake(intensity: float) -> void:
 	t.tween_property(self, "position", Vector2.ZERO, 0.05)
 
 
+var _last_click_time: float = -1.0
+
 func _next_panel() -> void:
+	var now: float = Time.get_ticks_msec() / 1000.0
+	if now - _last_click_time < 0.25:
+		return
+	_last_click_time = now
+
 	if _current_panel < PANELS.size() - 1:
 		_show_panel(_current_panel + 1)
 	else:
