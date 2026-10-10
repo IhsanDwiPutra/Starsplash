@@ -20,6 +20,8 @@ const DroneScene: PackedScene = preload("res://scenes/enemies/enemy_drone.tscn")
 const SineScene: PackedScene = preload("res://scenes/enemies/enemy_sine.tscn")
 const HitSparkScene: PackedScene = preload("res://scenes/fx/hit_spark.tscn")
 const ExplosionScene: PackedScene = preload("res://scenes/fx/explosion.tscn")
+const CarrierScene: PackedScene = preload("res://scenes/enemies/enemy_carrier.tscn")
+const PickupScene: PackedScene = preload("res://scenes/pickups/pickup.tscn")
 
 var current_hp: int = MAX_HP
 var current_phase: int = 1
@@ -30,6 +32,7 @@ var is_dead: bool = false
 var _time: float = 0.0
 var _fire_timer: float = 1.5
 var _special_timer: float = 5.0
+var _carrier_timer: float = 12.0
 var _center_y: float = 540.0
 var _pulse_timer: float = 0.0
 
@@ -99,6 +102,12 @@ func _handle_movement(delta: float) -> void:
 func _handle_combat(delta: float) -> void:
 	_fire_timer -= delta
 	_special_timer -= delta
+	_carrier_timer -= delta
+
+	# Suplai Carrier Drone melintas berkala membawa [P] / [S]
+	if _carrier_timer <= 0.0:
+		_carrier_timer = 15.0
+		_spawn_support_carrier()
 
 	match current_phase:
 		1:
@@ -107,7 +116,7 @@ func _handle_combat(delta: float) -> void:
 				_shoot_spread(3, 0.22)
 
 			if _special_timer <= 0.0:
-				_special_timer = 6.0
+				_special_timer = 5.5
 				_spawn_escort_drone()
 
 		2:
@@ -118,6 +127,8 @@ func _handle_combat(delta: float) -> void:
 			if _special_timer <= 0.0:
 				_special_timer = 4.2
 				_shoot_dual_fast()
+				if randf() < 0.5:
+					_spawn_escort_drone()
 
 		3:
 			if _fire_timer <= 0.0:
@@ -125,7 +136,7 @@ func _handle_combat(delta: float) -> void:
 				_shoot_barrage_stream()
 
 			if _special_timer <= 0.0:
-				_special_timer = 5.0
+				_special_timer = 4.8
 				_spawn_escort_sine()
 
 
@@ -190,6 +201,16 @@ func _spawn_escort_sine() -> void:
 	get_parent().add_child(sine)
 
 
+func _spawn_support_carrier() -> void:
+	var parent: Node = get_parent()
+	if parent == null or is_dead:
+		return
+	var carrier := CarrierScene.instantiate() as Enemy
+	var y_pos: float = 260.0 if randf() < 0.5 else 820.0
+	carrier.position = Vector2(2050.0, y_pos)
+	parent.add_child(carrier)
+
+
 func _update_core_pulse(delta: float) -> void:
 	var speed_mult: float = float(current_phase) * 3.5
 	_pulse_timer += delta * speed_mult
@@ -237,6 +258,9 @@ func _on_phase_changed(new_phase: int) -> void:
 	var t: Tween = create_tween()
 	t.tween_property(self, "modulate", Color.WHITE, 0.3)
 
+	# Hadiah pecah fase: lepaskan Power-Up Senjata [P], Rudal [M], & Shield [S]
+	_drop_phase_pickups(new_phase)
+
 
 func _update_phase_visuals() -> void:
 	match current_phase:
@@ -249,6 +273,31 @@ func _update_phase_visuals() -> void:
 		3:
 			_eye_iris.color = Color(1.0, 0.25, 0.25) # Merah enrage
 			_core.color = Color(1.0, 0.2, 0.3)
+
+
+func _drop_phase_pickups(phase: int) -> void:
+	var parent: Node = get_parent()
+	if parent == null or is_dead:
+		return
+
+	# Hadiah Pecah Fase: 1x Weapon Upgrade [P]
+	var p_weapon := PickupScene.instantiate() as Pickup
+	p_weapon.type = Pickup.Type.WEAPON
+	p_weapon.position = global_position + Vector2(-60.0, -35.0)
+	parent.add_child.call_deferred(p_weapon)
+
+	# Hadiah Pecah Fase: 1x Amunisi Rudal [M] (+3 amunisi)
+	var p_missile := PickupScene.instantiate() as Pickup
+	p_missile.type = Pickup.Type.MISSILE
+	p_missile.position = global_position + Vector2(-60.0, 35.0)
+	parent.add_child.call_deferred(p_missile)
+
+	# Jika masuk Fase 3 (Enrage mode): Berikan Shield [S] pelindung darurat!
+	if phase == 3:
+		var p_shield := PickupScene.instantiate() as Pickup
+		p_shield.type = Pickup.Type.SHIELD
+		p_shield.position = global_position + Vector2(-110.0, 0.0)
+		parent.add_child.call_deferred(p_shield)
 
 
 func _flash() -> void:

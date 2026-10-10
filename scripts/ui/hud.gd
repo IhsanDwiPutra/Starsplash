@@ -180,3 +180,11 @@ func hide_boss_bar() -> void:
 	)
 
 
+func reset_boss_bar() -> void:
+	if _boss_container != null:
+		_boss_container.visible = false
+		_boss_container.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	if _level_bar != null:
+		_level_bar.visible = true
+
+

@@ -242,6 +242,10 @@ func _clear_active_threats() -> void:
 			child.queue_free()
 	for bullet in get_tree().get_nodes_in_group("enemy_bullet"):
 		bullet.queue_free()
+	for star in get_tree().get_nodes_in_group("star"):
+		star.queue_free()
+	for pickup in get_tree().get_nodes_in_group("pickup"):
+		pickup.queue_free()
 
 
 func _finish_level() -> void:

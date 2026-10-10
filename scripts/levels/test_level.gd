@@ -107,6 +107,7 @@ func _on_level_completed(stats: Dictionary) -> void:
 
 func _on_game_over() -> void:
 	_is_game_over = true
+	_hud.reset_boss_bar()
 	SaveManager.submit_score(GameState.score)
 	if _level_runner.last_checkpoint_id > 0:
 		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Lanjut dari Checkpoint\nTekan [ESC] untuk Menu Utama" % GameState.score
@@ -142,10 +143,27 @@ func _restart_from_checkpoint() -> void:
 	_is_game_over = false
 	_can_leave = false
 	_game_over_label.visible = false
+	_hud.reset_boss_bar()
+
 	GameState.lives = GameState.START_LIVES[GameState.difficulty]
 	GameState.lives_changed.emit(GameState.lives)
-	GameState.weapon_level = 1
-	GameState.weapon_changed.emit(1)
+	
+	# Selalu berikan amunisi rudal darurat saat respawn
+	GameState.missile_ammo = GameState.START_MISSILES
+	GameState.missiles_changed.emit(GameState.missile_ammo, GameState.MAX_MISSILES)
+
+	# Jika respawn di Checkpoint Boss (id 2): langsung persenjatai Pip dengan Senjata Lv 2!
+	if _level_runner.last_checkpoint_id >= 2:
+		GameState.weapon_level = 2
+		GameState.weapon_timer = GameState.WEAPON_DURATION
+		GameState.weapon_changed.emit(2)
+		GameState.weapon_timer_changed.emit(GameState.weapon_timer, GameState.WEAPON_DURATION)
+	else:
+		GameState.weapon_level = 1
+		GameState.weapon_timer = 0.0
+		GameState.weapon_changed.emit(1)
+		GameState.weapon_timer_changed.emit(0.0, GameState.WEAPON_DURATION)
+
 	_player._dead = false
 	_player.visible = true
 	_player.position = Vector2(200, 540)

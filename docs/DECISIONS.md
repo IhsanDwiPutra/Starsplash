@@ -24,3 +24,5 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 18 | 2026-10-10 | Arsitektur AudioManager Hibrida: Synthesizer Prosedural Otomatis + Slot Pemuatan File Audio Eksternal (.ogg/.wav) | Game langsung bersuara retro arcade tanpa file eksternal; fleksibel di-upgrade aset final kapan saja tanpa ubah kode |
 | 19 | 2026-10-10 | Desain Boss Dunia 1: Glacier Gloop (HP 150, 3 fase transformasi, visual reaktif, Boss Health Bar HUD, 7 ledakan berantai saat mati) | Menghadirkan klimaks pertarungan boss arcade yang menantang namun adil, sesuai target scope GDD Dunia 1 Laut Beku |
 | 20 | 2026-10-10 | Standarisasi Deteksi Damage Proyektil & Bom Splash berbasis `has_method("take_damage")` serta Hitbox Capsule Boss | Mendukung multi-entity (Enemy reguler, Boss, rintangan masa depan) secara seragam dan responsif tanpa terikat inheritance statis tunggal |
+| 21 | 2026-10-10 | Mekanisme Suplai Boss Fight (Drop Hadiah Pecah Fase, Carrier Suplai Berkala, Checkpoint 2 Boss & Respawn Loadout) | Mengatasi jebakan recovery shmup sehingga pertarungan boss terasa menantang dan dinamis tanpa terasa alot atau menghukum pemain secara tidak adil |
+
