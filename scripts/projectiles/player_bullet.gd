@@ -24,7 +24,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	var enemy := area as Enemy
-	if enemy != null:
-		enemy.take_damage(damage, global_position)
+	if area.has_method("take_damage"):
+		area.take_damage(damage, global_position)
 		queue_free()

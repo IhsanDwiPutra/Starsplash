@@ -117,9 +117,10 @@ func _try_splash() -> void:
 		bullet.queue_free()
 	var limit_x: float = get_viewport_rect().size.x + SPLASH_OFFSCREEN_MARGIN
 	for node in get_tree().get_nodes_in_group("enemy"):
-		var enemy := node as Enemy
-		if enemy != null and enemy.global_position.x < limit_x:
-			enemy.take_damage(SPLASH_DAMAGE)
+		if node is Node2D and node.has_method("take_damage"):
+			var target := node as Node2D
+			if target.global_position.x < limit_x:
+				target.take_damage(SPLASH_DAMAGE, target.global_position)
 	var wave := SplashWaveScene.instantiate() as Node2D
 	get_parent().add_child(wave)
 	wave.global_position = global_position

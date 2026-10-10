@@ -31,8 +31,7 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if _exploded:
 		return
-	var enemy := area as Enemy
-	if enemy != null:
+	if area.has_method("take_damage"):
 		_explode()
 
 
@@ -47,9 +46,10 @@ func _explode() -> void:
 	get_parent().add_child(exp)
 	# Beri damage ke semua musuh dalam radius ledakan
 	for node in get_tree().get_nodes_in_group("enemy"):
-		var enemy := node as Enemy
-		if enemy != null and enemy.global_position.distance_to(global_position) <= BLAST_RADIUS:
-			enemy.take_damage(DAMAGE, enemy.global_position)
+		if node is Node2D and node.has_method("take_damage"):
+			var target := node as Node2D
+			if target.global_position.distance_to(global_position) <= BLAST_RADIUS:
+				target.take_damage(DAMAGE, target.global_position)
 	_play_blast_fx()
 
 
