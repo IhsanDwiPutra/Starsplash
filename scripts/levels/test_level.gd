@@ -6,13 +6,10 @@ const SineScene: PackedScene = preload("res://scenes/enemies/enemy_sine.tscn")
 const ShooterScene: PackedScene = preload("res://scenes/enemies/enemy_shooter.tscn")
 const CarrierScene: PackedScene = preload("res://scenes/enemies/enemy_carrier.tscn")
 const MENU_PATH: String = "res://scenes/ui/main_menu.tscn"
-const SPAWN_INTERVAL: float = 0.9
-const SPAWN_X: float = 2050.0
 const GAME_OVER_DELAY: float = 1.0
 
-var _spawn_timer: float = 0.0
-var _spawn_count: int = 0
 var _is_game_over: bool = false
+var _is_cleared: bool = false
 var _can_leave: bool = false
 
 var _shake_intensity: float = 0.0
@@ -20,24 +17,36 @@ var _shake_duration: float = 0.0
 var _shake_timer: float = 0.0
 
 @onready var _enemies: Node2D = $Enemies
+@onready var _player: Player = $Player
+@onready var _hud: CanvasLayer = $HUD
 @onready var _game_over_label: Label = $HUD/GameOverLabel
 @onready var _camera: Camera2D = $Camera2D
+@onready var _level_runner: LevelRunner = $LevelRunner
 
 
 func _ready() -> void:
-	$Player.game_over.connect(_on_game_over)
+	_player.game_over.connect(_on_game_over)
 	GameState.screen_shaken.connect(_on_screen_shaken)
 	_game_over_label.visible = false
+
+	# Setup timeline Level 1: Laut Beku
+	_level_runner.banner_requested.connect(_on_banner_requested)
+	_level_runner.progress_updated.connect(_on_progress_updated)
+	_level_runner.checkpoint_reached.connect(_on_checkpoint_reached)
+	_level_runner.level_completed.connect(_on_level_completed)
+
+	var enemy_scenes: Dictionary = {
+		"drone": DroneScene,
+		"sine": SineScene,
+		"shooter": ShooterScene,
+		"carrier": CarrierScene
+	}
+	var timeline: Array[Dictionary] = Level1Data.get_timeline(enemy_scenes)
+	_level_runner.setup(_enemies, timeline, 140.0)
 
 
 func _process(delta: float) -> void:
 	_handle_screen_shake(delta)
-	if _is_game_over:
-		return
-	_spawn_timer -= delta
-	if _spawn_timer <= 0.0:
-		_spawn_timer = SPAWN_INTERVAL
-		_spawn_enemy()
 
 
 func _handle_screen_shake(delta: float) -> void:
@@ -61,37 +70,70 @@ func _on_screen_shaken(intensity: float, duration: float) -> void:
 	_shake_timer = maxf(_shake_timer, duration)
 
 
-func _spawn_enemy() -> void:
-	_spawn_count += 1
-	var scene: PackedScene = DroneScene
-	var y_min: float = 120.0
-	var y_max: float = 960.0
-	if _spawn_count % 11 == 0:
-		scene = CarrierScene
-		y_min = 200.0
-		y_max = 700.0
-	elif _spawn_count % 5 == 0:
-		scene = ShooterScene
-		y_min = 250.0
-		y_max = 830.0
-	elif _spawn_count % 3 == 0:
-		scene = SineScene
-		y_min = 320.0
-		y_max = 760.0
-	var enemy: Enemy = scene.instantiate()
-	enemy.position = Vector2(SPAWN_X, randf_range(y_min, y_max))
-	_enemies.add_child(enemy)
+func _on_banner_requested(text: String, duration: float) -> void:
+	_hud.show_banner(text, duration)
+
+
+func _on_progress_updated(ratio: float, current_time: float, total_time: float) -> void:
+	_hud.update_progress(ratio, current_time, total_time)
+
+
+func _on_checkpoint_reached(_checkpoint_id: int, _name: String) -> void:
+	GameState.trigger_shake(4.0, 0.2)
+
+
+func _on_level_completed(stats: Dictionary) -> void:
+	_is_cleared = true
+	SaveManager.submit_score(stats["final_score"])
+	_hud.show_level_clear(stats)
+	GameState.trigger_shake(8.0, 0.3)
+	await get_tree().create_timer(GAME_OVER_DELAY).timeout
+	_can_leave = true
 
 
 func _on_game_over() -> void:
 	_is_game_over = true
 	SaveManager.submit_score(GameState.score)
-	_game_over_label.text = "GAME OVER\nSkor: %d\nTekan tembak untuk kembali" % GameState.score
+	if _level_runner.last_checkpoint_id > 0:
+		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Lanjut dari Checkpoint\nTekan [ESC] untuk Menu Utama" % GameState.score
+	else:
+		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Coba Lagi\nTekan [ESC] untuk Menu Utama" % GameState.score
 	_game_over_label.visible = true
 	await get_tree().create_timer(GAME_OVER_DELAY).timeout
 	_can_leave = true
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _can_leave and event.is_action_pressed("fire"):
+	if not _can_leave:
+		return
+
+	if event.is_action_pressed("pause"):
 		SceneRouter.go_to(MENU_PATH)
+		return
+
+	if event.is_action_pressed("fire"):
+		if _is_cleared:
+			# Tamat level 1: kembali ke menu atau restart
+			SceneRouter.go_to(MENU_PATH)
+		elif _is_game_over:
+			if _level_runner.last_checkpoint_id > 0:
+				_restart_from_checkpoint()
+			else:
+				# Ulang dari awal level
+				GameState.new_game(GameState.difficulty)
+				SceneRouter.go_to("res://scenes/levels/test_level.tscn")
+
+
+func _restart_from_checkpoint() -> void:
+	_is_game_over = false
+	_can_leave = false
+	_game_over_label.visible = false
+	GameState.lives = GameState.START_LIVES[GameState.difficulty]
+	GameState.lives_changed.emit(GameState.lives)
+	GameState.weapon_level = 1
+	GameState.weapon_changed.emit(1)
+	_player._dead = false
+	_player.visible = true
+	_player.position = Vector2(200, 540)
+	_player._invuln = 2.5
+	_level_runner.restart_from_checkpoint()

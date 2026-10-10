@@ -20,3 +20,4 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 14 | 2026-10-09 | Splash Meter, kombo, dan multiplier disimpan di autoload GameState (bukan node terpisah) | Sederhana; HUD, Player, Enemy mengaksesnya satu tempat |
 | 15 | 2026-10-09 | Senjata super (Lv 2-5) berdurasi 16 detik; drop [P] & Shield hanya dari musuh khusus/Carrier | Mencegah pemain terlalu overpowered; menjaga tensi dan tantangan |
 | 16 | 2026-10-10 | Efek Ledakan Poligon Prosedural, Hit Spark & Camera Screen Shake | Game feel arcade instan tanpa ketergantungan aset tekstur eksternal, performa tinggi di semua target platform |
+| 17 | 2026-10-10 | LevelRunner berbasis Timeline Data terpisah (Level1Data) dengan sistem formasi (Line, V, Wall, Swarm Sine) & Checkpoint 50% | Memisahkan logika eksekusi level dari data gelombang, mempermudah pembuatan level baru dan tuning kesulitan |

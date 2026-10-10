@@ -28,10 +28,10 @@
 - [x] Rudal (K / klik kanan) + ammo + pickup
 - [x] Shield (pelindung) + pickup
 - [x] Efek Partikel Ledakan, Hit Spark & Camera Screen Shake (Game Feel)
-- [ ] LevelRunner (timeline spawn musuh)
-- [ ] Respawn + checkpoint
+- [x] LevelRunner (timeline spawn musuh terstruktur & formasi)
+- [x] Respawn + checkpoint (di 50% level)
+- [x] Level 1 tamat (layar kemenangan, bonus skor nyawa, alur kembali ke menu)
 - [ ] SFX dasar + musik
-- [ ] Level 1 tamat
 
 ## Fase 3 - MVP Lengkap (PC)
 - [ ] Level 2
@@ -53,6 +53,7 @@
 ---
 ## Catatan Serah-Terima
 <!-- Tambahkan entri BARU di atas. Format: tanggal | model | dikerjakan | file utama | masalah | langkah berikut -->
+- 2026-10-10 | Gemini | LevelRunner timeline spawn terstruktur (Level 1: Laut Beku ~140s), sistem formasi (LINE, V, WALL, SWARM_SINE), notifikasi banner visual, progress bar level di HUD, Checkpoint di 50% dengan respawn flow, dan layar kemenangan Level Clear | scripts/levels/level_runner.gd, scripts/levels/level_1_data.gd, scripts/levels/test_level.gd, scripts/ui/hud.gd, scenes/levels/test_level.tscn, docs/DECISIONS.md, docs/ROADMAP.md | - | SFX dasar + musik (AudioManager), persiapan transisi ke Fase 3
 - 2026-10-10 | Gemini | Efek partikel ledakan poligon prosedural (flash inti, shockwave arc, pecahan berputar adaptif warna), hit spark peluru, camera screen shake responsif (dihubungkan ke Camera2D test_level, ledakan musuh berbobot, rudal, splash wave, dan damage pemain) | scenes/fx/*, scripts/fx/*, scripts/enemies/enemy.gd, scripts/projectiles/*, scripts/player/player.gd, scripts/levels/test_level.gd, docs/DECISIONS.md | - | LevelRunner (timeline spawn musuh), checkpoint & tamat Level 1, SFX dasar + musik
 - 2026-10-09 | Gemini | Penyeimbang senjata: durasi senjata super (16s timer revert ke Lv 1), Carrier Drone emas khusus (100% drop [P]/[S]), aturan drop ketat (musuh biasa hanya drop Bintang & rudal), HUD timer senjata | scripts/autoload/game_state.gd, scripts/enemies/*, scripts/ui/hud.gd, scenes/enemies/enemy_carrier.tscn, docs/BALANCE.md, docs/DECISIONS.md | - | LevelRunner (timeline spawn terstruktur), ledakan partikel / SFX, checkpoint & tamat Level 1
 - 2026-10-09 | Gemini | Fase 2: Power-up senjata (Lv 1-5, spread shot & turun saat hit), Rudal area damage (K / Klik Kanan), Shield aura pelindung, item pickup (P, M, S drop dari musuh), kontras outline musuh, update HUD | scripts/player/player.gd, scripts/projectiles/*, scripts/pickups/pickup.*, scenes/enemies/*, scripts/ui/hud.gd | - | LevelRunner (timeline spawn terstruktur), ledakan partikel / SFX, checkpoint & tamat Level 1
