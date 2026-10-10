@@ -11,6 +11,7 @@ const DESPAWN_X: float = -100.0
 
 var _time: float = 0.0
 var _base_y: float = 0.0
+var _active_sprite: Sprite2D = null
 
 
 func _ready() -> void:
@@ -21,32 +22,50 @@ func _ready() -> void:
 
 
 func _setup_visual() -> void:
+	if has_node("SpriteWeapon"):
+		$SpriteWeapon.visible = false
+	if has_node("SpriteMissile"):
+		$SpriteMissile.visible = false
+	if has_node("SpriteShield"):
+		$SpriteShield.visible = false
+	if has_node("Border"):
+		$Border.visible = false
+	if has_node("Badge"):
+		$Badge.visible = false
+	if has_node("Label"):
+		$Label.visible = false
+
 	match type:
 		Type.WEAPON:
 			if has_node("SpriteWeapon"):
 				$SpriteWeapon.visible = true
-				$Border.visible = false
-				$Badge.visible = false
-				$Label.visible = false
+				_active_sprite = $SpriteWeapon
 			else:
+				$Border.visible = true
+				$Badge.visible = true
+				$Label.visible = true
 				$Badge.color = Color(1.0, 0.72, 0.1, 1.0)
 				$Label.text = "P"
 		Type.MISSILE:
-			if has_node("SpriteWeapon"):
-				$SpriteWeapon.visible = false
-			$Border.visible = true
-			$Badge.visible = true
-			$Label.visible = true
-			$Badge.color = Color(0.95, 0.3, 0.3, 1.0)
-			$Label.text = "M"
+			if has_node("SpriteMissile"):
+				$SpriteMissile.visible = true
+				_active_sprite = $SpriteMissile
+			else:
+				$Border.visible = true
+				$Badge.visible = true
+				$Label.visible = true
+				$Badge.color = Color(0.95, 0.3, 0.3, 1.0)
+				$Label.text = "M"
 		Type.SHIELD:
-			if has_node("SpriteWeapon"):
-				$SpriteWeapon.visible = false
-			$Border.visible = true
-			$Badge.visible = true
-			$Label.visible = true
-			$Badge.color = Color(0.2, 0.75, 1.0, 1.0)
-			$Label.text = "S"
+			if has_node("SpriteShield"):
+				$SpriteShield.visible = true
+				_active_sprite = $SpriteShield
+			else:
+				$Border.visible = true
+				$Badge.visible = true
+				$Label.visible = true
+				$Badge.color = Color(0.2, 0.75, 1.0, 1.0)
+				$Label.text = "S"
 
 
 func _physics_process(delta: float) -> void:
@@ -54,9 +73,9 @@ func _physics_process(delta: float) -> void:
 	position.x -= DRIFT_SPEED * delta
 	position.y = _base_y + sin(_time * 3.0) * 15.0
 	
-	if has_node("SpriteWeapon") and $SpriteWeapon.visible:
-		$SpriteWeapon.rotation = sin(_time * 3.5) * 0.1
-		$SpriteWeapon.scale = Vector2(0.065, 0.065) * (1.0 + sin(_time * 6.0) * 0.07)
+	if _active_sprite != null:
+		_active_sprite.rotation = sin(_time * 3.5) * 0.1
+		_active_sprite.scale = Vector2(0.065, 0.065) * (1.0 + sin(_time * 6.0) * 0.07)
 		
 	if position.x < DESPAWN_X:
 		queue_free()
