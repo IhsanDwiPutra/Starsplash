@@ -25,6 +25,10 @@ func add_line(from: Vector2, to: Vector2, color: Color, width: float) -> void:
 	_items.append({"kind": "line", "a": from, "b": to, "color": color, "width": width})
 
 
+func add_texture(texture: Texture2D, rect: Rect2, modulate_color: Color = Color.WHITE) -> void:
+	_items.append({"kind": "texture", "tex": texture, "rect": rect, "modulate": modulate_color})
+
+
 func _process(delta: float) -> void:
 	if speed <= 0.0:
 		return
@@ -44,6 +48,8 @@ func _draw() -> void:
 
 func _draw_item(item: Dictionary) -> void:
 	match item["kind"]:
+		"texture":
+			draw_texture_rect(item["tex"], item["rect"], false, item["modulate"])
 		"poly":
 			draw_colored_polygon(item["pts"], item["color"])
 			var outline: Color = item["outline"]

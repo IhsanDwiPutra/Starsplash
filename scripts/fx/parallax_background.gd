@@ -16,6 +16,9 @@ const ICEBERG: Color = Color(0.66, 0.74, 0.96)
 const ICEBERG_OUTLINE: Color = Color(0.44, 0.52, 0.82)
 const SNOW: Color = Color(0.93, 0.96, 1.0, 0.9)
 
+const SkyboxTex: Texture2D = preload("res://assets/art/backgrounds/bg_skybox_aurora.jpg")
+const FarMountainsTex: Texture2D = preload("res://assets/art/backgrounds/bg_mountains_far.png")
+
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
@@ -23,9 +26,8 @@ func _ready() -> void:
 	_rng.seed = 7
 	_build_sky()
 	_build_stars()
-	_build_clouds()
-	_build_mountains(FAR_MOUNTAIN, FAR_OUTLINE, 25.0, HORIZON_Y + 10.0, 230.0, 430.0, 260.0, 520.0)
-	_build_mountains(ICEBERG, ICEBERG_OUTLINE, 70.0, HORIZON_Y + 10.0, 90.0, 210.0, 160.0, 320.0)
+	_build_far_mountains()
+	_build_mountains(ICEBERG, ICEBERG_OUTLINE, 65.0, HORIZON_Y + 10.0, 90.0, 210.0, 160.0, 320.0)
 	_build_ripples()
 	_build_floes()
 
@@ -39,24 +41,23 @@ func _new_layer(speed: float) -> BgLayer:
 
 
 func _build_sky() -> void:
-	var layer: BgLayer = _new_layer(0.0)
-	layer.add_gradient(
-		PackedVector2Array([Vector2(0, 0), Vector2(SCREEN.x, 0), Vector2(SCREEN.x, HORIZON_Y), Vector2(0, HORIZON_Y)]),
-		PackedColorArray([SKY_TOP, SKY_TOP, SKY_HORIZON, SKY_HORIZON]))
-	layer.add_gradient(
-		PackedVector2Array([Vector2(0, HORIZON_Y), Vector2(SCREEN.x, HORIZON_Y), Vector2(SCREEN.x, SCREEN.y), Vector2(0, SCREEN.y)]),
-		PackedColorArray([SEA_TOP, SEA_TOP, SEA_BOTTOM, SEA_BOTTOM]))
-	layer.add_circle(Vector2(1500.0, 170.0), 150.0, Color(1, 1, 1, 0.08))
-	layer.add_circle(Vector2(1500.0, 170.0), 85.0, Color(0.97, 0.97, 1.0, 1.0))
-	layer.add_circle(Vector2(1522.0, 150.0), 18.0, Color(0.88, 0.9, 0.98, 1.0))
-	layer.add_circle(Vector2(1478.0, 195.0), 12.0, Color(0.88, 0.9, 0.98, 1.0))
+	var layer: BgLayer = _new_layer(5.0)
+	layer.tile_width = 1920.0
+	layer.add_texture(SkyboxTex, Rect2(0.0, 0.0, 1920.0, 1080.0))
+
+
+func _build_far_mountains() -> void:
+	var layer: BgLayer = _new_layer(25.0)
+	layer.tile_width = 1920.0
+	# Skala proporsional 1920 x 1070, posisi Y di-offset agar puncak es pas di atas horizon laut
+	layer.add_texture(FarMountainsTex, Rect2(0.0, 90.0, 1920.0, 1070.0), Color(1.0, 1.0, 1.0, 0.98))
 
 
 func _build_stars() -> void:
-	var layer: BgLayer = _new_layer(8.0)
-	for i in 70:
-		var pos := Vector2(_rng.randf_range(20.0, TILE_W - 20.0), _rng.randf_range(20.0, 520.0))
-		layer.add_circle(pos, _rng.randf_range(1.5, 3.5), Color(1, 1, 1, _rng.randf_range(0.4, 0.9)))
+	var layer: BgLayer = _new_layer(10.0)
+	for i in 40:
+		var pos := Vector2(_rng.randf_range(20.0, TILE_W - 20.0), _rng.randf_range(20.0, 480.0))
+		layer.add_circle(pos, _rng.randf_range(1.5, 3.0), Color(1.0, 0.95, 0.7, _rng.randf_range(0.3, 0.7)))
 
 
 func _build_clouds() -> void:
