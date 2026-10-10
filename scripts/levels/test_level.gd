@@ -7,6 +7,7 @@ const ShooterScene: PackedScene = preload("res://scenes/enemies/enemy_shooter.ts
 const CarrierScene: PackedScene = preload("res://scenes/enemies/enemy_carrier.tscn")
 const BossScene: PackedScene = preload("res://scenes/bosses/boss_glacier_gloop.tscn")
 const MENU_PATH: String = "res://scenes/ui/main_menu.tscn"
+const STAGE_SELECT_PATH: String = "res://scenes/ui/stage_select.tscn"
 const GAME_OVER_DELAY: float = 1.0
 
 var _is_game_over: bool = false
@@ -126,19 +127,23 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed("pause"):
-		SceneRouter.go_to(MENU_PATH)
+		SceneRouter.go_to(STAGE_SELECT_PATH)
 		return
 
 	if event.is_action_pressed("fire"):
 		if _is_cleared:
-			# Tamat level 1: kembali ke menu atau restart
-			SceneRouter.go_to(MENU_PATH)
+			# Jika stage selesai: lanjut ke stage berikutnya atau kembali ke stage select jika sudah 1-6
+			if GameState.current_stage < 6:
+				GameState.start_stage(GameState.current_world, GameState.current_stage + 1)
+				SceneRouter.go_to("res://scenes/levels/test_level.tscn")
+			else:
+				SceneRouter.go_to(STAGE_SELECT_PATH)
 		elif _is_game_over:
 			if _level_runner.last_checkpoint_id > 0:
 				_restart_from_checkpoint()
 			else:
-				# Ulang dari awal level
-				GameState.new_game(GameState.difficulty)
+				# Ulang dari awal stage ini
+				GameState.start_stage(GameState.current_world, GameState.current_stage)
 				SceneRouter.go_to("res://scenes/levels/test_level.tscn")
 
 

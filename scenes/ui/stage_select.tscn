@@ -1,0 +1,444 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/stage_select.gd" id="1_stage_select"]
+[ext_resource type="Texture2D" path="res://assets/art/backgrounds/bg_stage_select.jpg" id="2_bg_tex"]
+
+[sub_resource type="Curve" id="Curve_snow"]
+_data = [Vector2(0, 0.5), 0.0, 1.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_snow"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(0.6, 0.9, 1, 0, 0.8, 0.95, 1, 0.8, 1, 1, 1, 0.8, 0.7, 0.9, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_normal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.08, 0.14, 0.28, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.65, 0.95, 0.75)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.02, 0.04, 0.1, 0.6)
+shadow_size = 10
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_miniboss"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.16, 0.13, 0.28, 0.9)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.68, 0.2, 0.9)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.2, 0.1, 0.02, 0.6)
+shadow_size = 12
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_boss"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.22, 0.1, 0.24, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.35, 0.55, 0.95)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.25, 0.04, 0.12, 0.7)
+shadow_size = 14
+shadow_offset = Vector2(0, 6)
+
+[node name="StageSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_stage_select")
+
+[node name="BackgroundTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg_tex")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VignetteOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.08, 0.18, 0.55)
+
+[node name="SnowParticles" type="CPUParticles2D" parent="."]
+position = Vector2(960, -20)
+amount = 45
+lifetime = 6.0
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(1000, 10)
+direction = Vector2(0.3, 1)
+spread = 20.0
+gravity = Vector2(0, 20)
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_snow")
+color_ramp = SubResource("Gradient_snow")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 40.0
+offset_right = -80.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="HeaderBox" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0.06, 0.08, 0.16, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 54
+text = "DUNIA 1 • LAUT BEKU"
+horizontal_alignment = 1
+
+[node name="SubTitleLabel" type="Label" parent="VBoxContainer/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "PILIH TAHAPAN PETUALANGAN PIP"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 28
+theme_override_constants/v_separation = 24
+columns = 3
+
+[node name="CardStage1" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(420, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_normal")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/GridContainer/CardStage1"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer/GridContainer/CardStage1/VBox"]
+layout_mode = 2
+
+[node name="StageTag" type="Label" parent="VBoxContainer/GridContainer/CardStage1/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "STAGE 1-1"
+
+[node name="Badge" type="Label" parent="VBoxContainer/GridContainer/CardStage1/VBox/TopRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.7, 1)
+theme_override_font_sizes/font_size = 15
+text = "★ PEMULA"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage1/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Pesisir Es"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage1/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 0.95, 0.8)
+theme_override_font_sizes/font_size = 15
+text = "Barisan Frost Jelly & Carrier Harta karun"
+autowrap_mode = 2
+
+[node name="BtnPlay" type="Button" parent="VBoxContainer/GridContainer/CardStage1/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 18
+text = "▶  MAINKAN"
+
+[node name="CardStage2" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(420, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_normal")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/GridContainer/CardStage2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer/GridContainer/CardStage2/VBox"]
+layout_mode = 2
+
+[node name="StageTag" type="Label" parent="VBoxContainer/GridContainer/CardStage2/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "STAGE 1-2"
+
+[node name="Badge" type="Label" parent="VBoxContainer/GridContainer/CardStage2/VBox/TopRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "★★ STANDAR"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage2/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Selat Gunung Es"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage2/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 0.95, 0.8)
+theme_override_font_sizes/font_size = 15
+text = "Uji gelombang gerak sinus & penembak es"
+autowrap_mode = 2
+
+[node name="BtnPlay" type="Button" parent="VBoxContainer/GridContainer/CardStage2/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 18
+text = "▶  MAINKAN"
+
+[node name="CardStage3" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(420, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_miniboss")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/GridContainer/CardStage3"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer/GridContainer/CardStage3/VBox"]
+layout_mode = 2
+
+[node name="StageTag" type="Label" parent="VBoxContainer/GridContainer/CardStage3/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.8, 0.35, 1)
+theme_override_font_sizes/font_size = 18
+text = "STAGE 1-3"
+
+[node name="Badge" type="Label" parent="VBoxContainer/GridContainer/CardStage3/VBox/TopRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+text = "⚔️ MINI-BOSS"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage3/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 26
+text = "Benteng Es"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage3/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.85, 0.8, 0.85)
+theme_override_font_sizes/font_size = 15
+text = "Pertahanan sengit & duel Mini-Boss Es"
+autowrap_mode = 2
+
+[node name="BtnPlay" type="Button" parent="VBoxContainer/GridContainer/CardStage3/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 18
+text = "▶  MAINKAN"
+
+[node name="CardStage4" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(420, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_normal")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/GridContainer/CardStage4"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer/GridContainer/CardStage4/VBox"]
+layout_mode = 2
+
+[node name="StageTag" type="Label" parent="VBoxContainer/GridContainer/CardStage4/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "STAGE 1-4"
+
+[node name="Badge" type="Label" parent="VBoxContainer/GridContainer/CardStage4/VBox/TopRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "★★★ SENGIT"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage4/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Badai Salju Malam"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage4/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 0.95, 0.8)
+theme_override_font_sizes/font_size = 15
+text = "Formasi kilat V di tengah badai es beku"
+autowrap_mode = 2
+
+[node name="BtnPlay" type="Button" parent="VBoxContainer/GridContainer/CardStage4/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 18
+text = "▶  MAINKAN"
+
+[node name="CardStage5" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(420, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_normal")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/GridContainer/CardStage5"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer/GridContainer/CardStage5/VBox"]
+layout_mode = 2
+
+[node name="StageTag" type="Label" parent="VBoxContainer/GridContainer/CardStage5/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "STAGE 1-5"
+
+[node name="Badge" type="Label" parent="VBoxContainer/GridContainer/CardStage5/VBox/TopRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.6, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "★★★★ ELITE"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage5/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Palung Laut Dalam"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage5/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 0.95, 0.8)
+theme_override_font_sizes/font_size = 15
+text = "Serbuan rapat gabungan shooter & carrier"
+autowrap_mode = 2
+
+[node name="BtnPlay" type="Button" parent="VBoxContainer/GridContainer/CardStage5/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 18
+text = "▶  MAINKAN"
+
+[node name="CardStage6" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(420, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_boss")
+
+[node name="VBox" type="VBoxContainer" parent="VBoxContainer/GridContainer/CardStage6"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer/GridContainer/CardStage6/VBox"]
+layout_mode = 2
+
+[node name="StageTag" type="Label" parent="VBoxContainer/GridContainer/CardStage6/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.5, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "STAGE 1-6"
+
+[node name="Badge" type="Label" parent="VBoxContainer/GridContainer/CardStage6/VBox/TopRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.6, 1)
+theme_override_font_sizes/font_size = 15
+text = "👑 FINAL BOSS"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage6/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 26
+text = "Tahta Inti Gloop"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/GridContainer/CardStage6/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.8, 0.85, 0.85)
+theme_override_font_sizes/font_size = 15
+text = "Duel klimaks epik 3 Fase Boss Glacier Gloop"
+autowrap_mode = 2
+
+[node name="BtnPlay" type="Button" parent="VBoxContainer/GridContainer/CardStage6/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 18
+text = "▶  MAINKAN"
+
+[node name="BottomBar" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnBack" type="Button" parent="VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(380, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "◀  KEMBALI KE MENU UTAMA (ESC)"

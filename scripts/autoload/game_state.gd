@@ -36,6 +36,9 @@ const MAX_MISSILES: int = 9
 const START_MISSILES: int = 3
 const WEAPON_DURATION: float = 16.0
 
+var current_world: int = 1
+var current_stage: int = 1
+
 var difficulty: Difficulty = Difficulty.NORMAL
 var score: int = 0
 var lives: int = 3
@@ -48,6 +51,12 @@ var missile_ammo: int = 3
 var has_shield: bool = false
 
 var _last_kill_time: float = -100.0
+
+
+func start_stage(world_id: int, stage_id: int) -> void:
+	current_world = world_id
+	current_stage = stage_id
+	new_game(difficulty)
 
 
 func _process(delta: float) -> void:

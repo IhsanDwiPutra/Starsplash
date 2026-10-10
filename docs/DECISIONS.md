@@ -35,6 +35,7 @@ Keputusan yang **sudah final**. Jangan dibatalkan tanpa persetujuan user. Entri 
 | 29 | 2026-10-10 | Desain UI Gameplay Modern (HUD Glassmorphism & Icon Pack Shmup) di `scenes/ui/hud.tscn` | Mempercantik antarmuka in-game dengan kartu status Pip glassmorphism, avatar Pip resmi, aset ikon AI (Bintang, Rudal, Shield, Boss), Stage Journey progress bar, Splash gauge berdenyut, dan kartu hasil level/game-over yang terisolasi rapi |
 | 30 | 2026-10-10 | Integrasi Layer Background Parallax Baru (Skybox Aurora & Pegunungan Es Jauh) di `assets/art/backgrounds/` | Mengganti placeholder langit dan gunung es prosedural dengan perpaduan tekstur seni 16:9 aurora kosmik dan pegunungan es transparan yang di-loop secara mulus di sistem BgLayer |
 | 31 | 2026-10-10 | Integrasi Sprite Musuh Pertama: Frost Jelly (`assets/art/enemies/frost_jelly.png`) pada `enemy_drone.tscn` | Menggantikan drone kotak merah dengan sprite ubur-ubur es mekanik facing-left, lengkap dengan animasi berenang kubah melayang dan efek ledakan kristal cyan |
+| 32 | 2026-10-10 | Desain & Implementasi Menu Pilihan Stage Dunia 1 (Stage 1-1 s/d 1-6) dengan Background Ilustrasi Es (`scenes/ui/stage_select.tscn`) | Menggantikan transisi langsung ke gameplay dengan menu pemilihan tahapan bebas (6 stage), memudahkan uji coba mandiri per stage tanpa harus maraton dari awal, dilengkapi kartu status glassmorphism, indikator Mini-Boss (1-3) & Major Boss (1-6), serta background seni 16:9 kepulauan laut beku |
 
 
 

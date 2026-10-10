@@ -194,7 +194,11 @@ func update_progress(ratio: float, _current_time: float, _total_time: float) -> 
 	if _level_bar != null:
 		_level_bar.value = ratio * 100.0
 	if _level_label != null:
-		_level_label.text = "DUNIA 1 • LAUT BEKU (%d%%)" % int(ratio * 100.0)
+		_level_label.text = "STAGE 1-%d: %s (%d%%)" % [
+			GameState.current_stage,
+			Level1Data.get_stage_name(GameState.current_stage).to_upper(),
+			int(ratio * 100.0)
+		]
 
 
 func show_level_clear(stats: Dictionary) -> void:
@@ -211,8 +215,12 @@ func show_level_clear(stats: Dictionary) -> void:
 	var bonus: int = stats.get("life_bonus", 0)
 	var final_score: int = stats.get("final_score", base_score + bonus)
 
-	_clear_stats.text = "SKOR PERJALANAN: %d\nBONUS NYAWA (%d x 1000): +%d\n-------------------------\nTOTAL SKOR AKHIR: %d\n\nTekan [TEMBAK] untuk Main Lagi\nTekan [ESC] untuk Menu Utama" % [
-		base_score, lives, bonus, final_score
+	var next_hint: String = "Tekan [TEMBAK] untuk Stage Berikutnya" if GameState.current_stage < 6 else "Tekan [TEMBAK] untuk Selesai"
+	_clear_stats.text = "STAGE 1-%d: %s SELESAI!\n\nSKOR PERJALANAN: %d\nBONUS NYAWA (%d x 1000): +%d\n-------------------------\nTOTAL SKOR AKHIR: %d\n\n%s\nTekan [ESC] untuk Pilih Stage" % [
+		GameState.current_stage,
+		Level1Data.get_stage_name(GameState.current_stage).to_upper(),
+		base_score, lives, bonus, final_score,
+		next_hint
 	]
 
 
@@ -220,9 +228,9 @@ func show_game_over(has_checkpoint: bool, score: int) -> void:
 	if _game_over_panel == null or _game_over_label == null:
 		return
 	if has_checkpoint:
-		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Lanjut dari Checkpoint\nTekan [ESC] untuk Menu Utama" % score
+		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Lanjut dari Checkpoint\nTekan [ESC] untuk Pilih Stage" % score
 	else:
-		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Coba Lagi\nTekan [ESC] untuk Menu Utama" % score
+		_game_over_label.text = "GAME OVER\nSkor: %d\n\nTekan [TEMBAK] untuk Coba Lagi\nTekan [ESC] untuk Pilih Stage" % score
 	_game_over_panel.visible = true
 	_game_over_panel.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	var t: Tween = create_tween()
