@@ -36,8 +36,9 @@ var _carrier_timer: float = 12.0
 var _center_y: float = 540.0
 var _pulse_timer: float = 0.0
 
-@onready var _eye_iris: Polygon2D = $Visual/EyeIris
-@onready var _core: Polygon2D = $Visual/Core
+const BASE_SPRITE_SCALE: Vector2 = Vector2(0.32, 0.32)
+
+@onready var _sprite: Sprite2D = $Sprite2D
 @onready var _upper_muzzle: Marker2D = $UpperMuzzle
 @onready var _lower_muzzle: Marker2D = $LowerMuzzle
 @onready var _collision: CollisionShape2D = $CollisionShape2D
@@ -212,10 +213,12 @@ func _spawn_support_carrier() -> void:
 
 
 func _update_core_pulse(delta: float) -> void:
-	var speed_mult: float = float(current_phase) * 3.5
+	if _sprite == null:
+		return
+	var speed_mult: float = float(current_phase) * 2.8
 	_pulse_timer += delta * speed_mult
-	var s: float = 1.0 + sin(_pulse_timer) * 0.12
-	_core.scale = Vector2(s, s)
+	var s: float = 1.0 + sin(_pulse_timer) * 0.035
+	_sprite.scale = Vector2(BASE_SPRITE_SCALE.x * (2.0 - s), BASE_SPRITE_SCALE.y * s)
 
 
 func take_damage(amount: int, hit_pos: Vector2 = Vector2.INF) -> void:
@@ -263,16 +266,15 @@ func _on_phase_changed(new_phase: int) -> void:
 
 
 func _update_phase_visuals() -> void:
+	if _sprite == null:
+		return
 	match current_phase:
 		1:
-			_eye_iris.color = Color(0.35, 0.95, 0.8) # Toska es
-			_core.color = Color(0.3, 0.8, 1.0)
+			_sprite.modulate = Color(1.0, 1.0, 1.0)
 		2:
-			_eye_iris.color = Color(1.0, 0.85, 0.2) # Kuning waspada
-			_core.color = Color(1.0, 0.65, 0.15)
+			_sprite.modulate = Color(1.15, 0.95, 0.75)
 		3:
-			_eye_iris.color = Color(1.0, 0.25, 0.25) # Merah enrage
-			_core.color = Color(1.0, 0.2, 0.3)
+			_sprite.modulate = Color(1.35, 0.7, 0.7)
 
 
 func _drop_phase_pickups(phase: int) -> void:

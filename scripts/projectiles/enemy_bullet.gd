@@ -13,6 +13,7 @@ var _speed: float = 450.0
 func _ready() -> void:
 	add_to_group("enemy_bullet")
 	_speed = speed if speed > 0.0 else GameState.get_enemy_bullet_speed()
+	rotation = direction.angle() - PI
 
 
 func _physics_process(delta: float) -> void:
