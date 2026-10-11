@@ -17,3 +17,6 @@ Thumbs.db
 *.keystore
 *.jks
 android/build/
+builds/
+*.apk
+*.idsig
