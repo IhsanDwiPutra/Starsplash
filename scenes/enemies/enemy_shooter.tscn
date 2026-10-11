@@ -1,9 +1,11 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" path="res://assets/art/enemies/enemy_shooter.png" id="2_shooter_tex"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_shooter"]
-radius = 38.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_shooter"]
+radius = 32.0
+height = 96.0
 
 [node name="EnemyShooter" type="Area2D"]
 collision_layer = 4
@@ -17,21 +19,10 @@ hold_x = 1500.0
 hold_duration = 6.0
 fire_interval = 2.0
 
-[node name="Outline" type="Polygon2D" parent="."]
-color = Color(0.08, 0.16, 0.22, 1)
-polygon = PackedVector2Array(-43, 0, -25, -35, 25, -35, 43, 0, 25, 35, -25, 35)
-
-[node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.35, 0.82, 0.85, 1)
-polygon = PackedVector2Array(-38, 0, -22, -30, 22, -30, 38, 0, 22, 30, -22, 30)
-
-[node name="Cannon" type="Polygon2D" parent="."]
-color = Color(0.18, 0.32, 0.45, 1)
-polygon = PackedVector2Array(-54, -9, -20, -9, -20, 9, -54, 9)
-
-[node name="Eye" type="Polygon2D" parent="."]
-color = Color(1, 0.9, 0.4, 1)
-polygon = PackedVector2Array(-6, -10, 12, -10, 18, 0, 12, 10, -6, 10)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("2_shooter_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_shooter")
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_shooter")

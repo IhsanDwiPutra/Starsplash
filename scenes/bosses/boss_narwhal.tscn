@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/bosses/boss_narwhal.gd" id="1_boss"]
+[ext_resource type="Texture2D" path="res://assets/art/bosses/boss_narwhal.png" id="2_narwhal_tex"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_narwhal"]
+radius = 42.0
+height = 190.0
+
+[node name="BossNarwhal" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_boss")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_narwhal_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 4)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_narwhal")
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(-110, -2)

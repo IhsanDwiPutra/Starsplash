@@ -6,6 +6,7 @@ const SineScene: PackedScene = preload("res://scenes/enemies/enemy_sine.tscn")
 const ShooterScene: PackedScene = preload("res://scenes/enemies/enemy_shooter.tscn")
 const CarrierScene: PackedScene = preload("res://scenes/enemies/enemy_carrier.tscn")
 const BossScene: PackedScene = preload("res://scenes/bosses/boss_glacier_gloop.tscn")
+const MiniBossScene: PackedScene = preload("res://scenes/bosses/boss_narwhal.tscn")
 const MENU_PATH: String = "res://scenes/ui/main_menu.tscn"
 const STAGE_SELECT_PATH: String = "res://scenes/ui/stage_select.tscn"
 const GAME_OVER_DELAY: float = 1.0
@@ -43,7 +44,8 @@ func _ready() -> void:
 		"sine": SineScene,
 		"shooter": ShooterScene,
 		"carrier": CarrierScene,
-		"boss": BossScene
+		"boss": BossScene,
+		"mini_boss": MiniBossScene
 	}
 	var timeline: Array[Dictionary] = Level1Data.get_timeline(enemy_scenes)
 	_level_runner.setup(_enemies, timeline)
@@ -89,11 +91,13 @@ func _on_checkpoint_reached(_checkpoint_id: int, _name: String) -> void:
 
 
 func _on_boss_spawned(boss_node: Node2D, boss_name: String) -> void:
-	var boss := boss_node as BossGlacierGloop
-	if boss != null:
-		boss.health_changed.connect(_hud.update_boss_hp)
-		boss.defeated.connect(_hud.hide_boss_bar)
-		_hud.show_boss_bar(boss_name, boss.MAX_HP)
+	if boss_node != null:
+		if boss_node.has_signal("health_changed"):
+			boss_node.connect("health_changed", _hud.update_boss_hp)
+		if boss_node.has_signal("defeated"):
+			boss_node.connect("defeated", _hud.hide_boss_bar)
+		var max_hp: int = boss_node.get("MAX_HP") if "MAX_HP" in boss_node else 80
+		_hud.show_boss_bar(boss_name, max_hp)
 
 
 func _on_level_completed(stats: Dictionary) -> void:

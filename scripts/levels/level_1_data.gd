@@ -26,6 +26,7 @@ static func get_stage_timeline(stage_num: int, scenes: Dictionary) -> Array[Dict
 	var shooter: PackedScene = scenes.get("shooter")
 	var carrier: PackedScene = scenes.get("carrier")
 	var boss: PackedScene = scenes.get("boss")
+	var mini_boss: PackedScene = scenes.get("mini_boss", boss)
 
 	var E = LevelRunner.EventType
 
@@ -79,11 +80,9 @@ static func get_stage_timeline(stage_num: int, scenes: Dictionary) -> Array[Dict
 				{ "time": 20.0, "type": E.SPAWN, "scene": carrier, "y": 540.0 },
 				{ "time": 24.0, "type": E.FORMATION, "formation": "SWARM_SINE", "scene": sine, "y": 540.0, "count": 3 },
 				{ "time": 28.0, "type": E.FORMATION, "formation": "WALL", "scene": drone, "y": 540.0, "count": 3 },
-				{ "time": 33.0, "type": E.BANNER, "text": "PERINGATAN: PASUKAN ELIT MENDEKAT!", "duration": 2.5 },
-				{ "time": 35.0, "type": E.SPAWN, "scene": shooter, "y": 540.0 },
-				{ "time": 37.0, "type": E.FORMATION, "formation": "LINE", "scene": drone, "y": 360.0, "count": 4 },
-				{ "time": 38.5, "type": E.FORMATION, "formation": "LINE", "scene": drone, "y": 720.0, "count": 4 },
-				{ "time": 44.0, "type": E.WAIT_CLEAR }
+				{ "time": 32.0, "type": E.BANNER, "text": "PERINGATAN: MINI-BOSS MECHA NARWHAL MENDEKAT!", "duration": 2.8 },
+				{ "time": 35.0, "type": E.BOSS, "scene": mini_boss, "name": "MECHA NARWHAL" },
+				{ "time": 35.5, "type": E.WAIT_CLEAR }
 			]
 
 		4:
