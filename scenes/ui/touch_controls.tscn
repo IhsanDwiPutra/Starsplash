@@ -1,0 +1,369 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/touch_controls.gd" id="1_touch"]
+[ext_resource type="Texture2D" path="res://assets/art/pickups/powerup_m.png" id="2_missile_tex"]
+[ext_resource type="Texture2D" path="res://assets/art/pickups/star_item.png" id="3_star_tex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_joy_base"]
+bg_color = Color(0.08, 0.16, 0.32, 0.4)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.85, 1, 0.7)
+corner_radius_top_left = 90
+corner_radius_top_right = 90
+corner_radius_bottom_right = 90
+corner_radius_bottom_left = 90
+shadow_color = Color(0.05, 0.3, 0.7, 0.35)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_joy_knob"]
+bg_color = Color(0.2, 0.7, 0.95, 0.75)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.9)
+corner_radius_top_left = 42
+corner_radius_top_right = 42
+corner_radius_bottom_right = 42
+corner_radius_bottom_left = 42
+shadow_color = Color(0.1, 0.5, 0.9, 0.5)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fire"]
+bg_color = Color(0.1, 0.22, 0.45, 0.55)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.9, 1, 0.85)
+corner_radius_top_left = 58
+corner_radius_top_right = 58
+corner_radius_bottom_right = 58
+corner_radius_bottom_left = 58
+shadow_color = Color(0.1, 0.5, 0.9, 0.4)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_auto"]
+bg_color = Color(0.08, 0.25, 0.2, 0.65)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 1, 0.7, 0.85)
+corner_radius_top_left = 37
+corner_radius_top_right = 37
+corner_radius_bottom_right = 37
+corner_radius_bottom_left = 37
+shadow_color = Color(0.05, 0.4, 0.2, 0.3)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_missile"]
+bg_color = Color(0.3, 0.1, 0.15, 0.55)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.4, 0.45, 0.85)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_color = Color(0.4, 0.08, 0.1, 0.4)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_splash"]
+bg_color = Color(0.35, 0.26, 0.08, 0.55)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.88, 0.3, 0.85)
+corner_radius_top_left = 55
+corner_radius_top_right = 55
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
+shadow_color = Color(0.4, 0.3, 0.05, 0.4)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause"]
+bg_color = Color(0.08, 0.14, 0.28, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.85, 1, 0.7)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+
+[node name="TouchControls" type="CanvasLayer"]
+layer = 12
+script = ExtResource("1_touch")
+
+[node name="Joystick" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Base" type="Panel" parent="Joystick"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 0
+offset_left = 150.0
+offset_top = 690.0
+offset_right = 330.0
+offset_bottom = 870.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_joy_base")
+
+[node name="Knob" type="Panel" parent="Joystick/Base"]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -42.0
+offset_right = 42.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_joy_knob")
+
+[node name="KnobCore" type="ColorRect" parent="Joystick/Base/Knob"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.9)
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BtnFire" type="Panel" parent="Buttons"]
+custom_minimum_size = Vector2(116, 116)
+layout_mode = 0
+offset_left = 1672.0
+offset_top = 802.0
+offset_right = 1788.0
+offset_bottom = 918.0
+pivot_offset = Vector2(58, 58)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fire")
+
+[node name="Label" type="Label" parent="Buttons/BtnFire"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -22.0
+offset_right = 46.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85, 0.95, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20
+text = "FIRE ⚡"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnAutoFire" type="Panel" parent="Buttons"]
+custom_minimum_size = Vector2(74, 74)
+layout_mode = 0
+offset_left = 1693.0
+offset_top = 693.0
+offset_right = 1767.0
+offset_bottom = 767.0
+pivot_offset = Vector2(37, 37)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_auto")
+
+[node name="Label" type="Label" parent="Buttons/BtnAutoFire"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -18.0
+offset_right = 30.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9, 1, 0.9, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "AUTO
+ON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnMissile" type="Panel" parent="Buttons"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 1530.0
+offset_top = 720.0
+offset_right = 1630.0
+offset_bottom = 820.0
+pivot_offset = Vector2(50, 50)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_missile")
+
+[node name="Texture" type="TextureRect" parent="Buttons/BtnMissile"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -32.0
+offset_right = 25.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_missile_tex")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AmmoLabel" type="Label" parent="Buttons/BtnMissile"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -26.0
+offset_right = 30.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.85, 0.85, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 14
+text = "x3"
+horizontal_alignment = 1
+
+[node name="BtnSplash" type="Panel" parent="Buttons"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 0
+offset_left = 1525.0
+offset_top = 845.0
+offset_right = 1635.0
+offset_bottom = 955.0
+pivot_offset = Vector2(55, 55)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_splash")
+
+[node name="Texture" type="TextureRect" parent="Buttons/BtnSplash"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -34.0
+offset_right = 28.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_star_tex")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChargeLabel" type="Label" parent="Buttons/BtnSplash"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -26.0
+offset_right = 40.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "0/30"
+horizontal_alignment = 1
+
+[node name="BtnPause" type="Panel" parent="Buttons"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 1826.0
+offset_top = 28.0
+offset_right = 1890.0
+offset_bottom = 92.0
+pivot_offset = Vector2(32, 32)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pause")
+
+[node name="Label" type="Label" parent="Buttons/BtnPause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -18.0
+offset_right = 20.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85, 0.95, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 24
+text = "⏸"
+horizontal_alignment = 1
+vertical_alignment = 1
