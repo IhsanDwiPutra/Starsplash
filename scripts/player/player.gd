@@ -24,6 +24,8 @@ const MissileScene: PackedScene = preload("res://scenes/projectiles/missile.tscn
 const SplashWaveScene: PackedScene = preload("res://scenes/fx/splash_wave.tscn")
 const ExplosionScene: PackedScene = preload("res://scenes/fx/explosion.tscn")
 
+const BASE_SHIELD_SCALE: Vector2 = Vector2(0.21, 0.21)
+
 var _velocity: Vector2 = Vector2.ZERO
 var _cooldown: float = 0.0
 var _missile_cooldown: float = 0.0
@@ -32,7 +34,7 @@ var _dead: bool = false
 var _shield_pulse: float = 0.0
 
 @onready var _muzzle: Marker2D = $Muzzle
-@onready var _shield_aura: Polygon2D = $ShieldAura
+@onready var _shield_aura: Sprite2D = $ShieldAura
 @onready var _thruster_flame: CPUParticles2D = $ThrusterFlame
 @onready var _stardust_trail: CPUParticles2D = $StardustTrail
 
@@ -181,13 +183,18 @@ func _try_splash() -> void:
 
 func _update_shield_visual(delta: float) -> void:
 	if _shield_aura.visible:
-		_shield_pulse += delta * 6.0
-		var s: float = 1.0 + sin(_shield_pulse) * 0.06
-		_shield_aura.scale = Vector2(s, s)
+		_shield_pulse += delta * 5.0
+		_shield_aura.rotation += delta * 0.9
+		var s: float = 1.0 + sin(_shield_pulse) * 0.05
+		_shield_aura.scale = BASE_SHIELD_SCALE * s
 
 
 func _on_shield_changed(active: bool) -> void:
 	_shield_aura.visible = active
+	if active:
+		_shield_aura.scale = BASE_SHIELD_SCALE * 1.35
+		var tween: Tween = create_tween()
+		tween.tween_property(_shield_aura, "scale", BASE_SHIELD_SCALE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func _handle_damage(delta: float) -> void:
