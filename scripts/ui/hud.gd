@@ -42,6 +42,9 @@ const COLOR_GREEN: Color = Color(0.4, 1.0, 0.65)
 @onready var _clear_panel: Control = $LevelClearPanel
 @onready var _clear_title: Label = $LevelClearPanel/VBox/TitleLabel
 @onready var _clear_stats: Label = $LevelClearPanel/VBox/StatsLabel
+@onready var _star1_label: Label = $LevelClearPanel/VBox/StarsRow/Star1
+@onready var _star2_label: Label = $LevelClearPanel/VBox/StarsRow/Star2
+@onready var _star3_label: Label = $LevelClearPanel/VBox/StarsRow/Star3
 @onready var _game_over_panel: Control = $GameOverPanel
 @onready var _game_over_label: Label = $GameOverPanel/GameOverLabel
 
@@ -208,20 +211,47 @@ func show_level_clear(stats: Dictionary) -> void:
 	_clear_panel.visible = true
 	_clear_panel.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	var tween: Tween = create_tween()
-	tween.tween_property(_clear_panel, "modulate:a", 1.0, 0.4)
+	tween.tween_property(_clear_panel, "modulate:a", 1.0, 0.35)
+
+	var s1: bool = stats.get("star_1", true)
+	var s2: bool = stats.get("star_2", false)
+	var s3: bool = stats.get("star_3", false)
+	var target_score: int = stats.get("target_score", 5000)
+
+	var active_star_color: Color = Color(1.0, 0.88, 0.25, 1.0)
+	var inactive_star_color: Color = Color(0.4, 0.45, 0.55, 0.45)
+
+	if _star1_label != null:
+		_star1_label.text = "★" if s1 else "☆"
+		_star1_label.modulate = active_star_color if s1 else inactive_star_color
+	if _star2_label != null:
+		_star2_label.text = "★" if s2 else "☆"
+		_star2_label.modulate = active_star_color if s2 else inactive_star_color
+	if _star3_label != null:
+		_star3_label.text = "★" if s3 else "☆"
+		_star3_label.modulate = active_star_color if s3 else inactive_star_color
 
 	var base_score: int = stats.get("base_score", 0)
 	var lives: int = stats.get("lives_remaining", 0)
 	var bonus: int = stats.get("life_bonus", 0)
 	var final_score: int = stats.get("final_score", base_score + bonus)
 
+	var icon_1: String = "✓" if s1 else "✗"
+	var icon_2: String = "✓" if s2 else "✗"
+	var icon_3: String = "✓" if s3 else "✗"
+
 	var next_hint: String = "Tekan [TEMBAK] untuk Stage Berikutnya" if GameState.current_stage < 6 else "Tekan [TEMBAK] untuk Selesai"
-	_clear_stats.text = "STAGE 1-%d: %s SELESAI!\n\nSKOR PERJALANAN: %d\nBONUS NYAWA (%d x 1000): +%d\n-------------------------\nTOTAL SKOR AKHIR: %d\n\n%s\nTekan [ESC] untuk Pilih Stage" % [
+	_clear_stats.text = "STAGE 1-%d: %s SELESAI!\n\n" % [
 		GameState.current_stage,
-		Level1Data.get_stage_name(GameState.current_stage).to_upper(),
-		base_score, lives, bonus, final_score,
-		next_hint
-	]
+		Level1Data.get_stage_name(GameState.current_stage).to_upper()
+	] + "KRITERIA BINTANG:\n" \
+	+ "[%s] Misi Tuntas   [%s] Skor >= %d   [%s] Sisa Nyawa >= 2\n\n" % [icon_1, icon_2, target_score, icon_3] \
+	+ "SKOR PERJALANAN: %d\n" % base_score \
+	+ "BONUS NYAWA (%d x 1000): +%d\n" % [lives, bonus] \
+	+ "----------------------------------------\n" \
+	+ "TOTAL SKOR AKHIR: %d\n\n" % final_score \
+	+ "%s\nTekan [ESC] untuk Pilih Stage" % next_hint
+
 
 
 func show_game_over(has_checkpoint: bool, score: int) -> void:

@@ -255,10 +255,21 @@ func _finish_level() -> void:
 	progress_updated.emit(1.0, total_duration, total_duration)
 	var bonus_lives: int = GameState.lives * 1000
 	var final_score: int = GameState.score + bonus_lives
+	var stars_data: Dictionary = Level1Data.calculate_stars(
+		GameState.current_stage,
+		final_score,
+		GameState.lives
+	)
 	var stats: Dictionary = {
 		"base_score": GameState.score,
 		"lives_remaining": GameState.lives,
 		"life_bonus": bonus_lives,
-		"final_score": final_score
+		"final_score": final_score,
+		"stars_earned": stars_data["total_stars"],
+		"star_1": stars_data["star_1"],
+		"star_2": stars_data["star_2"],
+		"star_3": stars_data["star_3"],
+		"target_score": stars_data["target_score"]
 	}
 	level_completed.emit(stats)
+

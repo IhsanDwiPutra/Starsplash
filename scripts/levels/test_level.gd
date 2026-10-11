@@ -103,12 +103,15 @@ func _on_boss_spawned(boss_node: Node2D, boss_name: String) -> void:
 func _on_level_completed(stats: Dictionary) -> void:
 	_is_cleared = true
 	SaveManager.submit_score(stats["final_score"])
+	var stars: int = stats.get("stars_earned", 1)
+	SaveManager.save_stage_stars(GameState.current_world, GameState.current_stage, stars)
 	SaveManager.unlock_next_stage(GameState.current_world, GameState.current_stage)
 	_hud.show_level_clear(stats)
 	GameState.trigger_shake(8.0, 0.3)
 	AudioManager.play_sfx("level_clear")
 	await get_tree().create_timer(GAME_OVER_DELAY).timeout
 	_can_leave = true
+
 
 
 func _on_game_over() -> void:
